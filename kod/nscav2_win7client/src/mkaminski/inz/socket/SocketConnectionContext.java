@@ -2,7 +2,7 @@ package mkaminski.inz.socket;
 
 import java.net.Socket;
 
-import mkaminski.inz.cache.DatabaseProvider;
+import mkaminski.inz.data.DatabaseProvider;
 import mkaminski.inz.message.MessageDecrypter;
 import mkaminski.inz.message.MessageFormer;
 import mkaminski.inz.state.WaitingForHello;

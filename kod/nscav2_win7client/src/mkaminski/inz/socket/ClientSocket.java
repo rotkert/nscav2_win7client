@@ -5,7 +5,8 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 
-import mkaminski.inz.cache.DatabaseProvider;
+import mkaminski.inz.data.DatabaseProvider;
+import mkaminski.inz.errorHandling.ErrorMessages;
 import mkaminski.inz.exception.IcingaException;
 
 /**
@@ -57,7 +58,7 @@ public enum ClientSocket
 			socketThread.start();
 		} catch (SocketTimeoutException e)
 		{
-			// TODO
+			System.out.println(ErrorMessages.NOT_CONNECTED);
 		} catch (IOException e)
 		{
 			// TODO

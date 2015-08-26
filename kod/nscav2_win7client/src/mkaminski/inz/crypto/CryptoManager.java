@@ -6,7 +6,8 @@ import java.security.PublicKey;
 import java.security.Security;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.X509EncodedKeySpec;
-import java.util.logging.Level;
+
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 /**
  * Class (enum) used to maintain cryptographic in application. Static pattern

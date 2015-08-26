@@ -1,17 +1,7 @@
-package mkaminski.inz.cache;
+package mkaminski.inz.data;
 
-
-/**
- * Class that stores information about one particular log
- * 
- * @see DatabaseCache
- * @see DatabaseProvider
- * 
- * @author Marcin Kubik <markubik@gmail.com>
- * 
- */
-public class IcingaLog {
-
+public class IcingaLog
+{
 	private String id;
 	private String value;
 	private String timestamp;
@@ -40,5 +30,4 @@ public class IcingaLog {
 	public String getIcingaLevel() {
 		return icingaLevel;
 	}
-
 }

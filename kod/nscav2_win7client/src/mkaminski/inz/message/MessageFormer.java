@@ -2,11 +2,11 @@ package mkaminski.inz.message;
 
 import java.security.SecureRandom;
 import java.util.ArrayList;
-import java.util.logging.Level;
 
-import mkaminski.inz.cache.DatabaseProvider;
-import mkaminski.inz.cache.IcingaLog;
 import mkaminski.inz.crypto.CryptoManager;
+import mkaminski.inz.data.DataProvider;
+import mkaminski.inz.data.DatabaseProvider;
+import mkaminski.inz.data.IcingaLog;
 import mkaminski.inz.socket.ClientSocket;
 import mkaminski.inz.state.StateUtils;
 
@@ -56,7 +56,7 @@ public class MessageFormer
 		byte[] random = new byte[8];
 		secureRandom.nextBytes(random);
 		byte[] clientIdWithAdd = StateUtils.combineByteArrays(random,
-				SharedPreferencesProxy.getInstance().getClientID().getBytes());
+				DataProvider.getInstance().getClientId().getBytes());
 		byte[] dataToBeEncrypted = new byte[clientIdWithAdd.length + 1];
 		dataToBeEncrypted[0] = (byte) StateUtils.Message.CLIENT_ID.ordinal();
 		System.arraycopy(clientIdWithAdd, 0, dataToBeEncrypted, 1, clientIdWithAdd.length);
@@ -77,7 +77,7 @@ public class MessageFormer
 	 */
 	public byte[] formChosenAlgorithm()
 	{
-		byte[] dataToBeEncrypted = new byte[SharedPreferencesProxy.getInstance().getClientID().getBytes().length + 1];
+		byte[] dataToBeEncrypted = new byte[DataProvider.getInstance().getClientId().getBytes().length + 1];
 		// byte[] dataToBeEncrypted = new
 		// byte[StateUtils.getClientId().getBytes().length + 1];
 		dataToBeEncrypted[0] = (byte) StateUtils.Message.CHOSEN_ALGORITHM.ordinal();
@@ -147,7 +147,7 @@ public class MessageFormer
 			byte[] code = new byte[2];
 			code[0] = (byte) StateUtils.Message.AUTH_DATA.ordinal();
 			code[1] = 1;
-			byte[] login = SharedPreferencesProxy.getInstance().getLogin().getBytes("UTF-8");
+			byte[] login = DataProvider.getInstance().getLogin().getBytes("UTF-8");
 			byte[] totalData = StateUtils.combineByteArrays(code, login);
 			byte[] hash = CryptoManager.INSTANCE.digest(totalData);
 			byte[] sizeOfMessageHash = StateUtils.getSizeAsByteArray(hash.length);
@@ -175,7 +175,7 @@ public class MessageFormer
 			byte[] code = new byte[2];
 			code[0] = (byte) StateUtils.Message.AUTH_DATA.ordinal();
 			code[1] = 3;
-			byte[] password = SharedPreferencesProxy.getInstance().getPassword().getBytes("UTF-8");
+			byte[] password = DataProvider.getInstance().getPassword().getBytes("UTF-8");
 			byte[] totalData = StateUtils.combineByteArrays(code, password);
 			byte[] hash = CryptoManager.INSTANCE.digest(totalData);
 			byte[] sizeOfMessageHash = StateUtils.getSizeAsByteArray(hash.length);
@@ -219,7 +219,7 @@ public class MessageFormer
 			byte[] totalData = code;
 
 			String tablename = databaseProvider.getMostFilledTableName();
-			byte[] hostname = SharedPreferencesProxy.getInstance().getHostName().getBytes("UTF-8");
+			byte[] hostname = DataProvider.getInstance().getHostName().getBytes("UTF-8");
 			for (IcingaLog i : logs)
 			{
 				String value = i.getValue();

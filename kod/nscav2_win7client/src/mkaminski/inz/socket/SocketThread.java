@@ -8,8 +8,8 @@ import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.nio.ByteBuffer;
 
-import mkaminski.inz.cache.DatabaseProvider;
 import mkaminski.inz.crypto.CryptoManager;
+import mkaminski.inz.data.DatabaseProvider;
 
 /**
  * Class that works in separate thread and is used to communicate with server
