@@ -3,6 +3,7 @@ package mkaminski.inz.state;
 import java.net.Socket;
 import java.net.SocketException;
 
+import mkaminski.inz.errorHandling.InfoMessages;
 import mkaminski.inz.socket.SocketConnectionContext;
 import mkaminski.inz.socket.SocketConnectionState;
 
@@ -41,6 +42,7 @@ public class WaitingForChooseAlgorithmAndIDHash implements SocketConnectionState
 
 	public SocketConnectionState setNewState()
 	{
+		System.out.println(InfoMessages.NEW_STATE + "WaitingForACKAfterChooseAlgorithm");
 		return new WaitingForACKAfterChooseAlgorithm();
 	}
 }

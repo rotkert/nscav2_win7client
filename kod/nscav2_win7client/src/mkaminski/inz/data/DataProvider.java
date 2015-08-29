@@ -5,7 +5,7 @@ public class DataProvider
 	private static volatile DataProvider instance = null;
 
 	/** */
-	private final String clientId = "winwin1";
+	private final String clientId = "win7::win7";
 	/** */
 	private final String login = "win7";
 	/** */

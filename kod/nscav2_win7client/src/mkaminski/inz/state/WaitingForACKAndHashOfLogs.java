@@ -3,6 +3,7 @@ package mkaminski.inz.state;
 import java.net.Socket;
 import java.net.SocketException;
 
+import mkaminski.inz.errorHandling.InfoMessages;
 import mkaminski.inz.socket.SocketConnectionContext;
 import mkaminski.inz.socket.SocketConnectionState;
 
@@ -11,8 +12,8 @@ public class WaitingForACKAndHashOfLogs implements SocketConnectionState
 
 	public byte[] getDataToSend(SocketConnectionContext socketConnectionContext)
 	{
-		return socketConnectionContext.getMessageFormer().formLog(socketConnectionContext.getDatabaseProvider());
-		// return socketConnectionContext.getMessageFormer().formEnd();
+		//return socketConnectionContext.getMessageFormer().formLog(socketConnectionContext.getDatabaseProvider());
+		return socketConnectionContext.getMessageFormer().formEnd();
 	}
 
 	public void onTimeout()
@@ -37,6 +38,7 @@ public class WaitingForACKAndHashOfLogs implements SocketConnectionState
 
 	public SocketConnectionState setNewState()
 	{
+		System.out.println(InfoMessages.NEW_STATE + "WaitingForACKAndHashOfLogs");
 		return new WaitingForACKAndHashOfLogs();
 	}
 

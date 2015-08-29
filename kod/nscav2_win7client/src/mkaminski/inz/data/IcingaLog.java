@@ -4,10 +4,10 @@ public class IcingaLog
 {
 	private String id;
 	private String value;
-	private String timestamp;
+	private Long timestamp;
 	private String icingaLevel;
 
-	public IcingaLog(String id, String value, String timestamp,
+	public IcingaLog(String id, String value, Long timestamp,
 			String icingaLevel) {
 		this.id = id;
 		this.value = value;
@@ -23,7 +23,7 @@ public class IcingaLog
 		return value;
 	}
 
-	public String getTimestamp() {
+	public Long getTimestamp() {
 		return timestamp;
 	}
 

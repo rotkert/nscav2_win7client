@@ -223,14 +223,13 @@ public class MessageFormer
 			for (IcingaLog i : logs)
 			{
 				String value = i.getValue();
-				String timestamp = i.getTimestamp();
+				Long timestamp = i.getTimestamp();
 				String icingaLevel = i.getIcingaLevel();
 
 				if (tablename.equals("BATTERY"))
 				{
 					totalData = StateUtils.combineByteArrays(totalData, zero);
-					int integer = Integer.parseInt(timestamp);
-					byte[] timestampAsByteArray = StateUtils.getTimeStampAsByteArray(integer);
+					byte[] timestampAsByteArray = StateUtils.getTimeStampAsByteArray(timestamp);
 					totalData = StateUtils.combineByteArrays(totalData, timestampAsByteArray);
 					totalData = StateUtils.combineByteArrays(totalData, hostname);
 					totalData = StateUtils.combineByteArrays(totalData, zero);
@@ -246,8 +245,7 @@ public class MessageFormer
 					totalData = StateUtils.combineByteArrays(totalData, zero);
 				}
 				totalData = StateUtils.combineByteArrays(totalData, one);
-				int integer = Integer.parseInt(timestamp);
-				byte[] timestampAsByteArray = StateUtils.getTimeStampAsByteArray(integer);
+				byte[] timestampAsByteArray = StateUtils.getTimeStampAsByteArray(timestamp);
 				totalData = StateUtils.combineByteArrays(totalData, timestampAsByteArray);
 				totalData = StateUtils.combineByteArrays(totalData, hostname);
 				totalData = StateUtils.combineByteArrays(totalData, zero);

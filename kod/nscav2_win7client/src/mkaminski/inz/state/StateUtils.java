@@ -130,12 +130,12 @@ public class StateUtils {
 	 *            timestamp to be stored in byte array
 	 * @return timestamp in right format
 	 */
-	public static byte[] getTimeStampAsByteArray(int time) {
+	public static byte[] getTimeStampAsByteArray(Long time) {
 		byte[] timeAsByteArray = new byte[8];
-		timeAsByteArray[0] = 0;
-		timeAsByteArray[1] = 0;
-		timeAsByteArray[2] = 0;
-		timeAsByteArray[3] = 0;
+		timeAsByteArray[0] = (byte) (time >> 56);
+		timeAsByteArray[1] = (byte) (time >> 48);
+		timeAsByteArray[2] = (byte) (time >> 40);
+		timeAsByteArray[3] = (byte) (time >> 32);
 		timeAsByteArray[4] = (byte) (time >> 24);
 		timeAsByteArray[5] = (byte) (time >> 16);
 		timeAsByteArray[6] = (byte) (time >> 8);
