@@ -1,0 +1,3 @@
+- sciezka do pliku komend zewnetrznych ustawiona na sztywno
+- nie dopasowuje id clienta wyslanego i znajdujacego sie w configu (poki co w configu sa puste wartosci)
+- ic clienta musi byc dlugie bo inaczej w javie sie wychrzania

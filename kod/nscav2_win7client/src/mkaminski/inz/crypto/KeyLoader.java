@@ -6,6 +6,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import mkaminski.inz.errorHandling.ErrorMessages;
+
 /**
  * Class used for read public key that is stored externally in storage
  * 
@@ -25,7 +27,7 @@ public class KeyLoader
 	 */
 	public KeyLoader()
 	{
-		publicKeyPath = "C:\\Users\\Miko\\Desktop\\inz - praca\\key";
+		publicKeyPath = "C:\\Users\\Miko\\Desktop\\inz_praca\\key\\Providers__Provider1.pub";
 	}
 
 	/**
@@ -45,7 +47,8 @@ public class KeyLoader
 			dis.close();
 			return publicKeyBytes;
 		} catch (FileNotFoundException e)
-		{
+		{	
+			System.out.println(ErrorMessages.KEY_NOT_FOUND + ". Exception message: " + e.getMessage());
 			return null;
 		} catch (IOException e)
 		{

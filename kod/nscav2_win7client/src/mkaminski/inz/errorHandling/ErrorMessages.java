@@ -2,7 +2,8 @@ package mkaminski.inz.errorHandling;
 
 public enum ErrorMessages
 {
-	NOT_CONNECTED ("ERROR - ClientSocket.java: connect()");
+	NOT_CONNECTED ("ERROR - ClientSocket.java: connect()"),
+	KEY_NOT_FOUND ("ERROR - KeyLoader.java: readPublicKey()");
 	
 	private final String msg;
 	
