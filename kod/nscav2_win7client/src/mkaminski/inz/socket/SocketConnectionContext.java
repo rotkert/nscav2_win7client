@@ -3,7 +3,6 @@ package mkaminski.inz.socket;
 import java.net.Socket;
 
 import mkaminski.inz.data.DatabaseProvider;
-import mkaminski.inz.errorHandling.InfoMessages;
 import mkaminski.inz.message.MessageDecrypter;
 import mkaminski.inz.message.MessageFormer;
 import mkaminski.inz.state.WaitingForHello;
