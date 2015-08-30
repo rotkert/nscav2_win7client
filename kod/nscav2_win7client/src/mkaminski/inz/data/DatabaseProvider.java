@@ -3,13 +3,21 @@ package mkaminski.inz.data;
 import java.util.ArrayList;
 import java.util.Date;
 
+import mkaminski.inz.dataCollector.DataCollectorWrapper;
+
 public class DatabaseProvider
 {
-
+	private final DataCollectorWrapper dataCollectorWrapper;
+	
+	public DatabaseProvider()
+	{
+		dataCollectorWrapper= new DataCollectorWrapper();
+	}
+	
 	public ArrayList<IcingaLog> getDataToSend()
 	{
-		String id = "disc";
-		String value = "5";
+		String id = "usage";
+		String value = ((Double)dataCollectorWrapper.getPhysMemUsage()).toString();
 		Long timestamp = new Date().getTime();
 		String icingaLevel = "1";
 		ArrayList<IcingaLog> logs = new ArrayList<>();
@@ -21,7 +29,7 @@ public class DatabaseProvider
 
 	public String getMostFilledTableName()
 	{
-		String mostFilledTableName = "disc";
+		String mostFilledTableName = "memoryUsage";
 		return mostFilledTableName;
 	}
 

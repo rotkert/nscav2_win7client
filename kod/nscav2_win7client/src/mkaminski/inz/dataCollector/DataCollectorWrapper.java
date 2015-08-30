@@ -3,21 +3,20 @@ package mkaminski.inz.dataCollector;
 import com.sun.jna.Library;
 import com.sun.jna.Native;
 
-public class DataCollectorProxy
+public class DataCollectorWrapper
 {
-	public interface CTest extends Library 
+	public interface DataCollectorNat extends Library 
 	{
 		long getTotalPhysMem();
 		long getPhysMemUsed();
 	}
 	
-	public void get()
+	public double getPhysMemUsage()
 	{
-		CTest cTest = (CTest) Native.loadLibrary("DataCollector", CTest.class);
+		DataCollectorNat cTest = (DataCollectorNat) Native.loadLibrary("DataCollector", DataCollectorNat.class);
 		long totalPhysMem = cTest.getTotalPhysMem();
 		long physMemUsed = cTest.getPhysMemUsed();
-		System.out.println(totalPhysMem + " " + physMemUsed);
 		double usage = (double) physMemUsed / totalPhysMem;
-		System.out.println(usage * 100);
+		return usage * 100;
 	}
 }

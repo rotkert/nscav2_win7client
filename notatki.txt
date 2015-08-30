@@ -1,3 +1,6 @@
 - sciezka do pliku komend zewnetrznych ustawiona na sztywno
 - nie dopasowuje id clienta wyslanego i znajdujacego sie w configu (poki co w configu sa puste wartosci)
 - ic clienta musi byc dlugie bo inaczej w javie sie wychrzania
+
+
+D:\mingw64\bin\gcc.exe" -o DataCollector.dll -shared -I/"C:\Program Files\Java\jdk1.8.0_25\include" DataCollector.c
