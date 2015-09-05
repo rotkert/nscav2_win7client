@@ -12,6 +12,7 @@ public class Main
 		DatabaseProvider databaseProvider = new DatabaseProvider();
 		CryptoManager.INSTANCE.readKeys();
 		ClientSocket.INSTANCE.connect(databaseProvider);
+//		databaseProvider.getReportText();
 	}	
 
 }
