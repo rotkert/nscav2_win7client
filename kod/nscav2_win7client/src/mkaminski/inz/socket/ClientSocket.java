@@ -22,7 +22,7 @@ public enum ClientSocket
 	INSTANCE;
 
 	/** IP address of the remote server */
-	private String IP = "192.168.0.13";
+	private String IP = "192.168.8.104";
 
 	/** Port on which server listens for data */
 	private int port = 8888;

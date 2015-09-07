@@ -10,9 +10,10 @@ public class Main
 	public static void main(String[] args)
 	{
 		DatabaseProvider databaseProvider = new DatabaseProvider();
-		CryptoManager.INSTANCE.readKeys();
-		ClientSocket.INSTANCE.connect(databaseProvider);
+//		CryptoManager.INSTANCE.readKeys();
+//		ClientSocket.INSTANCE.connect(databaseProvider);
 //		databaseProvider.getReportText();
+		System.out.println(databaseProvider.runPerfmon());
 	}	
 
 }
