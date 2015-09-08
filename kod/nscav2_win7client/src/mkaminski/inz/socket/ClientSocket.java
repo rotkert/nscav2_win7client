@@ -5,6 +5,7 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 
+import mkaminski.inz.config.Config;
 import mkaminski.inz.data.DatabaseProvider;
 import mkaminski.inz.errorHandling.ErrorMessages;
 import mkaminski.inz.exception.IcingaException;
@@ -20,12 +21,6 @@ public enum ClientSocket
 {
 	/** Instance of ClientSocket class (in Singleton pattern) */
 	INSTANCE;
-
-	/** IP address of the remote server */
-	private String IP = "192.168.8.104";
-
-	/** Port on which server listens for data */
-	private int port = 8888;
 
 	/** Object used for creation connection */
 	private Socket socket;
@@ -52,7 +47,7 @@ public enum ClientSocket
 		try
 		{
 			socket = new Socket();
-			socket.connect(new InetSocketAddress(this.IP, this.port), 2000);
+			socket.connect(new InetSocketAddress(Config.getIp(), Config.getPort()), 2000);
 			socketThread = new SocketThread(socket, provider);
 
 			socketThread.start();

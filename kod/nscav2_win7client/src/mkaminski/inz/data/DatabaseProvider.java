@@ -6,8 +6,13 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 
 import mkaminski.inz.dataCollector.DataCollectorWrapper;
 import mkaminski.inz.errorHandling.ErrorMessages;
@@ -109,5 +114,24 @@ public class DatabaseProvider
 		}
 		
 		return reportLocation;
+	}
+	
+	public void setReportExecutionDetails(String reportDir, CriticalSituationType type, long timestamp) 
+	{
+		File input = new File(reportDir + "\\report.html");
+		Document doc;
+		try
+		{
+			doc = Jsoup.parse(input, "UTF-16");
+			Element table = (Element) doc.getElementById("c_1").getElementsByClass("info").get(0).parentNode().parentNode();
+			table.append("<tr><td class='h4'>Przyczyna: </td><td class='info' id='CriticalSituationType'>" + type + "</td></tr><tr><td class='h4'>Stempel czasu: </td><td class='info' id='timestamp'>" + timestamp + "</td></tr>");
+			PrintWriter writer = new PrintWriter(reportDir + "\\new_report.html", "UTF-16");
+			writer.print(doc.toString());
+			writer.close();
+		} catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
