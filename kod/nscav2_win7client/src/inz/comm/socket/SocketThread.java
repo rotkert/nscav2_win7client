@@ -1,4 +1,4 @@
-package mkaminski.inz.socket;
+package inz.comm.socket;
 
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -8,7 +8,7 @@ import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.nio.ByteBuffer;
 
-import mkaminski.inz.crypto.CryptoManager;
+import inz.comm.crypto.CryptoManager;
 import mkaminski.inz.data.DatabaseProvider;
 
 /**

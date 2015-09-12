@@ -1,4 +1,4 @@
-package mkaminski.inz.config;
+package inz.comm.config;
 
 public final class Config
 {
@@ -11,6 +11,11 @@ public final class Config
 		appDirectory = System.getenv("APPDATA") + "\\Nscav2_client";
 		ip = "192.168.0.13";
 		port = 8888;
+	}
+	
+	public static void init()
+	{
+		new Config();
 	}
 	
 	public static String getAppDirectory()

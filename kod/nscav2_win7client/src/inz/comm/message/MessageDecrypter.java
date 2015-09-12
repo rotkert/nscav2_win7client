@@ -1,8 +1,8 @@
-package mkaminski.inz.message;
+package inz.comm.message;
 
-import mkaminski.inz.crypto.CryptoManager;
-import mkaminski.inz.socket.ClientSocket;
-import mkaminski.inz.state.StateUtils;
+import inz.comm.crypto.CryptoManager;
+import inz.comm.socket.ClientSocket;
+import inz.comm.state.StateUtils;
 
 /**
  * Class used to decrypt and check data that are received from server

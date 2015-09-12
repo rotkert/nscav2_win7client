@@ -1,11 +1,11 @@
-package mkaminski.inz.socket;
+package inz.comm.socket;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 
-import mkaminski.inz.config.Config;
+import inz.comm.config.Config;
 import mkaminski.inz.data.DatabaseProvider;
 import mkaminski.inz.errorHandling.ErrorMessages;
 import mkaminski.inz.exception.IcingaException;

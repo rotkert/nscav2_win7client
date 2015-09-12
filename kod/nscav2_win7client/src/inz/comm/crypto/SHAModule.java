@@ -1,4 +1,4 @@
-package mkaminski.inz.crypto;
+package inz.comm.crypto;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

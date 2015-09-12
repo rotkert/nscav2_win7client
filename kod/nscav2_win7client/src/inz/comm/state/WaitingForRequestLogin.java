@@ -1,23 +1,22 @@
-package mkaminski.inz.state;
+package inz.comm.state;
 
 import java.net.Socket;
 import java.net.SocketException;
 
+import inz.comm.socket.SocketConnectionContext;
+import inz.comm.socket.SocketConnectionState;
 import mkaminski.inz.errorHandling.InfoMessages;
-import mkaminski.inz.socket.SocketConnectionContext;
-import mkaminski.inz.socket.SocketConnectionState;
 
-public class WaitingForWaitingForLogs implements SocketConnectionState
+public class WaitingForRequestLogin implements SocketConnectionState
 {
 
 	public byte[] getDataToSend(SocketConnectionContext socketConnectionContext)
 	{
-		return socketConnectionContext.getMessageFormer().formLog(socketConnectionContext.getDatabaseProvider());
+		return socketConnectionContext.getMessageFormer().formLogin();
 	}
 
 	public void onTimeout()
 	{
-
 	}
 
 	public void setTimeout(Socket socket)
@@ -33,13 +32,13 @@ public class WaitingForWaitingForLogs implements SocketConnectionState
 
 	public boolean proceedText(SocketConnectionContext socketConnectionContext, int sizeOfMessage, byte[] text)
 	{
-		return socketConnectionContext.getMessageDecrypter().checkWaitingForLogs(sizeOfMessage, text);
+		return socketConnectionContext.getMessageDecrypter().checkRequestLogin(sizeOfMessage, text);
 	}
 
 	public SocketConnectionState setNewState()
 	{
-		System.out.println(InfoMessages.NEW_STATE + "WaitingForACKAndHashOfLogs");
-		return new WaitingForACKAndHashOfLogs();
+		System.out.println(InfoMessages.NEW_STATE + "WaitingForRequestPassword");
+		return new WaitingForRequestPassword();
 	}
 
 }

@@ -1,11 +1,11 @@
-package mkaminski.inz.state;
+package inz.comm.state;
 
 import java.net.Socket;
 import java.net.SocketException;
 
+import inz.comm.socket.SocketConnectionContext;
+import inz.comm.socket.SocketConnectionState;
 import mkaminski.inz.errorHandling.InfoMessages;
-import mkaminski.inz.socket.SocketConnectionContext;
-import mkaminski.inz.socket.SocketConnectionState;
 
 public class WaitingForACKAfterChooseProtocol implements SocketConnectionState
 {

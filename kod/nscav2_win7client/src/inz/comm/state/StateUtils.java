@@ -1,4 +1,4 @@
-package mkaminski.inz.state;
+package inz.comm.state;
 
 import java.lang.reflect.Field;
 

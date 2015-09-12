@@ -1,14 +1,15 @@
-package mkaminski.inz.state;
+package inz.comm.state;
 
 import java.net.Socket;
 import java.net.SocketException;
 
+import inz.comm.socket.SocketConnectionContext;
+import inz.comm.socket.SocketConnectionState;
 import mkaminski.inz.errorHandling.InfoMessages;
-import mkaminski.inz.socket.SocketConnectionContext;
-import mkaminski.inz.socket.SocketConnectionState;
 
-public class WaitingForChooseAlgorithmAndIDHash implements SocketConnectionState
+public class WaitingForChooseAuthModule implements SocketConnectionState
 {
+
 	/*
 	 * Value used to set timeout while waiting on particular data
 	 */
@@ -16,7 +17,7 @@ public class WaitingForChooseAlgorithmAndIDHash implements SocketConnectionState
 
 	public byte[] getDataToSend(SocketConnectionContext socketConnectionContext)
 	{
-		return socketConnectionContext.getMessageFormer().formChosenAlgorithm();
+		return socketConnectionContext.getMessageFormer().formChosenAuthModule();
 	}
 
 	public void onTimeout()
@@ -37,12 +38,13 @@ public class WaitingForChooseAlgorithmAndIDHash implements SocketConnectionState
 
 	public boolean proceedText(SocketConnectionContext socketConnectionContext, int sizeOfMessage, byte[] text)
 	{
-		return socketConnectionContext.getMessageDecrypter().checkChooseAlgorithmAndIDHash(sizeOfMessage, text);
+		return socketConnectionContext.getMessageDecrypter().checkChooseAuthModule(sizeOfMessage, text);
 	}
 
 	public SocketConnectionState setNewState()
 	{
-		System.out.println(InfoMessages.NEW_STATE + "WaitingForACKAfterChooseAlgorithm");
-		return new WaitingForACKAfterChooseAlgorithm();
+		System.out.println(InfoMessages.NEW_STATE + "WaitingForRequestLogin");
+		return new WaitingForRequestLogin();
 	}
+
 }

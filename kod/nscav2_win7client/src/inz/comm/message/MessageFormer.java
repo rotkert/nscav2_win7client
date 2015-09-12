@@ -1,14 +1,14 @@
-package mkaminski.inz.message;
+package inz.comm.message;
 
 import java.security.SecureRandom;
 import java.util.ArrayList;
 
-import mkaminski.inz.crypto.CryptoManager;
+import inz.comm.crypto.CryptoManager;
+import inz.comm.socket.ClientSocket;
+import inz.comm.state.StateUtils;
 import mkaminski.inz.data.DataProvider;
 import mkaminski.inz.data.DatabaseProvider;
 import mkaminski.inz.data.IcingaLog;
-import mkaminski.inz.socket.ClientSocket;
-import mkaminski.inz.state.StateUtils;
 
 /**
  * Class used to form data that will be send to remote server

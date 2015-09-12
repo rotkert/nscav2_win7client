@@ -1,4 +1,4 @@
-package mkaminski.inz.crypto;
+package inz.comm.crypto;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;

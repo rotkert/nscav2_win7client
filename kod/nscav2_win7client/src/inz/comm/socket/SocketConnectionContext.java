@@ -1,12 +1,12 @@
-package mkaminski.inz.socket;
+package inz.comm.socket;
 
 import java.net.Socket;
 
+import inz.comm.message.MessageDecrypter;
+import inz.comm.message.MessageFormer;
+import inz.comm.state.WaitingForHello;
+import inz.comm.state.WrongMessageState;
 import mkaminski.inz.data.DatabaseProvider;
-import mkaminski.inz.message.MessageDecrypter;
-import mkaminski.inz.message.MessageFormer;
-import mkaminski.inz.state.WaitingForHello;
-import mkaminski.inz.state.WrongMessageState;
 
 /**
  * Class used in MachineState pattern as a context

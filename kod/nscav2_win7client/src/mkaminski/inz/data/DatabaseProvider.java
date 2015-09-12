@@ -29,7 +29,10 @@ public class DatabaseProvider
 	public ArrayList<IcingaLog> getDataToSend()
 	{
 		String id = "usage";
-		String value = ((Double) dataCollectorWrapper.getPhysMemUsage()).toString();
+		//String value = ((Double) dataCollectorWrapper.getPhysMemUsage()).toString();
+		String value = setReportExecutionDetails("C:\\Users\\Miko\\AppData\\Roaming\\Nscav2_client\\MIKO-KOMPUTER_20150908-000036", CriticalEvent.MEMORY, new Date().getTime());
+		value = value.replaceAll("\\[", "&#91;");
+//		value.replaceAll(";", "&#91");
 		Long timestamp = new Date().getTime();
 		String icingaLevel = "1";
 		ArrayList<IcingaLog> logs = new ArrayList<>();
@@ -116,15 +119,15 @@ public class DatabaseProvider
 		return reportLocation;
 	}
 	
-	public void setReportExecutionDetails(String reportDir, CriticalSituationType type, long timestamp) 
+	public String setReportExecutionDetails(String reportDir, CriticalEvent event, long timestamp) 
 	{
 		File input = new File(reportDir + "\\report.html");
-		Document doc;
+		Document doc = null;
 		try
 		{
 			doc = Jsoup.parse(input, "UTF-16");
 			Element table = (Element) doc.getElementById("c_1").getElementsByClass("info").get(0).parentNode().parentNode();
-			table.append("<tr><td class='h4'>Przyczyna: </td><td class='info' id='CriticalSituationType'>" + type + "</td></tr><tr><td class='h4'>Stempel czasu: </td><td class='info' id='timestamp'>" + timestamp + "</td></tr>");
+			table.append("<tr><td class='h4'>Przyczyna: </td><td class='info' id='CriticalSituationType'>" + event + "</td></tr><tr><td class='h4'>Stempel czasu: </td><td class='info' id='timestamp'>" + timestamp + "</td></tr>");
 			PrintWriter writer = new PrintWriter(reportDir + "\\new_report.html", "UTF-16");
 			writer.print(doc.toString());
 			writer.close();
@@ -133,5 +136,6 @@ public class DatabaseProvider
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return doc.toString();
 	}
 }

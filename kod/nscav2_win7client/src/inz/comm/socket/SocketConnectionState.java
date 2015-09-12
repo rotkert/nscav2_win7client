@@ -1,4 +1,4 @@
-package mkaminski.inz.socket;
+package inz.comm.socket;
 
 import java.net.Socket;
 
