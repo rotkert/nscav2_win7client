@@ -1,24 +1,33 @@
 package mkaminski.inz.main;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
-import mkaminski.inz.crypto.CryptoManager;
-import mkaminski.inz.data.CriticalSituationType;
+import inz.comm.config.Config;
+import inz.comm.crypto.CryptoManager;
+import inz.comm.socket.ClientSocket;
+import inz.data.perfmon.PerfmonResult;
 import mkaminski.inz.data.DatabaseProvider;
-import mkaminski.inz.socket.ClientSocket;
+import mkaminski.inz.dataCollector.DataValidator;
+import mkaminski.inz.dataCollector.ValidationScheduler;
 
 public class Main
 {
 
 	public static void main(String[] args)
 	{
-		DatabaseProvider databaseProvider = new DatabaseProvider();
+//		Config.init();
+//		DatabaseProvider databaseProvider = new DatabaseProvider();
 //		CryptoManager.INSTANCE.readKeys();
 //		ClientSocket.INSTANCE.connect(databaseProvider);
 //		databaseProvider.getReportText();
 //		System.out.println(System.getenv("APPDATA"));
-//		databaseProvider.runPerfmon();
-		databaseProvider.setReportExecutionDetails("C:\\Users\\Miko\\AppData\\Roaming\\Nscav2_client\\MIKO-KOMPUTER_20150908-000036", CriticalSituationType.TEST, new Date().getTime());
+		BlockingQueue<PerfmonResult> blockingQueue = new LinkedBlockingQueue<>();
+		ValidationScheduler validationScheduler = new ValidationScheduler(blockingQueue);
 	}	
 
 }

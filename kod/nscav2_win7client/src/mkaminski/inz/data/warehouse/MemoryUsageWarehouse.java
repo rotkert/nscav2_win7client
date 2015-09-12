@@ -2,13 +2,14 @@ package mkaminski.inz.data.warehouse;
 
 import java.util.LinkedList;
 
-import mkaminski.inz.data.CriticalEvent;
+import devPackage.Writer;
+import mkaminski.inz.dataCollector.CriticalEvent;
 import mkaminski.inz.dataCollector.DataCollectorWrapper;
 
-public class MemoryUsageWarehouse implements IWarehouse
+public class MemoryUsageWarehouse extends Warehouse
 {
 	private static final int queueSize = 10;
-	private static final double critivalValue = 50;
+	private static final double critivalValue = 80;
 	private LinkedList<Double> valuesQueue;
 	private DataCollectorWrapper dataCollecor;
 	
@@ -45,13 +46,17 @@ public class MemoryUsageWarehouse implements IWarehouse
 			valuesSum += value;
 		}
 		
-		if(valuesQueue.isEmpty() == false)
+		if(valuesQueue.size() == queueSize)
 		{
 			valuesAvg = valuesSum / valuesQueue.size();
 		}
 		
+		// dev
+		Writer.write(((Double)valuesAvg).toString());
+		
 		if(valuesAvg >= critivalValue)
 		{
+			valuesQueue.clear();
 			return CriticalEvent.MEMORY;
 		}
 		else

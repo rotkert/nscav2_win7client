@@ -2,25 +2,48 @@ package mkaminski.inz.dataCollector;
 
 import java.util.LinkedList;
 import java.util.TimerTask;
+import java.util.concurrent.BlockingQueue;
 
-public class DataValidator extends TimerTask
+import inz.data.perfmon.PerfmonHandler;
+import inz.data.perfmon.PerfmonResult;
+import mkaminski.inz.data.warehouse.MemoryUsageWarehouse;
+import mkaminski.inz.data.warehouse.Warehouse;
+
+public class DataValidator implements Runnable
 {
-	private DataCollectorWrapper dataCollector;
-	private LinkedList<Double> measures;
+	private BlockingQueue<PerfmonResult> blockingQueue;
+	private PerfmonHandler perfmonHandler;
+	private LinkedList<Warehouse> warehouses;
 	
-	public DataValidator()
+	public DataValidator(BlockingQueue<PerfmonResult> blockingQueue)
 	{
 		super();
-		measures = new LinkedList<>();
-		dataCollector = new DataCollectorWrapper();
+		this.blockingQueue = blockingQueue;
+		perfmonHandler = new PerfmonHandler();
+		warehouses = new LinkedList<>();
+		warehouses.add(new MemoryUsageWarehouse());
 	}
 	
 	@Override
 	public void run()
 	{
-		
-	}
-	
-	private add
-
+		for (Warehouse warehouse : warehouses)
+		{
+			CriticalEvent event = warehouse.processMeasure();
+			
+			if(event.equals(CriticalEvent.OK) == false)
+			{
+				PerfmonResult pr = perfmonHandler.getReport(event);
+				
+				try
+				{
+					blockingQueue.put(pr);
+				} catch (InterruptedException e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+	}	
 }

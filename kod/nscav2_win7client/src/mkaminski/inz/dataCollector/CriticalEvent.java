@@ -1,4 +1,4 @@
-package mkaminski.inz.data;
+package mkaminski.inz.dataCollector;
 
 public enum CriticalEvent
 {
