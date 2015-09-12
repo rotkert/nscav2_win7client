@@ -1,6 +1,6 @@
 package inz.data.perfmon;
 
-import mkaminski.inz.dataCollector.CriticalEvent;
+import inz.data.collectors.CriticalEvent;
 
 public class PerfmonResult
 {

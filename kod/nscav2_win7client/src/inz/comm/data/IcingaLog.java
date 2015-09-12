@@ -1,4 +1,4 @@
-package mkaminski.inz.data;
+package inz.comm.data;
 
 public class IcingaLog
 {

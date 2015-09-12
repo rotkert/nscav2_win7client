@@ -1,4 +1,4 @@
-package mkaminski.inz.data;
+package inz.comm.data;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -14,8 +14,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
-import mkaminski.inz.dataCollector.CriticalEvent;
-import mkaminski.inz.dataCollector.DataCollectorWrapper;
+import inz.data.collectors.CriticalEvent;
+import inz.data.collectors.DataCollectorWrapper;
 import mkaminski.inz.errorHandling.ErrorMessages;
 
 public class DatabaseProvider

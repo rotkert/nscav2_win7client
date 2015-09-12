@@ -1,4 +1,4 @@
-package mkaminski.inz.dataCollector;
+package inz.data.collectors;
 
 import com.sun.jna.Library;
 import com.sun.jna.Native;

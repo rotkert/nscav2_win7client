@@ -2,11 +2,11 @@ package inz.comm.socket;
 
 import java.net.Socket;
 
+import inz.comm.data.DatabaseProvider;
 import inz.comm.message.MessageDecrypter;
 import inz.comm.message.MessageFormer;
 import inz.comm.state.WaitingForHello;
 import inz.comm.state.WrongMessageState;
-import mkaminski.inz.data.DatabaseProvider;
 
 /**
  * Class used in MachineState pattern as a context

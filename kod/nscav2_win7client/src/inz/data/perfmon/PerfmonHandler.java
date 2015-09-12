@@ -11,7 +11,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
-import mkaminski.inz.dataCollector.CriticalEvent;
+import inz.data.collectors.CriticalEvent;
 
 public class PerfmonHandler
 {

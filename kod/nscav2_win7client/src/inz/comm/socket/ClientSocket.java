@@ -6,9 +6,9 @@ import java.net.Socket;
 import java.net.SocketTimeoutException;
 
 import inz.comm.config.Config;
-import mkaminski.inz.data.DatabaseProvider;
+import inz.comm.data.DatabaseProvider;
+import inz.comm.exception.IcingaException;
 import mkaminski.inz.errorHandling.ErrorMessages;
-import mkaminski.inz.exception.IcingaException;
 
 /**
  * Class used to start connection with socket on remote server. Starts thread

@@ -1,4 +1,4 @@
-package mkaminski.inz.dataCollector;
+package inz.data.collectors;
 
 import java.util.LinkedList;
 import java.util.TimerTask;
@@ -6,8 +6,8 @@ import java.util.concurrent.BlockingQueue;
 
 import inz.data.perfmon.PerfmonHandler;
 import inz.data.perfmon.PerfmonResult;
-import mkaminski.inz.data.warehouse.MemoryUsageWarehouse;
-import mkaminski.inz.data.warehouse.Warehouse;
+import inz.data.warehouse.MemoryUsageWarehouse;
+import inz.data.warehouse.Warehouse;
 
 public class DataValidator implements Runnable
 {

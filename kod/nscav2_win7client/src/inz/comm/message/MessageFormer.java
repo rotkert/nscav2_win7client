@@ -4,11 +4,11 @@ import java.security.SecureRandom;
 import java.util.ArrayList;
 
 import inz.comm.crypto.CryptoManager;
+import inz.comm.data.DataProvider;
+import inz.comm.data.DatabaseProvider;
+import inz.comm.data.IcingaLog;
 import inz.comm.socket.ClientSocket;
 import inz.comm.state.StateUtils;
-import mkaminski.inz.data.DataProvider;
-import mkaminski.inz.data.DatabaseProvider;
-import mkaminski.inz.data.IcingaLog;
 
 /**
  * Class used to form data that will be send to remote server

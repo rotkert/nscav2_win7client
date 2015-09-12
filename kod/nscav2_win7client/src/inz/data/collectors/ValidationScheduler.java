@@ -1,4 +1,4 @@
-package mkaminski.inz.dataCollector;
+package inz.data.collectors;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executors;

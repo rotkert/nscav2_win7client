@@ -1,10 +1,10 @@
-package mkaminski.inz.data.warehouse;
+package inz.data.warehouse;
 
 import java.util.LinkedList;
 
 import devPackage.Writer;
-import mkaminski.inz.dataCollector.CriticalEvent;
-import mkaminski.inz.dataCollector.DataCollectorWrapper;
+import inz.data.collectors.CriticalEvent;
+import inz.data.collectors.DataCollectorWrapper;
 
 public class MemoryUsageWarehouse extends Warehouse
 {

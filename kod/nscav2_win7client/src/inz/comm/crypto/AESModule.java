@@ -9,7 +9,7 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 
-import mkaminski.inz.exception.IcingaException;
+import inz.comm.exception.IcingaException;
 
 /**
  * Class used for symmetric encryption and decryption of data that is sent to

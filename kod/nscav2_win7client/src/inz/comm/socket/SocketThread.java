@@ -9,7 +9,7 @@ import java.net.SocketTimeoutException;
 import java.nio.ByteBuffer;
 
 import inz.comm.crypto.CryptoManager;
-import mkaminski.inz.data.DatabaseProvider;
+import inz.comm.data.DatabaseProvider;
 
 /**
  * Class that works in separate thread and is used to communicate with server

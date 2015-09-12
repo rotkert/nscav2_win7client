@@ -1,4 +1,4 @@
-package mkaminski.inz.exception;
+package inz.comm.exception;
 
 /**
  * Class used as an exception. Raised, when events strange or unexpected for
