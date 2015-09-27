@@ -4,10 +4,12 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
+import java.util.concurrent.BlockingQueue;
 
 import inz.comm.config.Config;
-import inz.comm.data.DatabaseProvider;
+import inz.comm.data.DataPackProvider;
 import inz.comm.exception.IcingaException;
+import inz.data.perfmon.PerfmonResult;
 import mkaminski.inz.errorHandling.ErrorMessages;
 
 /**
@@ -26,14 +28,14 @@ public enum ClientSocket
 	private Socket socket;
 
 	/** Thread that talks with server */
-	private static SocketThread socketThread;
+	private static CommunicationThread communicationThread;
 
 	/**
 	 * Stops thread after disconnection with server
 	 */
 	public static void stopSocketThread()
 	{
-		SocketThread.stopThread();
+		communicationThread.stopSocketRunner();;
 	}
 
 	/**
@@ -42,15 +44,15 @@ public enum ClientSocket
 	 * @throws IcingaException
 	 *             when connection is not possible (timeout probably)
 	 */
-	public void connect(DatabaseProvider provider) throws IcingaException
+	public void connect(BlockingQueue<PerfmonResult> blockingQueue) throws IcingaException
 	{
 		try
 		{
 			socket = new Socket();
 			socket.connect(new InetSocketAddress(Config.getIp(), Config.getPort()), 2000);
-			socketThread = new SocketThread(socket, provider);
+			communicationThread = new CommunicationThread(blockingQueue, socket);
 
-			socketThread.start();
+			communicationThread.start();
 		} catch (SocketTimeoutException e)
 		{
 			System.out.println(ErrorMessages.NOT_CONNECTED);

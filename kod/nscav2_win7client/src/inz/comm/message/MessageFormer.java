@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import inz.comm.crypto.CryptoManager;
 import inz.comm.data.DataProvider;
-import inz.comm.data.DatabaseProvider;
+import inz.comm.data.DataPackProvider;
 import inz.comm.data.IcingaLog;
 import inz.comm.socket.ClientSocket;
 import inz.comm.state.StateUtils;
@@ -197,7 +197,7 @@ public class MessageFormer
 	 * 
 	 * @return data in right format
 	 */
-	public byte[] formLog(DatabaseProvider databaseProvider)
+	public byte[] formLog(DataPackProvider databaseProvider)
 	{
 		try
 		{

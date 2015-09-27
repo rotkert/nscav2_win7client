@@ -2,7 +2,7 @@ package inz.comm.socket;
 
 import java.net.Socket;
 
-import inz.comm.data.DatabaseProvider;
+import inz.comm.data.DataPackProvider;
 import inz.comm.message.MessageDecrypter;
 import inz.comm.message.MessageFormer;
 import inz.comm.state.WaitingForHello;
@@ -26,12 +26,12 @@ public class SocketConnectionContext
 	private MessageDecrypter messageDecrypter;
 
 	/** Used to get logs from database */
-	private DatabaseProvider databaseProvider;
+	private DataPackProvider databaseProvider;
 
 	/**
 	 * Public constructor Sets state to <code>Connected</code>
 	 */
-	public SocketConnectionContext(DatabaseProvider databaseProvider)
+	public SocketConnectionContext(DataPackProvider databaseProvider)
 	{
 		this.databaseProvider = databaseProvider;
 		messageFormer = new MessageFormer();
@@ -121,7 +121,7 @@ public class SocketConnectionContext
 	 * 
 	 * @return database provider
 	 */
-	public DatabaseProvider getDatabaseProvider()
+	public DataPackProvider getDatabaseProvider()
 	{
 		return this.databaseProvider;
 	}

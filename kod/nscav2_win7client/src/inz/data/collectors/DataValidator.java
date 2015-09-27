@@ -1,7 +1,6 @@
 package inz.data.collectors;
 
 import java.util.LinkedList;
-import java.util.TimerTask;
 import java.util.concurrent.BlockingQueue;
 
 import inz.data.perfmon.PerfmonHandler;

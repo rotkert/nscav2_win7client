@@ -9,14 +9,14 @@ import java.net.SocketTimeoutException;
 import java.nio.ByteBuffer;
 
 import inz.comm.crypto.CryptoManager;
-import inz.comm.data.DatabaseProvider;
+import inz.comm.data.DataPackProvider;
 
 /**
  * Class that works in separate thread and is used to communicate with server
  * 
  * @author Marcin Kubik <markubik@gmail.com>
  */
-public class SocketThread extends Thread
+public class SocketRunner
 {
 	/**
 	 * Timeout after which application should realize that socket is not
@@ -36,7 +36,7 @@ public class SocketThread extends Thread
 	private Socket socket;
 
 	/** Database Provider */
-	private DatabaseProvider databaseProvider;
+	private DataPackProvider databaseProvider;
 
 	/** Context of communication, used in <code>State Machine </code> pattern */
 	private SocketConnectionContext socketConnectionContext;
@@ -54,7 +54,7 @@ public class SocketThread extends Thread
 	 * @param s
 	 * @throws IOException
 	 */
-	public SocketThread(Socket s, DatabaseProvider provider) throws IOException
+	public SocketRunner(Socket s, DataPackProvider provider) throws IOException
 	{
 		this.socket = s;
 		this.databaseProvider = provider;
@@ -109,7 +109,7 @@ public class SocketThread extends Thread
 	}
 
 	/** Sets <code>isThreadRunning</code> variable to stop thread */
-	public static void stopThread()
+	public void stopThread()
 	{
 		isThreadRunning = false;
 	}
