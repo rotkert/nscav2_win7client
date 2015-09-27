@@ -16,12 +16,18 @@ import inz.data.collectors.CriticalEvent;
 public class PerfmonHandler
 {
 	private static final String PS_SCRIPT = "\\extensions\\runPerfmon.ps1";
+	private ReportHandler reportHandler;
 
+	public PerfmonHandler()
+	{
+		reportHandler = new ReportHandler();
+	}
+	
 	public PerfmonResult getReport(CriticalEvent event)
 	{
 		long timestamp = new Date().getTime();
 		String reportLocation = runPerfmon();
-		setReportExecutionDetails(reportLocation, event, timestamp);
+		reportHandler.setReportExecutionDetails(reportLocation, event, timestamp);
 		
 		return new PerfmonResult(reportLocation, timestamp, event);
 	}
@@ -65,24 +71,5 @@ public class PerfmonHandler
 		}
 		
 		return reportLocation;
-	}
-	
-	private void setReportExecutionDetails(String reportDir, CriticalEvent event, long timestamp) 
-	{
-		File input = new File(reportDir + "\\report.html");
-		Document doc = null;
-		try
-		{
-			doc = Jsoup.parse(input, "UTF-16");
-			Element table = (Element) doc.getElementById("c_1").getElementsByClass("info").get(0).parentNode().parentNode();
-			table.append("<tr><td class='h4'>Przyczyna: </td><td class='info' id='CriticalSituationType'>" + event + "</td></tr><tr><td class='h4'>Stempel czasu: </td><td class='info' id='timestamp'>" + timestamp + "</td></tr>");
-			PrintWriter writer = new PrintWriter(reportDir + "\\new_report.html", "UTF-16");
-			writer.print(doc.toString());
-			writer.close();
-		} catch (IOException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 }

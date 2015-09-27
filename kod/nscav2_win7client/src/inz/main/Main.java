@@ -14,6 +14,7 @@ import inz.comm.socket.ClientSocket;
 import inz.data.collectors.DataValidator;
 import inz.data.collectors.ValidationScheduler;
 import inz.data.perfmon.PerfmonResult;
+import inz.data.perfmon.ReportHandler;
 
 public class Main
 {
@@ -23,8 +24,10 @@ public class Main
 		Config.init();
 		CryptoManager.INSTANCE.readKeys();
 		BlockingQueue<PerfmonResult> blockingQueue = new LinkedBlockingQueue<>();
-		ValidationScheduler validationScheduler = new ValidationScheduler(blockingQueue);
-		ClientSocket.INSTANCE.connect(blockingQueue);
+		ReportHandler reportHandler = new ReportHandler();
+		reportHandler.getNotSentReports(blockingQueue);
+		//ValidationScheduler validationScheduler = new ValidationScheduler(blockingQueue);
+		//ClientSocket.INSTANCE.connect(blockingQueue);
 	}	
 
 }
