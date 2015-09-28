@@ -56,14 +56,12 @@ public class ReportHandler
 	//sciezka do pobierania raportu jest ustawiona na sztywno
 	public String getReportText(String reportLocation)
 	{
-		System.out.println(System.getenv("APPDATA"));
-		String reportPath = "C:\\Users\\Miko\\Desktop\\inz_raporty\\MIKO-KOMPUTER_20150530-000001\\raport.xml";
 		BufferedReader br = null;
 		StringBuilder sb = new StringBuilder();
 
 		try
 		{
-			br = new BufferedReader(new FileReader(new File(reportPath)));
+			br = new BufferedReader(new FileReader(new File(reportLocation)));
 
 			String line = "";
 			while ((line = br.readLine()) != null)
