@@ -2,10 +2,17 @@ package inz.data.perfmon;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.io.Reader;
+import java.nio.charset.Charset;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 
 import org.jsoup.Jsoup;
@@ -18,6 +25,31 @@ import mkaminski.inz.errorHandling.ErrorMessages;
 
 public class ReportHandler
 {
+	private final HashMap<String, String> polishDiacriticsDict;
+	
+	public ReportHandler()
+	{
+		polishDiacriticsDict = new HashMap<>();
+		polishDiacriticsDict.put("\u0105", "a");
+		polishDiacriticsDict.put("\u0107", "c");
+		polishDiacriticsDict.put("\u0119", "e");
+		polishDiacriticsDict.put("\u0142", "l");
+		polishDiacriticsDict.put("\u0144", "n");
+		polishDiacriticsDict.put("\u00F3", "o");
+		polishDiacriticsDict.put("\u015B", "s");
+		polishDiacriticsDict.put("\u017A", "z");
+		polishDiacriticsDict.put("\u017C", "z");
+		polishDiacriticsDict.put("\u0104", "A");
+		polishDiacriticsDict.put("\u0106", "C");
+		polishDiacriticsDict.put("\u0118", "E");
+		polishDiacriticsDict.put("\u0141", "L");
+		polishDiacriticsDict.put("\u0143", "N");
+		polishDiacriticsDict.put("\u00D3", "O");
+		polishDiacriticsDict.put("\u015A", "S");
+		polishDiacriticsDict.put("\u0179", "Z");
+		polishDiacriticsDict.put("\u017B", "Z");
+	}
+	
 	public void getNotSentReports(BlockingQueue<PerfmonResult> blockingQueue)
 	{
 		File appDir = new File(Config.reportDirectory);
@@ -52,16 +84,16 @@ public class ReportHandler
 		}
 	}
 	
-	//TODO
-	//sciezka do pobierania raportu jest ustawiona na sztywno
 	public String getReportText(String reportLocation)
 	{
 		BufferedReader br = null;
+		InputStream is = null;
 		StringBuilder sb = new StringBuilder();
 
 		try
 		{
-			br = new BufferedReader(new FileReader(new File(reportLocation)));
+			is = new FileInputStream(reportLocation);
+			br = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-16")));
 
 			String line = "";
 			while ((line = br.readLine()) != null)
@@ -79,7 +111,9 @@ public class ReportHandler
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return sb.toString();
+		
+		String reportText = removeDiacritics(sb.toString());
+		return reportText;
 	}
 	
 	void setReportExecutionDetails(String reportLocation, CriticalEvent event, long timestamp) 
@@ -126,5 +160,22 @@ public class ReportHandler
 		}
 		
 		return perfmonResult;
+	}
+	
+	private String removeDiacritics(String reportText) 
+	{
+		// zamienia polskie znaki diakretyczne na ichodpowiedniki bez "ogonkow"
+		for (Map.Entry<String, String> entry : polishDiacriticsDict.entrySet())
+		{
+			reportText = reportText.replaceAll(entry.getKey(), entry.getValue());
+		}
+
+		// zamienia backslash na nawias kwadratowy
+		reportText = reportText.replaceAll("\\[", "&#91;");
+		
+		//zamienia dlugi myslnik na krotki :)
+		reportText = reportText.replaceAll("\u2014", "-");
+		
+		return reportText;
 	}
 }
