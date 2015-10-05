@@ -16,7 +16,7 @@ public class WaitingForChooseAlgorithmAndIDHash implements SocketConnectionState
 
 	public byte[] getDataToSend(SocketConnectionContext socketConnectionContext)
 	{
-		return socketConnectionContext.getMessageFormer().formChosenAlgorithm();
+		return socketConnectionContext.getMessageFormer().formChosenAlgorithm(socketConnectionContext.getClientId());
 	}
 
 	public void onTimeout()

@@ -21,9 +21,9 @@ public class DataPackProvider
 	public ArrayList<IcingaLog> getDataToSend()
 	{
 		String id = "usage";
-		String icingaLevel = "1";
+		String icingaLevel = "2";
 		ArrayList<IcingaLog> logs = new ArrayList<>();
-		IcingaLog log = new IcingaLog(id, value, timestamp, icingaLevel);
+		IcingaLog log = new IcingaLog(id, "24", timestamp, icingaLevel);
 		logs.add(log);
 
 		return logs;

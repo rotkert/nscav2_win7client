@@ -14,7 +14,7 @@ public class WaitingForACKAfterChooseProtocol implements SocketConnectionState
 
 	public byte[] getDataToSend(SocketConnectionContext socketConnectionContext)
 	{
-		return socketConnectionContext.getMessageFormer().formClientID();
+		return socketConnectionContext.getMessageFormer().formClientID(socketConnectionContext.getClientId());
 	}
 
 	public void onTimeout()

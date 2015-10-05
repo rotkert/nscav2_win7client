@@ -12,7 +12,7 @@ public class WaitingForACKAndHashOfLogs implements SocketConnectionState
 
 	public byte[] getDataToSend(SocketConnectionContext socketConnectionContext)
 	{
-		//return socketConnectionContext.getMessageFormer().formLog(socketConnectionContext.getDatabaseProvider());
+//		return socketConnectionContext.getMessageFormer().formLog(socketConnectionContext.getDatabaseProvider());
 		return socketConnectionContext.getMessageFormer().formEnd();
 	}
 
@@ -38,8 +38,8 @@ public class WaitingForACKAndHashOfLogs implements SocketConnectionState
 
 	public SocketConnectionState setNewState()
 	{
-		System.out.println(InfoMessages.NEW_STATE + "WaitingForACKAndHashOfLogs");
-		return new WaitingForACKAndHashOfLogs();
+		System.out.println(InfoMessages.NEW_STATE + "LogsSent");
+		return new LogsSent();
 	}
 
 }

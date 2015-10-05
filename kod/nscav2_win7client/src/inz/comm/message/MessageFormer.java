@@ -4,10 +4,9 @@ import java.security.SecureRandom;
 import java.util.ArrayList;
 
 import inz.comm.crypto.CryptoManager;
-import inz.comm.data.DataProvider;
 import inz.comm.data.DataPackProvider;
+import inz.comm.data.DataProvider;
 import inz.comm.data.IcingaLog;
-import inz.comm.socket.ClientSocket;
 import inz.comm.state.StateUtils;
 
 /**
@@ -50,13 +49,13 @@ public class MessageFormer
 	 * 
 	 * @return data in right format
 	 */
-	public byte[] formClientID()
+	public byte[] formClientID(String clientId)
 	{
 		SecureRandom secureRandom = new SecureRandom();
 		byte[] random = new byte[8];
 		secureRandom.nextBytes(random);
 		byte[] clientIdWithAdd = StateUtils.combineByteArrays(random,
-				DataProvider.getInstance().getClientId().getBytes());
+				clientId.getBytes());
 		byte[] dataToBeEncrypted = new byte[clientIdWithAdd.length + 1];
 		dataToBeEncrypted[0] = (byte) StateUtils.Message.CLIENT_ID.ordinal();
 		System.arraycopy(clientIdWithAdd, 0, dataToBeEncrypted, 1, clientIdWithAdd.length);
@@ -75,9 +74,9 @@ public class MessageFormer
 	 * 
 	 * @return data in right format
 	 */
-	public byte[] formChosenAlgorithm()
+	public byte[] formChosenAlgorithm(String clientId)
 	{
-		byte[] dataToBeEncrypted = new byte[DataProvider.getInstance().getClientId().getBytes().length + 1];
+		byte[] dataToBeEncrypted = new byte[clientId.getBytes().length + 1];
 		// byte[] dataToBeEncrypted = new
 		// byte[StateUtils.getClientId().getBytes().length + 1];
 		dataToBeEncrypted[0] = (byte) StateUtils.Message.CHOSEN_ALGORITHM.ordinal();
@@ -197,7 +196,7 @@ public class MessageFormer
 	 * 
 	 * @return data in right format
 	 */
-	public byte[] formLog(DataPackProvider databaseProvider)
+	public byte[] formLog(DataPackProvider databaseProvider, String hostname, String clientId)
 	{
 		try
 		{
@@ -219,7 +218,7 @@ public class MessageFormer
 			byte[] totalData = code;
 
 			String tablename = databaseProvider.getMostFilledTableName();
-			byte[] hostname = DataProvider.getInstance().getHostName().getBytes("UTF-8");
+			byte[] hostnameBytes = hostname.getBytes("UTF-8");
 			for (IcingaLog i : logs)
 			{
 				String value = i.getValue();
@@ -231,7 +230,7 @@ public class MessageFormer
 					totalData = StateUtils.combineByteArrays(totalData, zero);
 					byte[] timestampAsByteArray = StateUtils.getTimeStampAsByteArray(timestamp);
 					totalData = StateUtils.combineByteArrays(totalData, timestampAsByteArray);
-					totalData = StateUtils.combineByteArrays(totalData, hostname);
+					totalData = StateUtils.combineByteArrays(totalData, hostnameBytes);
 					totalData = StateUtils.combineByteArrays(totalData, zero);
 					byte[] state = new byte[1];
 					int hostState = Integer.parseInt(value);
@@ -247,7 +246,7 @@ public class MessageFormer
 				totalData = StateUtils.combineByteArrays(totalData, one);
 				byte[] timestampAsByteArray = StateUtils.getTimeStampAsByteArray(timestamp);
 				totalData = StateUtils.combineByteArrays(totalData, timestampAsByteArray);
-				totalData = StateUtils.combineByteArrays(totalData, hostname);
+				totalData = StateUtils.combineByteArrays(totalData, hostnameBytes);
 				totalData = StateUtils.combineByteArrays(totalData, zero);
 				byte[] serviceName = tablename.getBytes("UTF-8");
 				totalData = StateUtils.combineByteArrays(totalData, serviceName);
@@ -300,7 +299,8 @@ public class MessageFormer
 		byte[] messageSize = StateUtils.getSizeAsByteArray(totalData.length);
 		totalData = StateUtils.combineByteArrays(messageSize, totalData);
 
-		ClientSocket.stopSocketThread();
+		// TODO
+		//ClientSocket.stopSocketThread();
 
 		return totalData;
 	}

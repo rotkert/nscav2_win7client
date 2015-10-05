@@ -1,13 +1,15 @@
 package inz.main;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import inz.comm.config.Config;
 import inz.comm.crypto.CryptoManager;
-import inz.comm.socket.ClientSocket;
+import inz.comm.socket.CommunicationThread;
 import inz.data.collectors.CriticalEvent;
+import inz.data.collectors.ValidationScheduler;
 import inz.data.perfmon.PerfmonResult;
 import inz.data.perfmon.ReportHandler;
 
@@ -24,12 +26,22 @@ public class Main
 //		ValidationScheduler validationScheduler = new ValidationScheduler(blockingQueue);
 		try
 		{
-			blockingQueue.put(new PerfmonResult("C:\\Users\\Miko\\Desktop\\tmp.html", new Date().getTime(), CriticalEvent.MEMORY));
+			blockingQueue.put(new PerfmonResult("C:\\Users\\Miko\\AppData\\Roaming\\Nscav2_client\\MIKO-KOMPUTER_20150912-000040\\new_report.html", new Date().getTime(), CriticalEvent.MEMORY));
+//			blockingQueue.put(new PerfmonResult("C:\\Users\\Miko\\AppData\\Roaming\\Nscav2_client\\MIKO-KOMPUTER_20150912-000040\\new_report.html", new Date().getTime(), CriticalEvent.MEMORY));
 		} catch (InterruptedException e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		ClientSocket.INSTANCE.connect(blockingQueue);
+		
+		try
+		{
+			new CommunicationThread(blockingQueue).run();
+		} catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}	
 }

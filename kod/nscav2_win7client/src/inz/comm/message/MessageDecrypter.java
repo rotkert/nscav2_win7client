@@ -1,7 +1,6 @@
 package inz.comm.message;
 
 import inz.comm.crypto.CryptoManager;
-import inz.comm.socket.ClientSocket;
 import inz.comm.state.StateUtils;
 
 /**
@@ -45,7 +44,8 @@ public class MessageDecrypter
 			}
 		} catch (NullPointerException e)
 		{
-			ClientSocket.stopSocketThread();
+			// TODO
+			//ClientSocket.stopSocketThread();
 			return false;
 		}
 	}
@@ -81,7 +81,8 @@ public class MessageDecrypter
 			}
 		} catch (NullPointerException e)
 		{
-			ClientSocket.stopSocketThread();
+			// TODO 
+			//ClientSocket.stopSocketThread();
 			return false;
 		}
 	}
@@ -117,7 +118,8 @@ public class MessageDecrypter
 			}
 		} catch (NullPointerException e)
 		{
-			ClientSocket.stopSocketThread();
+			// TODO 
+			//ClientSocket.stopSocketThread();
 			return false;
 		}
 	}
@@ -150,7 +152,8 @@ public class MessageDecrypter
 			return CryptoManager.INSTANCE.checkHash(hash, code);
 		} catch (NullPointerException e)
 		{
-			ClientSocket.stopSocketThread();
+			// TODO 
+			//ClientSocket.stopSocketThread();
 			return false;
 		}
 	}
@@ -179,7 +182,8 @@ public class MessageDecrypter
 			return true;
 		} catch (NullPointerException e)
 		{
-			ClientSocket.stopSocketThread();
+			// TODO 
+			//ClientSocket.stopSocketThread();
 			return false;
 		}
 	}
@@ -212,7 +216,8 @@ public class MessageDecrypter
 			return CryptoManager.INSTANCE.checkHash(hash, code);
 		} catch (NullPointerException e)
 		{
-			ClientSocket.stopSocketThread();
+			// TODO 
+			//ClientSocket.stopSocketThread();
 			return false;
 		}
 	}
@@ -243,7 +248,8 @@ public class MessageDecrypter
 			return CryptoManager.INSTANCE.checkHash(hash, data);
 		} catch (NullPointerException e)
 		{
-			ClientSocket.stopSocketThread();
+			// TODO 
+			//ClientSocket.stopSocketThread();
 			return false;
 		}
 	}
@@ -274,7 +280,8 @@ public class MessageDecrypter
 			return CryptoManager.INSTANCE.checkHash(hash, data);
 		} catch (NullPointerException e)
 		{
-			ClientSocket.stopSocketThread();
+			// TODO
+			//ClientSocket.stopSocketThread();
 			return false;
 		}
 	}
@@ -304,7 +311,8 @@ public class MessageDecrypter
 			return (state == (byte) StateUtils.Message.ACK.ordinal());
 		} catch (NullPointerException e)
 		{
-			ClientSocket.stopSocketThread();
+			// TODO
+			//ClientSocket.stopSocketThread();
 			return false;
 		}
 	}

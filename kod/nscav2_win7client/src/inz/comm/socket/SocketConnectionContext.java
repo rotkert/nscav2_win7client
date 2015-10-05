@@ -27,16 +27,22 @@ public class SocketConnectionContext
 
 	/** Used to get logs from database */
 	private DataPackProvider databaseProvider;
+	
+	private String hostname;
+	
+	private String clientId;
 
 	/**
 	 * Public constructor Sets state to <code>Connected</code>
 	 */
-	public SocketConnectionContext(DataPackProvider databaseProvider)
+	public SocketConnectionContext(DataPackProvider databaseProvider, String hostname, String clientId)
 	{
 		this.databaseProvider = databaseProvider;
 		messageFormer = new MessageFormer();
 		messageDecrypter = new MessageDecrypter();
 		this.socketConnectionState = new WaitingForHello();
+		this.hostname = hostname;
+		this.clientId = clientId;
 	}
 
 	/**
@@ -115,6 +121,11 @@ public class SocketConnectionContext
 	{
 		this.socketConnectionState = new WrongMessageState();
 	}
+	
+	public void setStartState(SocketConnectionState s)
+	{
+		this.socketConnectionState = s;
+	}
 
 	/**
 	 * Getter for database provider
@@ -124,5 +135,20 @@ public class SocketConnectionContext
 	public DataPackProvider getDatabaseProvider()
 	{
 		return this.databaseProvider;
+	}
+	
+	public String getHostname()
+	{
+		return hostname;
+	}
+	
+	public String getClientId()
+	{
+		return clientId;
+	}
+	
+	public SocketConnectionState getState()
+	{
+		return socketConnectionState;
 	}
 }

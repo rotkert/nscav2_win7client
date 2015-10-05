@@ -12,7 +12,7 @@ public class WaitingForWaitingForLogs implements SocketConnectionState
 
 	public byte[] getDataToSend(SocketConnectionContext socketConnectionContext)
 	{
-		return socketConnectionContext.getMessageFormer().formLog(socketConnectionContext.getDatabaseProvider());
+		return socketConnectionContext.getMessageFormer().formLog(socketConnectionContext.getDatabaseProvider(), socketConnectionContext.getHostname(), socketConnectionContext.getClientId() );
 	}
 
 	public void onTimeout()

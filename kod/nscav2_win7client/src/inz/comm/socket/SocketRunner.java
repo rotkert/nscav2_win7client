@@ -35,9 +35,6 @@ public class SocketRunner
 	/** Socket that connects to remote server */
 	private Socket socket;
 
-	/** Database Provider */
-	private DataPackProvider databaseProvider;
-
 	/** Context of communication, used in <code>State Machine </code> pattern */
 	private SocketConnectionContext socketConnectionContext;
 
@@ -54,12 +51,11 @@ public class SocketRunner
 	 * @param s
 	 * @throws IOException
 	 */
-	public SocketRunner(Socket s, DataPackProvider provider) throws IOException
+	public SocketRunner(Socket s, DataPackProvider provider, SocketConnectionContext socketConnectionContext) throws IOException
 	{
 		this.socket = s;
-		this.databaseProvider = provider;
 		this.socket.setSoTimeout(TIMEOUT);
-		this.socketConnectionContext = new SocketConnectionContext(databaseProvider);
+		this.socketConnectionContext = socketConnectionContext;
 		this.os = socket.getOutputStream();
 		this.is = new DataInputStream(socket.getInputStream());
 		os.flush();
@@ -90,6 +86,10 @@ public class SocketRunner
 					os.write(dataToSend, 0, dataToSend.length);
 					socketConnectionContext.setSoTimeout(this.socket);
 					socketConnectionContext.setNextState();
+					if (socketConnectionContext.getState().getClass().equals("LogsSent"))
+					{
+						break;
+					}
 				} else
 				{
 					isThreadRunning = false;
