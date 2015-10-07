@@ -4,12 +4,10 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.io.Reader;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
@@ -63,7 +61,7 @@ public class ReportHandler
 				continue;
 			}
 			
-			PerfmonResult perfmonResult = getReportExecutionDetails(reportDir + Config.newReportFileName);
+			PerfmonResult perfmonResult = getReportExecutionDetails(reportDir + Config.newReportFileName, reportDirName);
 			
 			if(perfmonResult != null)
 			{
@@ -136,7 +134,7 @@ public class ReportHandler
 		}
 	}
 	
-	private PerfmonResult getReportExecutionDetails(String reportLocation)
+	private PerfmonResult getReportExecutionDetails(String reportLocation, String reportName)
 	{
 		File reportFile = new File(reportLocation);
 		Document doc = null;
@@ -151,7 +149,7 @@ public class ReportHandler
 			CriticalEvent event = CriticalEvent.valueOf(eventString);
 			Long timestamp = Long.parseLong(timestampString);
 			
-			perfmonResult = new PerfmonResult(reportLocation, timestamp, event);
+			perfmonResult = new PerfmonResult(reportLocation, timestamp, event, reportName);
 		} 
 		catch (IOException e)
 		{

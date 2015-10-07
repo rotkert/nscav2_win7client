@@ -10,9 +10,9 @@ import mkaminski.inz.errorHandling.InfoMessages;
 public class WaitingForWaitingForLogs implements SocketConnectionState
 {
 
-	public byte[] getDataToSend(SocketConnectionContext socketConnectionContext)
+	public byte[] getDataToSend(SocketConnectionContext scc)
 	{
-		return socketConnectionContext.getMessageFormer().formLog(socketConnectionContext.getDatabaseProvider(), socketConnectionContext.getHostname(), socketConnectionContext.getClientId() );
+		return scc.getMessageFormer().formLog(scc.getDatabaseProvider(), scc.getHostname(), scc.isReport());
 	}
 
 	public void onTimeout()

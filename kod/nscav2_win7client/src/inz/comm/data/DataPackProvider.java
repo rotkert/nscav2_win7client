@@ -7,6 +7,7 @@ public class DataPackProvider
 {
 	private String value;
 	private Long timestamp;
+	private String reportName;
 	
 	public void setValue(String value)
 	{
@@ -18,12 +19,22 @@ public class DataPackProvider
 		this.timestamp = timestamp;
 	}
 	
+	public void setReportName(String reportName)
+	{
+		this.reportName = reportName;
+	}
+	
+	public String getReportName()
+	{
+		return reportName;
+	}
+	
 	public ArrayList<IcingaLog> getDataToSend()
 	{
 		String id = "usage";
-		String icingaLevel = "2";
+		String icingaLevel = "1";
 		ArrayList<IcingaLog> logs = new ArrayList<>();
-		IcingaLog log = new IcingaLog(id, "24", timestamp, icingaLevel);
+		IcingaLog log = new IcingaLog(id, value, timestamp, icingaLevel);
 		logs.add(log);
 
 		return logs;
@@ -31,7 +42,6 @@ public class DataPackProvider
 
 	public String getMostFilledTableName()
 	{
-		String mostFilledTableName = "memoryUsage";
-		return mostFilledTableName;
+		return "memoryUsage";
 	}
 }

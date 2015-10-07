@@ -7,6 +7,8 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.Date;
 
+import javax.swing.text.AbstractDocument.LeafElement;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -27,9 +29,10 @@ public class PerfmonHandler
 	{
 		long timestamp = new Date().getTime();
 		String reportLocation = runPerfmon();
-		reportHandler.setReportExecutionDetails(reportLocation, event, timestamp);
+		String reportName = getReportName(reportLocation);
 		
-		return new PerfmonResult(reportLocation, timestamp, event);
+		reportHandler.setReportExecutionDetails(reportLocation, event, timestamp);
+		return new PerfmonResult(reportLocation, timestamp, event, reportName);
 	}
 	
 	private String runPerfmon()
@@ -71,5 +74,12 @@ public class PerfmonHandler
 		}
 		
 		return reportLocation;
+	}
+	
+	private String getReportName(String reportLocation)
+	{
+		String[] locationArray = reportLocation.split("\\");
+		String reportName = locationArray[locationArray.length - 1];
+		return reportName;
 	}
 }

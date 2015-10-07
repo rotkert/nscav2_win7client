@@ -37,11 +37,12 @@ public class CommunicationThread
 				// wyslanie raportu
 				socket = new Socket();
 				socket.connect(new InetSocketAddress(Config.getIp(), Config.getPort()), 2000);
-				socketConnectionContext = new SocketConnectionContext(dataPackProvider, Config.getReportHostName(), Config.getReportClientId());
+				socketConnectionContext = new SocketConnectionContext(dataPackProvider, Config.getReportHostName(), Config.getReportClientId(), true);
 				socketRunner = new SocketRunner(socket, dataPackProvider, socketConnectionContext);
 				String reportText = reportHandler.getReportText(pr.getReportLocation());
 				dataPackProvider.setValue(reportText);
 				dataPackProvider.setTimestamp(pr.getTimestamp());
+				dataPackProvider.setReportName(pr.getReportName());
 				socketRunner.run();
 				socketRunner.stopThread();
 				socket.close();
@@ -49,9 +50,9 @@ public class CommunicationThread
 				// wyslanie eventu o raporcie
 				socket = new Socket();
 				socket.connect(new InetSocketAddress(Config.getIp(), Config.getPort()), 2000);				
-				socketConnectionContext = new SocketConnectionContext(dataPackProvider, Config.getEventHostname(), Config.getEventClientId());
+				socketConnectionContext = new SocketConnectionContext(dataPackProvider, Config.getEventHostname(), Config.getEventClientId(), false);
 				socketRunner = new SocketRunner(socket, dataPackProvider, socketConnectionContext);
-				dataPackProvider.setValue(pr.getEvent().toString());
+				dataPackProvider.setValue(pr.getReportName());
 				dataPackProvider.setTimestamp(pr.getTimestamp());
 				socketRunner.run();
 				socketRunner.stopThread();

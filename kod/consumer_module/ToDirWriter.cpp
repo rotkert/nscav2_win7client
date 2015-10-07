@@ -17,6 +17,16 @@
 #include "ReadPortion.h"
 #include "DataFile.h"
 
+#include <boost/algorithm/string/classification.hpp>
+#include <boost/algorithm/string.hpp>
+#include <sstream>
+#include <string>
+#include <vector>
+#include <algorithm> 
+#include <functional> 
+#include <cctype>
+#include <locale>
+
 namespace INZ_project {
 namespace Base {
 
@@ -40,8 +50,23 @@ void ToDirWriter::consumeDataPortion(const ReadPortion *portion,
         QObject* toConfirm, QString confirmMethod)
 {
     foreach(QString log, portion->getLogs()) {
-        QString filename = "/home/inz/Desktop/tmp.html";
-		QFile file(filename);
+		std::string tmpLog = log.toUtf8().constData(); 
+		std::vector<std::string> strs1;
+		boost::split(strs1, tmpLog, boost::is_any_of("|"));
+		std::string lastPart = strs1.back();
+		
+		std::vector<std::string> strs2;
+		boost::split(strs2, lastPart, boost::is_any_of("="));
+		std::string filename = strs2.back();
+		
+		std::stringstream ss;
+		ss << "/var/www/html/"<< filename <<".html";
+		std::string filepathStr = ss.str();
+		filepathStr.erase( std::remove_if( filepathStr.begin(), filepathStr.end(), ::isspace ), filepathStr.end() );
+		
+        QString filepath = QString::fromUtf8(filepathStr.c_str());
+		
+		QFile file(filepath);
 		
 		if(file.open(QIODevice::ReadWrite));
 		{

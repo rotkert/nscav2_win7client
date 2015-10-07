@@ -196,11 +196,11 @@ public class MessageFormer
 	 * 
 	 * @return data in right format
 	 */
-	public byte[] formLog(DataPackProvider databaseProvider, String hostname, String clientId)
+	public byte[] formLog(DataPackProvider dataPackProvider, String hostname, boolean isReport)
 	{
 		try
 		{
-			ArrayList<IcingaLog> logs = databaseProvider.getDataToSend();
+			ArrayList<IcingaLog> logs = dataPackProvider.getDataToSend();
 
 			if (logs == null)
 				return formEnd();
@@ -217,33 +217,19 @@ public class MessageFormer
 
 			byte[] totalData = code;
 
-			String tablename = databaseProvider.getMostFilledTableName();
+			String tablename = dataPackProvider.getMostFilledTableName();
 			byte[] hostnameBytes = hostname.getBytes("UTF-8");
+			
 			for (IcingaLog i : logs)
 			{
 				String value = i.getValue();
 				Long timestamp = i.getTimestamp();
 				String icingaLevel = i.getIcingaLevel();
 
-				if (tablename.equals("BATTERY"))
-				{
-					totalData = StateUtils.combineByteArrays(totalData, zero);
-					byte[] timestampAsByteArray = StateUtils.getTimeStampAsByteArray(timestamp);
-					totalData = StateUtils.combineByteArrays(totalData, timestampAsByteArray);
-					totalData = StateUtils.combineByteArrays(totalData, hostnameBytes);
-					totalData = StateUtils.combineByteArrays(totalData, zero);
-					byte[] state = new byte[1];
-					int hostState = Integer.parseInt(value);
-					state[0] = (byte) StateUtils.getStateOfHost(hostState);
-					totalData = StateUtils.combineByteArrays(totalData, state);
-					byte[] output = StateUtils.getStateOfHostAsString(hostState);
-					totalData = StateUtils.combineByteArrays(totalData, output);
-					totalData = StateUtils.combineByteArrays(totalData, pipe);
-					totalData = StateUtils.combineByteArrays(totalData,
-							StateUtils.getStateOfHostAsStringWithState(hostState));
-					totalData = StateUtils.combineByteArrays(totalData, zero);
-				}
+				
 				totalData = StateUtils.combineByteArrays(totalData, one);
+				
+		
 				byte[] timestampAsByteArray = StateUtils.getTimeStampAsByteArray(timestamp);
 				totalData = StateUtils.combineByteArrays(totalData, timestampAsByteArray);
 				totalData = StateUtils.combineByteArrays(totalData, hostnameBytes);
@@ -260,7 +246,16 @@ public class MessageFormer
 				totalData = StateUtils.combineByteArrays(totalData, output);
 				totalData = StateUtils.combineByteArrays(totalData, pipe);
 				totalData = StateUtils.combineByteArrays(totalData, StateUtils.getTextForGraph(tablename));
-				totalData = StateUtils.combineByteArrays(totalData, value.getBytes("UTF-8"));
+				
+				if(isReport)
+				{
+					totalData = StateUtils.combineByteArrays(totalData, dataPackProvider.getReportName().getBytes("UTF-8"));
+				}
+				else
+				{
+					totalData = StateUtils.combineByteArrays(totalData, value.getBytes("UTF-8"));
+				}
+				
 				totalData = StateUtils.combineByteArrays(totalData, StateUtils.getTextAfterGraph(tablename));
 				totalData = StateUtils.combineByteArrays(totalData, zero);
 			}
