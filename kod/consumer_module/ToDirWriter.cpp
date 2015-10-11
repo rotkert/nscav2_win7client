@@ -72,6 +72,7 @@ void ToDirWriter::consumeDataPortion(const ReadPortion *portion,
 		{
 			QTextStream stream(&file);
 			stream << log << endl;
+			file.close();
 		}
     }
 

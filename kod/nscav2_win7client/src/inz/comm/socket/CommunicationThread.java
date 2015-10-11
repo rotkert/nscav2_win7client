@@ -34,6 +34,17 @@ public class CommunicationThread
 			{
 				PerfmonResult pr = blockingQueue.take();
 				
+				// wyslanie eventu o raporcie
+				socket = new Socket();
+				socket.connect(new InetSocketAddress(Config.getIp(), Config.getPort()), 2000);				
+				socketConnectionContext = new SocketConnectionContext(dataPackProvider, Config.getEventHostname(), Config.getEventClientId(), false);
+				socketRunner = new SocketRunner(socket, dataPackProvider, socketConnectionContext);
+				dataPackProvider.setValue(pr.getReportName());
+				dataPackProvider.setTimestamp(pr.getTimestamp());
+				socketRunner.run();
+				socketRunner.stopThread();
+				socket.close();
+				
 				// wyslanie raportu
 				socket = new Socket();
 				socket.connect(new InetSocketAddress(Config.getIp(), Config.getPort()), 2000);
@@ -43,17 +54,6 @@ public class CommunicationThread
 				dataPackProvider.setValue(reportText);
 				dataPackProvider.setTimestamp(pr.getTimestamp());
 				dataPackProvider.setReportName(pr.getReportName());
-				socketRunner.run();
-				socketRunner.stopThread();
-				socket.close();
-				
-				// wyslanie eventu o raporcie
-				socket = new Socket();
-				socket.connect(new InetSocketAddress(Config.getIp(), Config.getPort()), 2000);				
-				socketConnectionContext = new SocketConnectionContext(dataPackProvider, Config.getEventHostname(), Config.getEventClientId(), false);
-				socketRunner = new SocketRunner(socket, dataPackProvider, socketConnectionContext);
-				dataPackProvider.setValue(pr.getReportName());
-				dataPackProvider.setTimestamp(pr.getTimestamp());
 				socketRunner.run();
 				socketRunner.stopThread();
 				socket.close();
