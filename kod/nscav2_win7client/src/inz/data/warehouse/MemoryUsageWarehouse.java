@@ -2,14 +2,15 @@ package inz.data.warehouse;
 
 import java.util.LinkedList;
 
-import devPackage.Writer;
+import inz.commons.Logger;
+import inz.commons.Severity;
 import inz.data.collectors.CriticalEvent;
 import inz.data.collectors.DataCollectorWrapper;
 
 public class MemoryUsageWarehouse extends Warehouse
 {
-	private static final int queueSize = 10;
-	private static final double critivalValue = 80;
+	private static final int queueSize = 1;
+	private static final double critivalValue = 50;
 	private LinkedList<Double> valuesQueue;
 	private DataCollectorWrapper dataCollecor;
 	
@@ -30,6 +31,7 @@ public class MemoryUsageWarehouse extends Warehouse
 	private void addValue(double measure)
 	{
 		valuesQueue.addLast(measure);
+		Logger.getInstatnce().log(Severity.INFO, "Physical memory usage = " + measure);
 		
 		if(valuesQueue.size() > queueSize)
 		{
@@ -51,8 +53,8 @@ public class MemoryUsageWarehouse extends Warehouse
 			valuesAvg = valuesSum / valuesQueue.size();
 		}
 		
-		// dev
-		Writer.write(((Double)valuesAvg).toString());
+		System.out.println(valuesAvg);
+		Logger.getInstatnce().log(Severity.INFO, "Average physical memory usage = " + valuesAvg);
 		
 		if(valuesAvg >= critivalValue)
 		{

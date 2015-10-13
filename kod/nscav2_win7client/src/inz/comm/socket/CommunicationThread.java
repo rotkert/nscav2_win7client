@@ -16,7 +16,7 @@ public class CommunicationThread
 	private DataPackProvider dataPackProvider;
 	private ReportHandler reportHandler;
 	
-	public CommunicationThread(BlockingQueue<PerfmonResult> blockingQueue) throws IOException
+	public CommunicationThread(BlockingQueue<PerfmonResult> blockingQueue)
 	{
 		this.blockingQueue = blockingQueue;
 		this.dataPackProvider = new DataPackProvider();
@@ -57,6 +57,8 @@ public class CommunicationThread
 				socketRunner.run();
 				socketRunner.stopThread();
 				socket.close();
+				
+				reportHandler.removeReport(pr.getReportLocation());
 			} 
 			catch (InterruptedException e)
 			{

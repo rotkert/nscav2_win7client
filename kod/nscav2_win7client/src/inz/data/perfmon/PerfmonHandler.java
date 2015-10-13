@@ -1,17 +1,9 @@
 package inz.data.perfmon;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.util.Date;
-
-import javax.swing.text.AbstractDocument.LeafElement;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 
 import inz.data.collectors.CriticalEvent;
 
@@ -78,8 +70,23 @@ public class PerfmonHandler
 	
 	private String getReportName(String reportLocation)
 	{
-		String[] locationArray = reportLocation.split("\\");
-		String reportName = locationArray[locationArray.length - 1];
+		String reportName = "";
+		int lastSlash = 0;
+		for (int i = 0; i < reportLocation.length(); i++)
+		{
+			char c = reportLocation.charAt(i);
+			if (c == '\\')
+			{
+				lastSlash = i;
+			}
+		}
+		
+		for (int i = lastSlash + 1; i < reportLocation.length(); i++)
+		{
+			char c = reportLocation.charAt(i);
+			reportName += c;
+		}
+		
 		return reportName;
 	}
 }

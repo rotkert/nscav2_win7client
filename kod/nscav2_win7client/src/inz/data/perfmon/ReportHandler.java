@@ -87,7 +87,9 @@ public class ReportHandler
 		BufferedReader br = null;
 		InputStream is = null;
 		StringBuilder sb = new StringBuilder();
-
+		
+		reportLocation += Config.newReportFileName;
+		
 		try
 		{
 			is = new FileInputStream(reportLocation);
@@ -112,6 +114,18 @@ public class ReportHandler
 		
 		String reportText = removeDiacritics(sb.toString());
 		return reportText;
+	}
+	
+	public void removeReport(String reportLocation)
+	{
+		File reportDir = new File(reportLocation);
+		
+		for (File file : reportDir.listFiles())
+		{
+			file.delete();
+		}
+		
+		reportDir.delete();
 	}
 	
 	void setReportExecutionDetails(String reportLocation, CriticalEvent event, long timestamp) 

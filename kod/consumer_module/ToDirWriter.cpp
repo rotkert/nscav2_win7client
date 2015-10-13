@@ -60,7 +60,7 @@ void ToDirWriter::consumeDataPortion(const ReadPortion *portion,
 		std::string filename = strs2.back();
 		
 		std::stringstream ss;
-		ss << "/var/www/html/"<< filename <<".html";
+		ss << "/var/www/html/reports/"<< filename <<".html";
 		std::string filepathStr = ss.str();
 		filepathStr.erase( std::remove_if( filepathStr.begin(), filepathStr.end(), ::isspace ), filepathStr.end() );
 		

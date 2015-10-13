@@ -2,6 +2,7 @@ package inz.commons;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
@@ -43,12 +44,16 @@ public class Logger
 	{
 		try
 		{
-			PrintWriter writer = new PrintWriter(logFile);
+			PrintWriter writer = new PrintWriter(new FileWriter(logFile, true));
 			String dateString = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date());
 			writer.println("[" + dateString + "] " + severity.toString() + ": " + message);
 			writer.close();
 		} 
 		catch (FileNotFoundException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
