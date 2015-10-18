@@ -253,7 +253,7 @@ public class MessageFormer
 				}
 				else
 				{
-					totalData = StateUtils.combineByteArrays(totalData, value.getBytes("UTF-8"));
+					totalData = StateUtils.combineByteArrays(totalData, "1".getBytes("UTF-8"));
 				}
 				
 				totalData = StateUtils.combineByteArrays(totalData, StateUtils.getTextAfterGraph(tablename));

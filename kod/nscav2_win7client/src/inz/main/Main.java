@@ -3,6 +3,7 @@ package inz.main;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import devPackage.AddReport;
 import inz.comm.config.Config;
 import inz.comm.crypto.CryptoManager;
 import inz.comm.socket.CommunicationThread;

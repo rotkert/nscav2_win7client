@@ -63,7 +63,7 @@ public class CommunicationThread
 				socketRunner.stopThread();
 				socket.close();
 				
-				reportHandler.removeReport(perfmonResult.getReportLocation());
+//				reportHandler.removeReport(perfmonResult.getReportLocation());
 				perfmonResult = null;
 			}
 			catch (InterruptedException e)

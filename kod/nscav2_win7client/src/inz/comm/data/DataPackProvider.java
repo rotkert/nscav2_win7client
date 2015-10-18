@@ -32,7 +32,7 @@ public class DataPackProvider
 	public ArrayList<IcingaLog> getDataToSend()
 	{
 		String id = "usage";
-		String icingaLevel = "1";
+		String icingaLevel = "0";
 		ArrayList<IcingaLog> logs = new ArrayList<>();
 		IcingaLog log = new IcingaLog(id, value, timestamp, icingaLevel);
 		logs.add(log);
@@ -42,6 +42,6 @@ public class DataPackProvider
 
 	public String getMostFilledTableName()
 	{
-		return "memoryUsage";
+		return "reportEvent";
 	}
 }

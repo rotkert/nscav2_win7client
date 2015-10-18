@@ -61,7 +61,7 @@ public class ReportHandler
 				continue;
 			}
 			
-			PerfmonResult perfmonResult = getReportExecutionDetails(reportDir + Config.newReportFileName, reportDirName);
+			PerfmonResult perfmonResult = getReportExecutionDetails(reportDir, reportDirName);
 			
 			if(perfmonResult != null)
 			{
@@ -148,9 +148,9 @@ public class ReportHandler
 		}
 	}
 	
-	private PerfmonResult getReportExecutionDetails(String reportLocation, String reportName)
+	private PerfmonResult getReportExecutionDetails(String reportDir, String reportName)
 	{
-		File reportFile = new File(reportLocation);
+		File reportFile = new File(reportDir + Config.newReportFileName);
 		Document doc = null;
 		PerfmonResult perfmonResult = null;
 		
@@ -163,7 +163,7 @@ public class ReportHandler
 			CriticalEvent event = CriticalEvent.valueOf(eventString);
 			Long timestamp = Long.parseLong(timestampString);
 			
-			perfmonResult = new PerfmonResult(reportLocation, timestamp, event, reportName);
+			perfmonResult = new PerfmonResult(reportDir, timestamp, event, reportName);
 		} 
 		catch (IOException e)
 		{

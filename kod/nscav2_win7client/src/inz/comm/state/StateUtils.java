@@ -237,9 +237,9 @@ public class StateUtils {
 			return value;
 		} catch (Exception e) {
 			try {
-				return (serviceName + "_STATE=").getBytes("UTF-8");
+				return (serviceName + "=").getBytes("UTF-8");
 			} catch (Exception ex) {
-				return (serviceName + "_STATE=").getBytes();
+				return (serviceName + "=").getBytes();
 			}
 		}
 	}
