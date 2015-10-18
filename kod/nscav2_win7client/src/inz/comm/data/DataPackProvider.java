@@ -5,28 +5,34 @@ import java.util.ArrayList;
 
 public class DataPackProvider
 {
+	private String icingaService;
 	private String value;
 	private Long timestamp;
 	private String reportName;
+	private String perfdataName;
 	
-	public void setValue(String value)
+	public DataPackProvider(String value, String reportName, Long timestamp, String perfdataName)
 	{
+		this.icingaService = "reportEvent";
 		this.value = value;
-	}
-	
-	public void setTimestamp(Long timestamp)
-	{
 		this.timestamp = timestamp;
-	}
-	
-	public void setReportName(String reportName)
-	{
 		this.reportName = reportName;
+		this.perfdataName = perfdataName;
 	}
 	
 	public String getReportName()
 	{
 		return reportName;
+	}
+	
+	public String getIcingaService()
+	{
+		return icingaService;
+	}
+	
+	public String getPerfdataName()
+	{
+		return perfdataName;
 	}
 	
 	public ArrayList<IcingaLog> getDataToSend()
@@ -38,10 +44,5 @@ public class DataPackProvider
 		logs.add(log);
 
 		return logs;
-	}
-
-	public String getMostFilledTableName()
-	{
-		return "reportEvent";
 	}
 }

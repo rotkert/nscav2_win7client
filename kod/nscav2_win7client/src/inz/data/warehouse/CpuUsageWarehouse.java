@@ -5,26 +5,26 @@ import java.util.LinkedList;
 import devPackage.Writer;
 import inz.commons.Logger;
 import inz.commons.Severity;
+import inz.data.collectors.CpuUsageCollectorWrapper;
 import inz.data.collectors.CriticalEvent;
-import inz.data.collectors.DataCollectorWrapper;
 
-public class MemoryUsageWarehouse extends Warehouse
+public class CpuUsageWarehouse extends Warehouse
 {
 	private static final int queueSize = 1;
-	private static final double critivalValue = 100;
+	private static final double critivalValue = 10;
 	private LinkedList<Double> valuesQueue;
-	private DataCollectorWrapper dataCollecor;
+	private CpuUsageCollectorWrapper cpuUsageCollector;
 	
-	public MemoryUsageWarehouse()
+	public CpuUsageWarehouse()
 	{
 		valuesQueue = new LinkedList<>();
-		dataCollecor = new DataCollectorWrapper();
+		cpuUsageCollector = new CpuUsageCollectorWrapper();
 	}
 	
 	@Override
 	public CriticalEvent processMeasure()
 	{
-		double measure = dataCollecor.getPhysMemUsage();
+		double measure = cpuUsageCollector.getCpuUsage();
 		addValue(measure);
 		return validate();
 	}
@@ -38,7 +38,7 @@ public class MemoryUsageWarehouse extends Warehouse
 	private void addValue(double measure)
 	{
 		valuesQueue.addLast(measure);
-		Logger.getInstatnce().log(Severity.INFO, "Physical memory usage = " + measure);
+		Logger.getInstatnce().log(Severity.INFO, "Cpu usage = " + measure);
 		
 		if(valuesQueue.size() > queueSize)
 		{
@@ -61,13 +61,14 @@ public class MemoryUsageWarehouse extends Warehouse
 		}
 		
 		//dev
-		Writer.write("Memory usage:" + valuesAvg);
-		Logger.getInstatnce().log(Severity.INFO, "Average physical memory usage = " + valuesAvg);
+		Writer.write("Cpu usage:" + valuesAvg);
+		
+		Logger.getInstatnce().log(Severity.INFO, "Average cpu usage = " + valuesAvg);
 		
 		if(valuesAvg >= critivalValue)
 		{
 			valuesQueue.clear();
-			return CriticalEvent.MEMORY;
+			return CriticalEvent.CPU;
 		}
 		else
 		{

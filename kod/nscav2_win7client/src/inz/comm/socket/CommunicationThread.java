@@ -5,6 +5,7 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.concurrent.BlockingQueue;
 
+import devPackage.Writer;
 import inz.comm.config.Config;
 import inz.comm.data.DataPackProvider;
 import inz.commons.Logger;
@@ -15,14 +16,12 @@ import inz.data.perfmon.ReportHandler;
 public class CommunicationThread
 {
 	private BlockingQueue<PerfmonResult> blockingQueue;
-	private DataPackProvider dataPackProvider;
 	private ReportHandler reportHandler;
 	private PerfmonResult perfmonResult;
 	
 	public CommunicationThread(BlockingQueue<PerfmonResult> blockingQueue)
 	{
 		this.blockingQueue = blockingQueue;
-		this.dataPackProvider = new DataPackProvider();
 		this.reportHandler = new ReportHandler();
 		this.perfmonResult = null;
 	}
@@ -41,13 +40,17 @@ public class CommunicationThread
 					perfmonResult = blockingQueue.take();
 				}
 				
+				String reportName = perfmonResult.getReportName();
+				String reportLocation = perfmonResult.getReportLocation();
+				String eventStr = perfmonResult.getEvent().toString();
+				long timestamp = perfmonResult.getTimestamp();
+				
 				// wyslanie eventu o raporcie
 				socket = new Socket();
-				socket.connect(new InetSocketAddress(Config.getIp(), Config.getPort()), 2000);				
-				socketConnectionContext = new SocketConnectionContext(dataPackProvider, Config.getEventHostname(), Config.getEventClientId(), false);
-				socketRunner = new SocketRunner(socket, dataPackProvider, socketConnectionContext);
-				dataPackProvider.setValue(perfmonResult.getReportName());
-				dataPackProvider.setTimestamp(perfmonResult.getTimestamp());
+				socket.connect(new InetSocketAddress(Config.getIp(), Config.getPort()), 2000);			
+				DataPackProvider dataPackProviderEvent = new DataPackProvider(reportName, reportName, timestamp, eventStr);
+				socketConnectionContext = new SocketConnectionContext(dataPackProviderEvent, Config.getEventHostname(), Config.getEventClientId(), false);
+				socketRunner = new SocketRunner(socket, dataPackProviderEvent, socketConnectionContext);
 				socketRunner.run();
 				socketRunner.stopThread();
 				socket.close();
@@ -55,17 +58,16 @@ public class CommunicationThread
 				// wyslanie raportu
 				socket = new Socket();
 				socket.connect(new InetSocketAddress(Config.getIp(), Config.getPort()), 2000);
-				socketConnectionContext = new SocketConnectionContext(dataPackProvider, Config.getReportHostName(), Config.getReportClientId(), true);
-				socketRunner = new SocketRunner(socket, dataPackProvider, socketConnectionContext);
-				String reportText = reportHandler.getReportText(perfmonResult.getReportLocation());
-				dataPackProvider.setValue(reportText);
-				dataPackProvider.setTimestamp(perfmonResult.getTimestamp());
-				dataPackProvider.setReportName(perfmonResult.getReportName());
+				String reportText = reportHandler.getReportText(reportLocation);
+				DataPackProvider dataPackProviderReport = new DataPackProvider(reportText, reportName, timestamp, eventStr);
+				socketConnectionContext = new SocketConnectionContext(dataPackProviderReport, Config.getReportHostName(), Config.getReportClientId(), true);
+				socketRunner = new SocketRunner(socket, dataPackProviderReport, socketConnectionContext);
+				
 				socketRunner.run();
 				socketRunner.stopThread();
 				socket.close();
 				
-				Logger.getInstatnce().log(Severity.INFO, "Report " + perfmonResult.getReportName() + " was successfully sent to Icinga2 server.");
+				Logger.getInstatnce().log(Severity.INFO, "Report " + reportName + " was successfully sent to Icinga2 server.");
 //				reportHandler.removeReport(perfmonResult.getReportLocation());
 				perfmonResult = null;
 			}
@@ -75,6 +77,9 @@ public class CommunicationThread
 				e.printStackTrace();
 			} catch (IOException e)
 			{
+				//dev
+				Writer.write(e.getMessage());
+				
 				Logger.getInstatnce().log(Severity.ERROR, "Error while sending report " + perfmonResult.getReportName() + ". Error message: " + e.getMessage());
 				try
 				{

@@ -217,7 +217,8 @@ public class MessageFormer
 
 			byte[] totalData = code;
 
-			String tablename = dataPackProvider.getMostFilledTableName();
+			String tablename = dataPackProvider.getIcingaService();
+			String perfdataName = dataPackProvider.getPerfdataName();
 			byte[] hostnameBytes = hostname.getBytes("UTF-8");
 			
 			for (IcingaLog i : logs)
@@ -245,7 +246,7 @@ public class MessageFormer
 				output = StateUtils.combineByteArrays(textToOutput, output);
 				totalData = StateUtils.combineByteArrays(totalData, output);
 				totalData = StateUtils.combineByteArrays(totalData, pipe);
-				totalData = StateUtils.combineByteArrays(totalData, StateUtils.getTextForGraph(tablename));
+				totalData = StateUtils.combineByteArrays(totalData, StateUtils.getTextForGraph(perfdataName));
 				
 				if(isReport)
 				{
@@ -256,7 +257,7 @@ public class MessageFormer
 					totalData = StateUtils.combineByteArrays(totalData, "1".getBytes("UTF-8"));
 				}
 				
-				totalData = StateUtils.combineByteArrays(totalData, StateUtils.getTextAfterGraph(tablename));
+				totalData = StateUtils.combineByteArrays(totalData, StateUtils.getTextAfterGraph(perfdataName));
 				totalData = StateUtils.combineByteArrays(totalData, zero);
 			}
 

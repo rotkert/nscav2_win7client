@@ -7,6 +7,7 @@ import inz.commons.Logger;
 import inz.commons.Severity;
 import inz.data.perfmon.PerfmonHandler;
 import inz.data.perfmon.PerfmonResult;
+import inz.data.warehouse.CpuUsageWarehouse;
 import inz.data.warehouse.MemoryUsageWarehouse;
 import inz.data.warehouse.Warehouse;
 
@@ -23,6 +24,7 @@ public class DataValidator implements Runnable
 		perfmonHandler = new PerfmonHandler();
 		warehouses = new LinkedList<>();
 		warehouses.add(new MemoryUsageWarehouse());
+		warehouses.add(new CpuUsageWarehouse());
 	}
 	
 	@Override
@@ -36,6 +38,7 @@ public class DataValidator implements Runnable
 			{
 				Logger.getInstatnce().log(Severity.INFO, "Parameter: " + event.toString() + " has exeeded critical value. Starting perfmon...");
 				
+				resetWarehouses();
 				PerfmonResult pr = perfmonHandler.getReport(event);
 				
 				Logger.getInstatnce().log(Severity.INFO, "Report " + pr.getReportName() + " generated.");
@@ -51,5 +54,12 @@ public class DataValidator implements Runnable
 				break;
 			}
 		}
-	}	
+	}
+	
+	private void resetWarehouses()
+	{
+		for (Warehouse warehouse : warehouses) {
+			warehouse.reset();
+		}
+	}
 }
