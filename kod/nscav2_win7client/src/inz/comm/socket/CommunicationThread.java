@@ -7,6 +7,8 @@ import java.util.concurrent.BlockingQueue;
 
 import inz.comm.config.Config;
 import inz.comm.data.DataPackProvider;
+import inz.commons.Logger;
+import inz.commons.Severity;
 import inz.data.perfmon.PerfmonResult;
 import inz.data.perfmon.ReportHandler;
 
@@ -63,6 +65,7 @@ public class CommunicationThread
 				socketRunner.stopThread();
 				socket.close();
 				
+				Logger.getInstatnce().log(Severity.INFO, "Report " + perfmonResult.getReportName() + " was successfully sent to Icinga2 server.");
 //				reportHandler.removeReport(perfmonResult.getReportLocation());
 				perfmonResult = null;
 			}
@@ -72,7 +75,7 @@ public class CommunicationThread
 				e.printStackTrace();
 			} catch (IOException e)
 			{
-				System.out.println(e.getMessage());
+				Logger.getInstatnce().log(Severity.ERROR, "Error while sending report " + perfmonResult.getReportName() + ". Error message: " + e.getMessage());
 				try
 				{
 					Thread.sleep(1000);

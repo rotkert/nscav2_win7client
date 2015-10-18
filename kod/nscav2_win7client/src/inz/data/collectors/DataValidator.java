@@ -3,6 +3,8 @@ package inz.data.collectors;
 import java.util.LinkedList;
 import java.util.concurrent.BlockingQueue;
 
+import inz.commons.Logger;
+import inz.commons.Severity;
 import inz.data.perfmon.PerfmonHandler;
 import inz.data.perfmon.PerfmonResult;
 import inz.data.warehouse.MemoryUsageWarehouse;
@@ -32,7 +34,11 @@ public class DataValidator implements Runnable
 			
 			if(event.equals(CriticalEvent.OK) == false)
 			{
+				Logger.getInstatnce().log(Severity.INFO, "Parameter: " + event.toString() + " has exeeded critical value. Starting perfmon...");
+				
 				PerfmonResult pr = perfmonHandler.getReport(event);
+				
+				Logger.getInstatnce().log(Severity.INFO, "Report " + pr.getReportName() + " generated.");
 				
 				try
 				{

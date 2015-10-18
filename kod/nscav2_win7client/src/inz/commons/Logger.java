@@ -25,7 +25,7 @@ public class Logger
 	private Logger()
 	{
 		String dateString = new SimpleDateFormat("ddMMyyyy_HHmm").format(new Date());
-		logFile = new File(Config.reportDirectory + "\\logs\\logs_" + dateString + ".txt.");
+		logFile = new File(Config.logDirecotry + "\\logs_" + dateString + ".txt");
 		
 		try
 		{
@@ -36,8 +36,6 @@ public class Logger
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		log(Severity.INFO, "Application nscav2_client started.");
 	}
 	
 	public synchronized void log(Severity severity, String message)

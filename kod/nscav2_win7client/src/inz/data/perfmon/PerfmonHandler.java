@@ -33,6 +33,8 @@ public class PerfmonHandler
 		String command = "powershell.exe " + projectDirectory + PS_SCRIPT;
 		Process powerShellProcess = null;
 		String reportLocation = null;
+		String line = null;
+		StringBuilder builder = null;
 		
 		BufferedReader stdout = null;
 		BufferedReader stderr = null;
@@ -43,14 +45,24 @@ public class PerfmonHandler
 			powerShellProcess.getOutputStream().close();
 	
 			stdout = new BufferedReader(new InputStreamReader(powerShellProcess.getInputStream()));
-			reportLocation = stdout.readLine();
+			builder = new StringBuilder();
+			while((line = stdout.readLine()) != null)
+			{
+				builder.append(line);
+			}
+			reportLocation = builder.toString();
 			stdout.close();
 			
 			String errorText = null;
 			stderr = new BufferedReader(new InputStreamReader(powerShellProcess.getErrorStream()));
-			errorText = stderr.readLine();
+			builder = new StringBuilder();
+			while((line = stderr.readLine()) != null)
+			{
+				builder.append(line);
+			}
+			errorText = builder.toString();
 			
-			if (errorText != null)
+			if (errorText != null && !errorText.equals(""))
 			{
 				IOException e = new IOException(errorText);
 				throw e;
