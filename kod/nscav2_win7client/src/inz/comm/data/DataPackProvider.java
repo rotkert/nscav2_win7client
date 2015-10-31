@@ -13,7 +13,7 @@ public class DataPackProvider
 	
 	public DataPackProvider(String value, String reportName, Long timestamp, String perfdataName)
 	{
-		this.icingaService = "reportEvent";
+		this.icingaService = "diagnostics";
 		this.value = value;
 		this.timestamp = timestamp;
 		this.reportName = reportName;
@@ -38,7 +38,7 @@ public class DataPackProvider
 	public ArrayList<IcingaLog> getDataToSend()
 	{
 		String id = "usage";
-		String icingaLevel = "0";
+		String icingaLevel = "2";
 		ArrayList<IcingaLog> logs = new ArrayList<>();
 		IcingaLog log = new IcingaLog(id, value, timestamp, icingaLevel);
 		logs.add(log);

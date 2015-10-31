@@ -22,9 +22,9 @@ public class Main
 		Config.init();
 		CryptoManager.INSTANCE.readKeys();
 		BlockingQueue<PerfmonResult> blockingQueue = new LinkedBlockingQueue<>();
-//		ReportHandler reportHandler = new ReportHandler();
-//		reportHandler.getNotSentReports(blockingQueue);
-		ValidationScheduler validationScheduler = new ValidationScheduler(blockingQueue);
+		ReportHandler reportHandler = new ReportHandler();
+		reportHandler.getNotSentReports(blockingQueue);
+//		ValidationScheduler validationScheduler = new ValidationScheduler(blockingQueue);
 		
 		// dev
 //		new AddReport(blockingQueue);

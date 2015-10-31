@@ -13,10 +13,10 @@ public final class Config
 	private Config()
 	{
 		appDirectory = System.getenv("APPDATA") + "\\Nscav2_client";
-		ip = "192.168.0.14";
+		ip = "192.168.8.103";
 		port = 8888;
-		reportHostName = "win7";
-		eventHostName = "win7";
+		reportHostName = "windows7";
+		eventHostName = "windows7";
 		reportClientId = "win7::report";
 		eventClientId = "win7::event";
 	}

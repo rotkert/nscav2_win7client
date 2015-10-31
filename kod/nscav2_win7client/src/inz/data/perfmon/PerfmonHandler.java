@@ -19,7 +19,7 @@ public class PerfmonHandler
 	
 	public PerfmonResult getReport(CriticalEvent event)
 	{
-		long timestamp = new Date().getTime();
+		long timestamp = new Date().getTime() / 1000;
 		String reportLocation = runPerfmon();
 		String reportName = getReportName(reportLocation);
 		
