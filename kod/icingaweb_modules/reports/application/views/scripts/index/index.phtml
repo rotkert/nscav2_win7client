@@ -1,5 +1,16 @@
-<div class="content" style="height:100%">
-    <h1>Reports</h1>
-    <iframe id="reportsFrame" src="http:/reports/" style="width:100%;height:100%"></iframe>
+<div id='reportDiv' class="content">
+    <h1 id='reportTitle'>Reports</h1>
+    <iframe id='reportDetails' style='display:none; width:100%; height:100%;'>
+    </iframe>
 </div>
+<script>
+   function showReport(reportName) {
+	$('#reportsTable').hide();
+	$('#reportDetails').attr('src', '\\reports\\' + reportName + '.html');
+	$('#reportDetails').show();
+	$('#reportDiv').height('100%');
+	$('#reportTitle').html(reportName);
+   }
+</script>
+
 
