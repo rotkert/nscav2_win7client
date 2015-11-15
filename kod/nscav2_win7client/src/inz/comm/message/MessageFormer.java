@@ -196,7 +196,7 @@ public class MessageFormer
 	 * 
 	 * @return data in right format
 	 */
-	public byte[] formLog(DataPackProvider dataPackProvider, String hostname, boolean isReport)
+	public byte[] formLog(DataPackProvider dataPackProvider, String hostname)
 	{
 		try
 		{
@@ -219,11 +219,13 @@ public class MessageFormer
 
 			String tablename = dataPackProvider.getIcingaService();
 			String perfdataName = dataPackProvider.getPerfdataName();
+			String reportName = dataPackProvider.getReportName();
+			String separator = "_DiagSep_";
 			byte[] hostnameBytes = hostname.getBytes("UTF-8");
 			
 			for (IcingaLog i : logs)
 			{
-				String value = i.getValue();
+				String value = separator + i.getValue() + separator + reportName + separator + reportName;
 				Long timestamp = i.getTimestamp();
 				String icingaLevel = i.getIcingaLevel();
 
@@ -247,15 +249,7 @@ public class MessageFormer
 				totalData = StateUtils.combineByteArrays(totalData, output);
 				totalData = StateUtils.combineByteArrays(totalData, pipe);
 				totalData = StateUtils.combineByteArrays(totalData, StateUtils.getTextForGraph(perfdataName));
-				
-				if(isReport)
-				{
-					totalData = StateUtils.combineByteArrays(totalData, dataPackProvider.getReportName().getBytes("UTF-8"));
-				}
-				else
-				{
-					totalData = StateUtils.combineByteArrays(totalData, "1".getBytes("UTF-8"));
-				}
+				totalData = StateUtils.combineByteArrays(totalData, "1".getBytes("UTF-8"));
 				
 				totalData = StateUtils.combineByteArrays(totalData, StateUtils.getTextAfterGraph(perfdataName));
 				totalData = StateUtils.combineByteArrays(totalData, zero);

@@ -44,25 +44,14 @@ public class CommunicationThread
 				String reportLocation = perfmonResult.getReportLocation();
 				String eventStr = perfmonResult.getEvent().toString();
 				long timestamp = perfmonResult.getTimestamp();
-				
-				// wyslanie eventu o raporcie
-				socket = new Socket();
-				socket.connect(new InetSocketAddress(Config.getIp(), Config.getPort()), 2000);			
-				DataPackProvider dataPackProviderEvent = new DataPackProvider(reportName, reportName, timestamp, eventStr);
-				socketConnectionContext = new SocketConnectionContext(dataPackProviderEvent, Config.getEventHostname(), Config.getEventClientId(), false);
-				socketRunner = new SocketRunner(socket, dataPackProviderEvent, socketConnectionContext);
-				socketRunner.run();
-				socketRunner.stopThread();
-				socket.close();
+				String reportText = reportHandler.getReportText(reportLocation);
 				
 				// wyslanie raportu
 				socket = new Socket();
-				socket.connect(new InetSocketAddress(Config.getIp(), Config.getPort()), 2000);
-				String reportText = reportHandler.getReportText(reportLocation);
-				DataPackProvider dataPackProviderReport = new DataPackProvider(reportText, reportName, timestamp, eventStr);
-				socketConnectionContext = new SocketConnectionContext(dataPackProviderReport, Config.getReportHostName(), Config.getReportClientId(), true);
-				socketRunner = new SocketRunner(socket, dataPackProviderReport, socketConnectionContext);
-				
+				socket.connect(new InetSocketAddress(Config.getIp(), Config.getPort()), 2000);			
+				DataPackProvider dataPackProvider = new DataPackProvider(reportText, reportName, timestamp, eventStr);
+				socketConnectionContext = new SocketConnectionContext(dataPackProvider, Config.getReportHostName(), Config.getReportClientId());
+				socketRunner = new SocketRunner(socket, dataPackProvider, socketConnectionContext);
 				socketRunner.run();
 				socketRunner.stopThread();
 				socket.close();

@@ -32,12 +32,10 @@ public class SocketConnectionContext
 	
 	private String clientId;
 	
-	private boolean isReport;
-
 	/**
 	 * Public constructor Sets state to <code>Connected</code>
 	 */
-	public SocketConnectionContext(DataPackProvider databaseProvider, String hostname, String clientId, boolean isReport)
+	public SocketConnectionContext(DataPackProvider databaseProvider, String hostname, String clientId)
 	{
 		this.databaseProvider = databaseProvider;
 		messageFormer = new MessageFormer();
@@ -45,7 +43,6 @@ public class SocketConnectionContext
 		this.socketConnectionState = new WaitingForHello();
 		this.hostname = hostname;
 		this.clientId = clientId;
-		this.isReport = isReport;
 	}
 
 	/**
@@ -153,10 +150,5 @@ public class SocketConnectionContext
 	public SocketConnectionState getState()
 	{
 		return socketConnectionState;
-	}
-	
-	public boolean isReport()
-	{
-		return isReport;
 	}
 }

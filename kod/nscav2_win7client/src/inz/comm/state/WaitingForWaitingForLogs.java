@@ -12,7 +12,7 @@ public class WaitingForWaitingForLogs implements SocketConnectionState
 
 	public byte[] getDataToSend(SocketConnectionContext scc)
 	{
-		return scc.getMessageFormer().formLog(scc.getDatabaseProvider(), scc.getHostname(), scc.isReport());
+		return scc.getMessageFormer().formLog(scc.getDatabaseProvider(), scc.getHostname());
 	}
 
 	public void onTimeout()

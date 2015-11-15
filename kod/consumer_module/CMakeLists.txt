@@ -33,7 +33,7 @@ SET( BASE_SRC
 		${INZ_SOURCE_DIR}/Base/src/DefaultTcpProvider.cpp
 		${INZ_SOURCE_DIR}/Base/src/ToScreenPrinter.cpp
 		${INZ_SOURCE_DIR}/Base/src/ToIcingaWritter.cpp
-		${INZ_SOURCE_DIR}/Base/src/ToDirWriter.cpp
+		${INZ_SOURCE_DIR}/Base/src/DiagnosticsConsumer.cpp
 		${INZ_SOURCE_DIR}/Base/src/Log.cpp
 		${INZ_SOURCE_DIR}/Base/include/ClientSession.h
 		${INZ_SOURCE_DIR}/Base/include/DataChannel.h
