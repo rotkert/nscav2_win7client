@@ -50,7 +50,7 @@ public class ReportHandler
 	
 	public void getNotSentReports(BlockingQueue<PerfmonResult> blockingQueue)
 	{
-		File appDir = new File(Config.reportDirectory);
+		File appDir = new File(Config.getInstance().getReportDirectory());
 		for (String reportDirName : appDir.list())
 		{
 			String reportDir = appDir + "\\" + reportDirName;
@@ -88,7 +88,7 @@ public class ReportHandler
 		InputStream is = null;
 		StringBuilder sb = new StringBuilder();
 		
-		reportLocation += Config.newReportFileName;
+		reportLocation += Config.getInstance().getNewReportFileName();
 		
 		try
 		{
@@ -130,7 +130,7 @@ public class ReportHandler
 	
 	void setReportExecutionDetails(String reportLocation, CriticalEvent event, long timestamp) 
 	{
-		File input = new File(reportLocation + Config.reportFileName);
+		File input = new File(reportLocation + Config.getInstance().getReportFileName());
 		Document doc = null;
 		try
 		{
@@ -150,7 +150,7 @@ public class ReportHandler
 	
 	private PerfmonResult getReportExecutionDetails(String reportDir, String reportName)
 	{
-		File reportFile = new File(reportDir + Config.newReportFileName);
+		File reportFile = new File(reportDir + Config.getInstance().getNewReportFileName());
 		Document doc = null;
 		PerfmonResult perfmonResult = null;
 		

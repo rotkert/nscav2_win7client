@@ -25,7 +25,7 @@ public class Logger
 	private Logger()
 	{
 		String dateString = new SimpleDateFormat("ddMMyyyy_HHmm").format(new Date());
-		logFile = new File(Config.logDirecotry + "\\logs_" + dateString + ".txt");
+		logFile = new File(Config.getInstance().getLogDirecotry() + "\\logs_" + dateString + ".txt");
 		
 		try
 		{

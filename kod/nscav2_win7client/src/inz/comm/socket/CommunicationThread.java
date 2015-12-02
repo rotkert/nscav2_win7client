@@ -6,8 +6,8 @@ import java.net.Socket;
 import java.util.concurrent.BlockingQueue;
 
 import devPackage.Writer;
-import inz.comm.config.Config;
 import inz.comm.data.DataPackProvider;
+import inz.commons.Config;
 import inz.commons.Logger;
 import inz.commons.Severity;
 import inz.data.perfmon.PerfmonResult;
@@ -48,9 +48,9 @@ public class CommunicationThread
 				
 				// wyslanie raportu
 				socket = new Socket();
-				socket.connect(new InetSocketAddress(Config.getIp(), Config.getPort()), 2000);			
+				socket.connect(new InetSocketAddress(Config.getInstance().getIp(), Config.getInstance().getPort()), 2000);			
 				DataPackProvider dataPackProvider = new DataPackProvider(reportText, reportName, timestamp, eventStr);
-				socketConnectionContext = new SocketConnectionContext(dataPackProvider, Config.getReportHostName(), Config.getReportClientId());
+				socketConnectionContext = new SocketConnectionContext(dataPackProvider, Config.getInstance().getReportHostName(), Config.getInstance().getReportClientId());
 				socketRunner = new SocketRunner(socket, dataPackProvider, socketConnectionContext);
 				socketRunner.run();
 				socketRunner.stopThread();

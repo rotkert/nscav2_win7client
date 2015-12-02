@@ -4,7 +4,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import devPackage.AddReport;
-import inz.comm.config.Config;
+import inz.commons.Config;
 import inz.comm.crypto.CryptoManager;
 import inz.comm.socket.CommunicationThread;
 import inz.commons.Logger;
@@ -16,18 +16,23 @@ import inz.data.perfmon.ReportHandler;
 public class Main
 {
 
-	public static void main(String[] args)
+	public static void main(String args[])
 	{
+		if(!Config.getInstance().init())
+		{
+			Logger.getInstatnce().log(Severity.INFO, "Application closed.");
+			System.exit(1);
+		}
+		
 		Logger.getInstatnce().log(Severity.INFO, "Application nscav2_client started.");
-		Config.init();
 		CryptoManager.INSTANCE.readKeys();
 		BlockingQueue<PerfmonResult> blockingQueue = new LinkedBlockingQueue<>();
 		ReportHandler reportHandler = new ReportHandler();
-		reportHandler.getNotSentReports(blockingQueue);
+//		reportHandler.getNotSentReports(blockingQueue);
 //		ValidationScheduler validationScheduler = new ValidationScheduler(blockingQueue);
 		
 		// dev
-//		new AddReport(blockingQueue);
+		new AddReport(blockingQueue);
 		
 		new CommunicationThread(blockingQueue).run();
 		
