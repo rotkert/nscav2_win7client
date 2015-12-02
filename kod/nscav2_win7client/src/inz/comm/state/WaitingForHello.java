@@ -3,9 +3,9 @@ package inz.comm.state;
 import java.net.Socket;
 import java.net.SocketException;
 
+import inz.comm.errorHandling.InfoMessages;
 import inz.comm.socket.SocketConnectionContext;
 import inz.comm.socket.SocketConnectionState;
-import mkaminski.inz.errorHandling.InfoMessages;
 
 /**
  * Class that implements SocketConnectionState interface. State of communication

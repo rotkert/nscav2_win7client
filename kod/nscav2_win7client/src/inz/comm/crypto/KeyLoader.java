@@ -6,7 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import mkaminski.inz.errorHandling.ErrorMessages;
+import inz.comm.errorHandling.ErrorMessages;
 
 /**
  * Class used for read public key that is stored externally in storage

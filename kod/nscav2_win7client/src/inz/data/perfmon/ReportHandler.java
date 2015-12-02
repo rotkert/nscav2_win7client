@@ -17,9 +17,9 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
+import inz.comm.errorHandling.ErrorMessages;
 import inz.commons.Config;
 import inz.data.collectors.CriticalEvent;
-import mkaminski.inz.errorHandling.ErrorMessages;
 
 public class ReportHandler
 {

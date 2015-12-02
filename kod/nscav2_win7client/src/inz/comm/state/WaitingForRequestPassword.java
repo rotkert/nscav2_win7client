@@ -2,9 +2,9 @@ package inz.comm.state;
 
 import java.net.Socket;
 
+import inz.comm.errorHandling.InfoMessages;
 import inz.comm.socket.SocketConnectionContext;
 import inz.comm.socket.SocketConnectionState;
-import mkaminski.inz.errorHandling.InfoMessages;
 
 public class WaitingForRequestPassword implements SocketConnectionState
 {

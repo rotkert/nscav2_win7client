@@ -1,4 +1,4 @@
-package mkaminski.inz.errorHandling;
+package inz.comm.errorHandling;
 
 public enum InfoMessages
 {
