@@ -1,4 +1,5 @@
 <div id='reportDiv' class="content">
+    <a id='backButton' href='/icingaweb2/Reports' class='action-link' style='font-size:1.7em;display:none;'>Back to reports</a>
     <h1 id='reportTitle'>Reports</h1>
     <iframe id='reportDetails' style='display:none; width:100%; height:100%;'>
     </iframe>
@@ -6,6 +7,7 @@
 <script>
    function showReport(reportName) {
 	$('#reportsTable').hide();
+	$('#backButton').show();
 	$('#reportDetails').attr('src', '\\reports\\' + reportName + '.html');
 	$('#reportDetails').show();
 	$('#reportDiv').height('100%');

@@ -1,4 +1,5 @@
-Module: reports
-Version: 0.0.1
-Description: Hello World module
- This is a simple Hello World demo module.
+Module: Reports
+Version: 1.0.0
+Description: Windows7 diagnostics reports
+ This module adds section to list and view reports.
+ It also adds link to the report in service details section. 

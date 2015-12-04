@@ -1,2 +1,2 @@
-Icinga Web 2 - Hello World Module
+Icinga Web 2 - Windows diagnostics reports Module
 =================================

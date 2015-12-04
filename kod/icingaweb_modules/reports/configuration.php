@@ -1,7 +1,7 @@
 <?php
 
 $section = $this->menuSection('Windows diagnostics', array(
-    'url' => 'reports',
+    'url' => 'Reports',
     'priority' => 99,
     'icon' => 'book'
 ));
