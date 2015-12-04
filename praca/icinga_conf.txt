@@ -1,0 +1,11 @@
+﻿object Host "windows7" {
+  check_command = "dummy"
+  display_name = "Windows 7 nscav2 client"
+}
+
+object Service "diagnostics" {
+  host_name = "windows7"
+  check_command = "passive"
+  volatile = 1
+
+}
