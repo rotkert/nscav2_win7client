@@ -7,7 +7,7 @@ import java.util.concurrent.BlockingQueue;
 
 import devPackage.Writer;
 import inz.comm.data.DataPackProvider;
-import inz.commons.Config;
+import inz.commons.ConfigProvider;
 import inz.commons.Logger;
 import inz.commons.Severity;
 import inz.data.perfmon.PerfmonResult;
@@ -42,15 +42,15 @@ public class CommunicationThread
 				
 				String reportName = perfmonResult.getReportName();
 				String reportLocation = perfmonResult.getReportLocation();
-				String eventStr = perfmonResult.getEvent().toString();
+				String counterName = perfmonResult.getCounterName();
 				long timestamp = perfmonResult.getTimestamp();
 				String reportText = reportHandler.getReportText(reportLocation);
 				
 				// wyslanie raportu
 				socket = new Socket();
-				socket.connect(new InetSocketAddress(Config.getInstance().getIp(), Config.getInstance().getPort()), 2000);			
-				DataPackProvider dataPackProvider = new DataPackProvider(reportText, reportName, timestamp, eventStr);
-				socketConnectionContext = new SocketConnectionContext(dataPackProvider, Config.getInstance().getReportHostName(), Config.getInstance().getReportClientId());
+				socket.connect(new InetSocketAddress(ConfigProvider.getInstance().getIp(), ConfigProvider.getInstance().getPort()), 2000);			
+				DataPackProvider dataPackProvider = new DataPackProvider(reportText, reportName, timestamp, counterName);
+				socketConnectionContext = new SocketConnectionContext(dataPackProvider, ConfigProvider.getInstance().getReportHostName(), ConfigProvider.getInstance().getReportClientId());
 				socketRunner = new SocketRunner(socket, dataPackProvider, socketConnectionContext);
 				socketRunner.run();
 				socketRunner.stopThread();
