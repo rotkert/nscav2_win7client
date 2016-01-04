@@ -18,8 +18,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import inz.comm.errorHandling.ErrorMessages;
-import inz.commons.Config;
-import inz.data.collectors.CriticalEvent;
+import inz.commons.ConfigProvider;
 
 public class ReportHandler
 {
@@ -50,7 +49,7 @@ public class ReportHandler
 	
 	public void getNotSentReports(BlockingQueue<PerfmonResult> blockingQueue)
 	{
-		File appDir = new File(Config.getInstance().getReportDirectory());
+		File appDir = new File(ConfigProvider.getInstance().getReportDirectory());
 		for (String reportDirName : appDir.list())
 		{
 			String reportDir = appDir + "\\" + reportDirName;
@@ -88,7 +87,7 @@ public class ReportHandler
 		InputStream is = null;
 		StringBuilder sb = new StringBuilder();
 		
-		reportLocation += Config.getInstance().getNewReportFileName();
+		reportLocation += ConfigProvider.getInstance().getNewReportFileName();
 		
 		try
 		{
@@ -128,15 +127,15 @@ public class ReportHandler
 		reportDir.delete();
 	}
 	
-	void setReportExecutionDetails(String reportLocation, CriticalEvent event, long timestamp) 
+	void setReportExecutionDetails(String reportLocation, String counterName, long timestamp) 
 	{
-		File input = new File(reportLocation + Config.getInstance().getReportFileName());
+		File input = new File(reportLocation + ConfigProvider.getInstance().getReportFileName());
 		Document doc = null;
 		try
 		{
 			doc = Jsoup.parse(input, "UTF-16");
 			Element table = (Element) doc.getElementById("c_1").getElementsByClass("info").get(0).parentNode().parentNode();
-			table.append("<tr><td class='h4'>Przyczyna: </td><td class='info' id='CriticalSituationType'>" + event + "</td></tr><tr><td class='h4'>Stempel czasu: </td><td class='info' id='timestamp'>" + timestamp + "</td></tr>");
+			table.append("<tr><td class='h4'>Przyczyna: </td><td class='info' id='CriticalSituationType'>" + counterName + "</td></tr><tr><td class='h4'>Stempel czasu: </td><td class='info' id='timestamp'>" + timestamp + "</td></tr>");
 			PrintWriter writer = new PrintWriter(reportLocation + "\\new_report.html", "UTF-16");
 			writer.print(doc.toString());
 			writer.close();
@@ -150,20 +149,19 @@ public class ReportHandler
 	
 	private PerfmonResult getReportExecutionDetails(String reportDir, String reportName)
 	{
-		File reportFile = new File(reportDir + Config.getInstance().getNewReportFileName());
+		File reportFile = new File(reportDir + ConfigProvider.getInstance().getNewReportFileName());
 		Document doc = null;
 		PerfmonResult perfmonResult = null;
 		
 		try
 		{
 			doc = Jsoup.parse(reportFile, "UTF-16");
-			String eventString = doc.getElementById("CriticalSituationType").html();
+			String counterName = doc.getElementById("CriticalSituationType").html();
 			String timestampString = doc.getElementById("timestamp").html();
 			
-			CriticalEvent event = CriticalEvent.valueOf(eventString);
 			Long timestamp = Long.parseLong(timestampString);
 			
-			perfmonResult = new PerfmonResult(reportDir, timestamp, event, reportName);
+			perfmonResult = new PerfmonResult(reportDir, timestamp, counterName, reportName);
 		} 
 		catch (IOException e)
 		{
@@ -187,7 +185,7 @@ public class ReportHandler
 		
 		//zamienia dlugi myslnik na krotki :)
 		reportText = reportText.replaceAll("\u2014", "-");
-		
+//		
 		return reportText;
 	}
 }

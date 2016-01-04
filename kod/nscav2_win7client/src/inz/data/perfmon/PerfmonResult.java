@@ -1,19 +1,17 @@
 package inz.data.perfmon;
 
-import inz.data.collectors.CriticalEvent;
-
 public class PerfmonResult
 {
 	private final String reportLocation;
 	private final long timestamp;
-	private final CriticalEvent event;
+	private final String counterName;
 	private final String reportName;
 	
-	public PerfmonResult(String reportLocation, long timestamp, CriticalEvent event, String reportName)
+	public PerfmonResult(String reportLocation, long timestamp, String counterName, String reportName)
 	{
 		this.reportLocation = reportLocation;
 		this.timestamp = timestamp;
-		this.event = event;
+		this.counterName = counterName;
 		this.reportName = reportName;
 	}
 	
@@ -27,9 +25,9 @@ public class PerfmonResult
 		return timestamp;
 	}
 	
-	public CriticalEvent getEvent()
+	public String getCounterName()
 	{
-		return event;
+		return counterName;
 	}
 	
 	public String getReportName()

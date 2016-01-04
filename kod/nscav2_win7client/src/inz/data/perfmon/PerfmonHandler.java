@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Date;
 
-import inz.data.collectors.CriticalEvent;
-
 public class PerfmonHandler
 {
 	private static final String PS_SCRIPT = "\\extensions\\runPerfmon.ps1";
@@ -17,14 +15,14 @@ public class PerfmonHandler
 		reportHandler = new ReportHandler();
 	}
 	
-	public PerfmonResult getReport(CriticalEvent event)
+	public PerfmonResult getReport(String counterName)
 	{
 		long timestamp = new Date().getTime() / 1000;
 		String reportLocation = runPerfmon();
 		String reportName = getReportName(reportLocation);
 		
-		reportHandler.setReportExecutionDetails(reportLocation, event, timestamp);
-		return new PerfmonResult(reportLocation, timestamp, event, reportName);
+		reportHandler.setReportExecutionDetails(reportLocation, counterName, timestamp);
+		return new PerfmonResult(reportLocation, timestamp, counterName, reportName);
 	}
 	
 	private String runPerfmon()
