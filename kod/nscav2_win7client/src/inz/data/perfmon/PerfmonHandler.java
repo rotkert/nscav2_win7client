@@ -4,25 +4,43 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Date;
+import java.util.concurrent.BlockingQueue;
 
-public class PerfmonHandler
+import inz.commons.Logger;
+import inz.commons.Severity;
+
+public class PerfmonHandler implements Runnable
 {
 	private static final String PS_SCRIPT = "\\extensions\\runPerfmon.ps1";
+	private BlockingQueue<PerfmonResult> blockingQueue;
+	private String counterCategory;
 	private ReportHandler reportHandler;
 
-	public PerfmonHandler()
+	public PerfmonHandler(BlockingQueue<PerfmonResult> blockingQueue, String counterCategory)
 	{
-		reportHandler = new ReportHandler();
+		this.blockingQueue = blockingQueue;
+		this.counterCategory = counterCategory;
+		this.reportHandler = new ReportHandler();
 	}
 	
-	public PerfmonResult getReport(String counterName)
+	public void run()
 	{
 		long timestamp = new Date().getTime() / 1000;
 		String reportLocation = runPerfmon();
-		String reportName = getReportName(reportLocation);
 		
-		reportHandler.setReportExecutionDetails(reportLocation, counterName, timestamp);
-		return new PerfmonResult(reportLocation, timestamp, counterName, reportName);
+		try 
+		{
+			if (reportLocation != null)
+			{
+				String reportName = getReportName(reportLocation);
+				reportHandler.setReportExecutionDetails(reportLocation, counterCategory, timestamp);
+				blockingQueue.put(new PerfmonResult(reportLocation, timestamp, counterCategory, reportName));
+			}
+		}
+		catch (InterruptedException e)
+		{
+			Logger.getInstatnce().log(Severity.ERROR, e.getMessage());
+		}	
 	}
 	
 	private String runPerfmon()
@@ -70,8 +88,7 @@ public class PerfmonHandler
 		} 
 		catch (IOException e)
 		{
-			// TODO zaloguj wyst¹pienie b³êdu
-			System.out.println(e.getMessage());
+			Logger.getInstatnce().log(Severity.ERROR, e.getMessage());
 			reportLocation = null;
 		}
 		

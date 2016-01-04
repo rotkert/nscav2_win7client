@@ -4,14 +4,14 @@ public class PerfmonResult
 {
 	private final String reportLocation;
 	private final long timestamp;
-	private final String counterName;
+	private final String counterCategory;
 	private final String reportName;
 	
-	public PerfmonResult(String reportLocation, long timestamp, String counterName, String reportName)
+	public PerfmonResult(String reportLocation, long timestamp, String counterCategory, String reportName)
 	{
 		this.reportLocation = reportLocation;
 		this.timestamp = timestamp;
-		this.counterName = counterName;
+		this.counterCategory = counterCategory;
 		this.reportName = reportName;
 	}
 	
@@ -25,9 +25,9 @@ public class PerfmonResult
 		return timestamp;
 	}
 	
-	public String getCounterName()
+	public String getCounterCategory()
 	{
-		return counterName;
+		return counterCategory;
 	}
 	
 	public String getReportName()

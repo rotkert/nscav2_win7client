@@ -13,7 +13,7 @@ import inz.commons.Severity;
 import inz.data.perfmon.PerfmonResult;
 import inz.data.perfmon.ReportHandler;
 
-public class CommunicationThread
+public class CommunicationThread implements Runnable
 {
 	private BlockingQueue<PerfmonResult> blockingQueue;
 	private ReportHandler reportHandler;
@@ -42,7 +42,7 @@ public class CommunicationThread
 				
 				String reportName = perfmonResult.getReportName();
 				String reportLocation = perfmonResult.getReportLocation();
-				String counterName = perfmonResult.getCounterName();
+				String counterName = perfmonResult.getCounterCategory();
 				long timestamp = perfmonResult.getTimestamp();
 				String reportText = reportHandler.getReportText(reportLocation);
 				

@@ -5,12 +5,16 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.concurrent.BlockingQueue;
+
+import inz.data.perfmon.PerfmonHandler;
+import inz.data.perfmon.PerfmonResult;
 
 public class Receiver
 {
-	public void work() throws IOException
+	public void work(int port, BlockingQueue<PerfmonResult> blockingQueue) throws IOException
 	{
-		ServerSocket serverSocket = new ServerSocket(4545);
+		ServerSocket serverSocket = new ServerSocket(port);
 		while(true)
 		{	
 			Socket socket = serverSocket.accept();
@@ -18,8 +22,8 @@ public class Receiver
 		
 			byte[] message = new byte[1024];
 			int bytesRead = is.read(message);
-			String meassageText = new String(message, 0, bytesRead);
-			System.out.println("Received " + meassageText);
+			String counterCategory = new String(message, 0, bytesRead);
+			new Thread(new PerfmonHandler(blockingQueue, counterCategory)).start();
 		}
 			
 	}
