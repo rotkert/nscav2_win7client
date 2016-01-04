@@ -7,13 +7,15 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.BlockingQueue;
 
+import inz.commons.ConfigProvider;
 import inz.data.perfmon.PerfmonHandler;
 import inz.data.perfmon.PerfmonResult;
 
 public class Receiver
 {
-	public void work(int port, BlockingQueue<PerfmonResult> blockingQueue) throws IOException
+	public void work(BlockingQueue<PerfmonResult> blockingQueue) throws IOException
 	{
+		int port = ConfigProvider.getInstance().getReceivingPort();
 		ServerSocket serverSocket = new ServerSocket(port);
 		while(true)
 		{	

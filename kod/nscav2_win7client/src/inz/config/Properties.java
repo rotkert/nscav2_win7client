@@ -10,7 +10,7 @@ public class Properties
 	private int port;
 	private String reportClientId;
 	private String reportHostName;
-	private Counters counters;
+	private int receivingPort;
 	
 	public String getIp()
 	{
@@ -55,15 +55,15 @@ public class Properties
 	{
 		this.reportHostName = reportHostName;
 	}
-	
-	public Counters getCounters()
+
+	public int getReceivingPort()
 	{
-		return counters;
+		return receivingPort;
 	}
 	
 	@XmlElement
-	public void setCounters(Counters counters)
+	public void setReceivingPort(int receivingPort)
 	{
-		this.counters = counters;
+		this.receivingPort = receivingPort;
 	}
 }

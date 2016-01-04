@@ -7,7 +7,8 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
-import inz.config.Counter;
+import org.w3c.dom.css.Counter;
+
 import inz.config.Properties;
 
 public class ConfigProvider
@@ -26,8 +27,7 @@ public class ConfigProvider
 	private int port;
 	private String reportClientId;
 	private String reportHostName;
-	
-	private List<Counter> counters;
+	private int receivingPort;
 	
 	private static class Holder
 	{
@@ -78,11 +78,6 @@ public class ConfigProvider
 	{
 		return reportClientId;
 	}
-	
-	public List<Counter> getCounters()
-	{
-		return counters;
-	}
 
 	public static ConfigProvider getInstance() 
 	{
@@ -114,6 +109,16 @@ public class ConfigProvider
 		port = properties.getPort();
 		reportClientId = properties.getReportClientId();
 		reportHostName = properties.getReportHostName();
-		counters = properties.getCounters().getCounter();
+		receivingPort = properties.getReceivingPort();
+	}
+
+	public int getReceivingPort()
+	{
+		return receivingPort;
+	}
+
+	public void setReceivingPort(int receivingPort)
+	{
+		this.receivingPort = receivingPort;
 	}
 }

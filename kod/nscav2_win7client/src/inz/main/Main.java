@@ -31,7 +31,7 @@ public class Main
 //			ReportHandler reportHandler = new ReportHandler();
 //			reportHandler.getNotSentReports(blockingQueue);
 			
-			new Receiver().work(4545, blockingQueue);
+			new Receiver().work(blockingQueue);
 		} catch (IOException e)
 		{
 			// TODO Auto-generated catch block
