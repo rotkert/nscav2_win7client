@@ -15,6 +15,7 @@ namespace PerfCountersCollector
         private float lastValue;
         private float avg;
         private String name;
+        private String category;
 
         public PerfCounter(String category, String counter, String instance, int queueSize, float criticalValue)
         {
@@ -32,11 +33,17 @@ namespace PerfCountersCollector
             this.avg = 0;
             this.criticalValue = criticalValue;
             this.name = category + " " + counter + " " + instance;
+            this.category = category;
         }
 
-        public String getCounterName()
+        public String getName()
         {
             return name;
+        }
+
+        public String getCategory()
+        {
+            return category;
         }
 
         public float getCritivalValue() 
@@ -57,6 +64,8 @@ namespace PerfCountersCollector
         public void reset()
         {
             valuesQueue.Clear();
+            lastValue = 0;
+            avg = 0;
         }
 
         public bool Check()

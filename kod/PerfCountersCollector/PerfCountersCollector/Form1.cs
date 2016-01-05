@@ -14,91 +14,108 @@ namespace PerfCountersCollector
     {
         private List<PerfCounter> counters;
         private Sender  infoSender;
+        private bool isSendMode;
 
         public Form1()
         {
             InitializeComponent();
             counters = new List<PerfCounter>();
             infoSender = new Sender();
+            isSendMode = false;
             
             System.Diagnostics.PerformanceCounterCategory[] categories = System.Diagnostics.PerformanceCounterCategory.GetCategories();
             for (int i = 0; i < categories.Length; i++)
             {
-                comboBox1.Items.Add(categories[i].CategoryName);
+                categoryCb.Items.Add(categories[i].CategoryName);
             }
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            List<string> criticalCounters = new List<string>();
-
             for (int i = 0; i < counters.Count; i++)
             {
                 PerfCounter counter = counters[i];
 
-                if (counter.Check())
+                if (counter.Check() && isSendMode)
                 {
-                    criticalCounters.Add(counter.getCounterName());
+                    sendReportRequest(counter.getCategory());
+                    clearCountersValues();
+                    break;
                 }
-
-                dataGridView1.Rows[i].Cells[2].Value = counter.getLastValue();
-                dataGridView1.Rows[i].Cells[3].Value = counter.getLastValue();
-            }
-
-            bool isSent = true;
-            if (criticalCounters.Count > 0)
-            {
-                isSent = infoSender.sendInfo("Counters: " + string.Join(", ", criticalCounters.ToArray()) + " have exceeded crtical value.");
-            }
-
-            if (isSent == false)
-            {
-                stopCounters();
+                else
+                {
+                    dataGridView1.Rows[i].Cells[2].Value = counter.getLastValue();
+                    dataGridView1.Rows[i].Cells[3].Value = counter.getAvg();
+                }
             }
         }
 
-        private void stopCounters()
+        private void sendReportRequest(String categoryName)
         {
-            timer1.Enabled = false;
-            button3.Enabled = true;
-            numericUpDown2.Enabled = true;
-            MessageBox.Show("Nie udało się wysłać informacji o sytuacji krytycznej");
+            bool isSent = infoSender.sendInfo(categoryName);
+
+            if(!isSent)
+            {
+                stopSending("Nie można było się połączyć z serwerem");
+            }
         }
 
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void stopSending(String message)
+        {
+            isSendMode = false;
+            startBtn.Enabled = true;
+            stopBtn.Enabled = false;
+            numericUpDown2.Enabled = true;
+            sendCustomBtn.Enabled = false;
+            infoLabel.Text = message;
+        }
+
+        private void clearCountersValues()
+        {
+            for (int i = 0; i < counters.Count; i++)
+            {
+                PerfCounter counter = counters[i];
+
+                counter.reset();
+                dataGridView1.Rows[i].Cells[2].Value = counter.getLastValue();
+                dataGridView1.Rows[i].Cells[3].Value = counter.getAvg();
+            }
+        }
+
+        private void categoryCb_SelectedIndexChanged(object sender, EventArgs e)
         {
             string[] instanceNames;
             
-            var category = new System.Diagnostics.PerformanceCounterCategory(comboBox1.SelectedItem.ToString());
+            var category = new System.Diagnostics.PerformanceCounterCategory(categoryCb.SelectedItem.ToString());
             
-            comboBox2.Items.Clear();
-            comboBox3.Items.Clear();
-            comboBox2.Text = "";
-            comboBox3.Text = "";
-            comboBox2.Enabled = true;
-            comboBox3.Enabled = false;
+            instanceCb.Items.Clear();
+            nameCb.Items.Clear();
+            instanceCb.Text = "";
+            nameCb.Text = "";
+            instanceCb.Enabled = true;
+            nameCb.Enabled = false;
 
             try
             {
                 instanceNames = category.GetInstanceNames();
                 if (instanceNames.Length == 0)
                 {
-                    comboBox2.Enabled = false;
-                    comboBox3.Enabled = true;
+                    instanceCb.Enabled = false;
+                    nameCb.Enabled = true;
 
                     System.Collections.ArrayList counters = new System.Collections.ArrayList();
                     counters.AddRange(category.GetCounters());
 
                     foreach (System.Diagnostics.PerformanceCounter counter in counters)
                     {
-                        comboBox3.Items.Add(counter.CounterName);
+                        nameCb.Items.Add(counter.CounterName);
                     }
                 }
                 else
                 {
                     for (int i = 0; i < instanceNames.Length; i++)
                     {
-                        comboBox2.Items.Add(instanceNames[i]);
+                        instanceCb.Items.Add(instanceNames[i]);
                     }
                 }
             }
@@ -109,28 +126,28 @@ namespace PerfCountersCollector
             
         }
 
-        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        private void instanceCb_SelectedIndexChanged(object sender, EventArgs e)
         {
-            comboBox3.Items.Clear();
-            comboBox3.Text= "";
-            comboBox3.Enabled = true;
+            nameCb.Items.Clear();
+            nameCb.Text= "";
+            nameCb.Enabled = true;
 
-            var category = new System.Diagnostics.PerformanceCounterCategory(comboBox1.SelectedItem.ToString());
+            var category = new System.Diagnostics.PerformanceCounterCategory(categoryCb.SelectedItem.ToString());
 
             System.Collections.ArrayList counters = new System.Collections.ArrayList();
-            counters.AddRange(category.GetCounters(comboBox2.Text.ToString()));
+            counters.AddRange(category.GetCounters(instanceCb.Text.ToString()));
 
             foreach (System.Diagnostics.PerformanceCounter counter in counters)
             {
-                comboBox3.Items.Add(counter.CounterName);
+                nameCb.Items.Add(counter.CounterName);
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void addCounterBtn_Click(object sender, EventArgs e)
         {
-            String category = comboBox1.Text.ToString();
-            String instance = comboBox2.Text.ToString();
-            String name = comboBox3.Text.ToString();
+            String category = categoryCb.Text.ToString();
+            String instance = instanceCb.Text.ToString();
+            String name = nameCb.Text.ToString();
             decimal criticalValue = numericUpDown1.Value;
 
             if (String.IsNullOrEmpty(category) || String.IsNullOrEmpty(name) || criticalValue == 0)
@@ -142,18 +159,18 @@ namespace PerfCountersCollector
             {
                 try
                 {
-                    PerfCounter newCounter = new PerfCounter(category, name, instance, 2, 2);
+                    PerfCounter newCounter = new PerfCounter(category, name, instance, 2, (float)criticalValue);
                     counters.Add(newCounter);
-                    comboBox1.Text = "";
-                    comboBox2.Text = "";
-                    comboBox3.Text = "";
+                    categoryCb.Text = "";
+                    instanceCb.Text = "";
+                    nameCb.Text = "";
                     numericUpDown1.Value = 0;
 
-                    comboBox2.Enabled = false;
-                    comboBox3.Enabled = false;
+                    instanceCb.Enabled = false;
+                    nameCb.Enabled = false;
 
                     var index = dataGridView1.Rows.Add();
-                    dataGridView1.Rows[index].Cells[1].Value = newCounter.getCounterName();
+                    dataGridView1.Rows[index].Cells[1].Value = newCounter.getName();
                     dataGridView1.Rows[index].Cells[2].Value = 0;
                     dataGridView1.Rows[index].Cells[3].Value = 0;
                     dataGridView1.Rows[index].Cells[4].Value = criticalValue;
@@ -166,7 +183,7 @@ namespace PerfCountersCollector
 
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void deleteBtn_Click(object sender, EventArgs e)
         {
             
             foreach (DataGridViewRow row in dataGridView1.Rows)
@@ -183,14 +200,28 @@ namespace PerfCountersCollector
             }
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void startBtn_Click(object sender, EventArgs e)
         {
-            infoSender.setPort(Convert.ToInt32(numericUpDown1.Value));
+            infoSender.setPort(Convert.ToInt32(numericUpDown2.Value));
             numericUpDown2.Enabled = false;
-            button3.Enabled = false;
-            timer1.Enabled = true;
+            startBtn.Enabled = false;
+            stopBtn.Enabled = true;
+            sendCustomBtn.Enabled = true;
+            isSendMode = true;
+            infoLabel.Text = "";
         }
 
+        private void sendCustomBtn_Click(object sender, EventArgs e)
+        {
+            sendReportRequest("User");
+        }
+
+        private void stopBtn_Click(object sender, EventArgs e)
+        {
+            stopSending("");
+        }
+
+    
         
     }
 }
