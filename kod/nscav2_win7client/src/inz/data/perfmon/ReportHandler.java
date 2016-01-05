@@ -97,7 +97,7 @@ public class ReportHandler
 			String line = "";
 			while ((line = br.readLine()) != null)
 			{
-				sb.append(line.trim());
+				sb.append(line);
 			}
 
 			br.close();
@@ -180,7 +180,7 @@ public class ReportHandler
 			reportText = reportText.replaceAll(entry.getKey(), entry.getValue());
 		}
 
-		// zamienia backslash na nawias kwadratowy
+		// zamienia lewy nawias kwadratowy na cos innego
 		reportText = reportText.replaceAll("\\[", "&#91;");
 		
 		//zamienia dlugi myslnik na krotki :)
