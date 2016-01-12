@@ -22,11 +22,11 @@ public class StateUtilsCst extends StateUtils
 	public static byte[] getTextForGraph(String serviceName) {
 		try
 		{
-			return (serviceName + "=1").getBytes("UTF-8");
+			return (serviceName).getBytes("UTF-8");
 		} 
 		catch (UnsupportedEncodingException e)
 		{
-			return (serviceName + "=1").getBytes();
+			return (serviceName).getBytes();
 		}
 	}
 }

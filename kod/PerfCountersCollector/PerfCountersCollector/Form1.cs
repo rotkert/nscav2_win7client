@@ -32,27 +32,33 @@ namespace PerfCountersCollector
 
         private void timer1_Tick(object sender, EventArgs e)
         {
+            List<string> criticalCounters = new List<string>();
             for (int i = 0; i < counters.Count; i++)
             {
                 PerfCounter counter = counters[i];
 
                 if (counter.Check() && isSendMode)
                 {
-                    sendReportRequest(counter.getCategory());
-                    clearCountersValues();
-                    break;
+                    criticalCounters.Add(counter.getCategory() + "=1");
                 }
                 else
                 {
                     dataGridView1.Rows[i].Cells[2].Value = counter.getLastValue();
                     dataGridView1.Rows[i].Cells[3].Value = counter.getAvg();
                 }
+
+            }
+            
+            if (criticalCounters.Count > 0)
+            {
+                sendReportRequest(string.Join(" ", criticalCounters.ToArray()));
+                clearCountersValues();
             }
         }
 
-        private void sendReportRequest(String categoryName)
+        private void sendReportRequest(String performanceData)
         {
-            bool isSent = infoSender.sendInfo(categoryName);
+            bool isSent = infoSender.sendInfo(performanceData);
 
             if(!isSent)
             {
@@ -213,7 +219,7 @@ namespace PerfCountersCollector
 
         private void sendCustomBtn_Click(object sender, EventArgs e)
         {
-            sendReportRequest("User");
+            sendReportRequest("User=1");
         }
 
         private void stopBtn_Click(object sender, EventArgs e)
