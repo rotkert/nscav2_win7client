@@ -72,6 +72,7 @@ namespace PerfCountersCollector
             startBtn.Enabled = true;
             stopBtn.Enabled = false;
             numericUpDown2.Enabled = true;
+            textBox1.Enabled = true;
             sendCustomBtn.Enabled = false;
             infoLabel.Text = message;
         }
@@ -155,6 +156,7 @@ namespace PerfCountersCollector
             String instance = instanceCb.Text.ToString();
             String name = nameCb.Text.ToString();
             decimal criticalValue = numericUpDown1.Value;
+            decimal sampleAmount = numericUpDown3.Value;
 
             if (String.IsNullOrEmpty(category) || String.IsNullOrEmpty(name) || criticalValue == 0)
             {
@@ -165,7 +167,7 @@ namespace PerfCountersCollector
             {
                 try
                 {
-                    PerfCounter newCounter = new PerfCounter(category, name, instance, 2, (float)criticalValue);
+                    PerfCounter newCounter = new PerfCounter(category, name, instance, (int)sampleAmount, (float)criticalValue);
                     counters.Add(newCounter);
                     categoryCb.Text = "";
                     instanceCb.Text = "";
@@ -208,7 +210,9 @@ namespace PerfCountersCollector
 
         private void startBtn_Click(object sender, EventArgs e)
         {
+            infoSender.setAddress(textBox1.Text);
             infoSender.setPort(Convert.ToInt32(numericUpDown2.Value));
+            textBox1.Enabled = false;
             numericUpDown2.Enabled = false;
             startBtn.Enabled = false;
             stopBtn.Enabled = true;
@@ -225,6 +229,11 @@ namespace PerfCountersCollector
         private void stopBtn_Click(object sender, EventArgs e)
         {
             stopSending("");
+        }
+
+        private void numericUpDown2_ValueChanged(object sender, EventArgs e)
+        {
+
         }
 
     

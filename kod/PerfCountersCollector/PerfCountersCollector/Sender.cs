@@ -7,16 +7,22 @@ namespace PerfCountersCollector
     class Sender
     {
         private int port = 0;
+        private string address = "127.0.0.1";
 
         public void setPort(int port)
         {
             this.port = port;
         }
 
+        public void setAddress(string address)
+        {
+            this.address = address;
+        }
+
         public bool sendInfo(String message)
         {
             bool isSent = true;
-            IPEndPoint serverAddress = new IPEndPoint(IPAddress.Parse("127.0.0.1"), port);
+            IPEndPoint serverAddress = new IPEndPoint(IPAddress.Parse(address), port);
             Socket clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             
             try
