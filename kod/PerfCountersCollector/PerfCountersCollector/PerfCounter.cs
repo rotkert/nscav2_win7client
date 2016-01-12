@@ -17,7 +17,7 @@ namespace PerfCountersCollector
         private String name;
         private String category;
 
-        public PerfCounter(String category, String counter, String instance, int queueSize, float criticalValue)
+        public PerfCounter(String category, String instance, String counter, int queueSize, float criticalValue)
         {
             this.counter = new System.Diagnostics.PerformanceCounter();
 
@@ -34,6 +34,11 @@ namespace PerfCountersCollector
             this.criticalValue = criticalValue;
             this.name = category + " " + counter + " " + instance;
             this.category = category;
+        }
+
+        public System.Diagnostics.PerformanceCounter getCounter()
+        {
+            return counter;
         }
 
         public String getName()
@@ -59,6 +64,11 @@ namespace PerfCountersCollector
         public float getAvg()
         {
             return avg;
+        }
+
+        public int getQueueSize()
+        {
+            return queueSize;
         }
 
         public void reset()

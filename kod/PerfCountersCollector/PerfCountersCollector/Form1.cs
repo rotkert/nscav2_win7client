@@ -14,14 +14,21 @@ namespace PerfCountersCollector
     {
         private List<PerfCounter> counters;
         private Sender  infoSender;
+        private FileHandler fileHandler;
         private bool isSendMode;
 
         public Form1()
         {
             InitializeComponent();
-            counters = new List<PerfCounter>();
             infoSender = new Sender();
+            fileHandler = new FileHandler();
             isSendMode = false;
+
+            counters = fileHandler.loadCounters();
+            foreach(PerfCounter counter in counters)
+            {
+                addCounterToDataView(counter.getName(), counter.getCritivalValue());
+            }
             
             System.Diagnostics.PerformanceCounterCategory[] categories = System.Diagnostics.PerformanceCounterCategory.GetCategories();
             for (int i = 0; i < categories.Length; i++)
@@ -167,7 +174,7 @@ namespace PerfCountersCollector
             {
                 try
                 {
-                    PerfCounter newCounter = new PerfCounter(category, name, instance, (int)sampleAmount, (float)criticalValue);
+                    PerfCounter newCounter = new PerfCounter(category, instance, name, (int)sampleAmount, (float)criticalValue);
                     counters.Add(newCounter);
                     categoryCb.Text = "";
                     instanceCb.Text = "";
@@ -177,11 +184,7 @@ namespace PerfCountersCollector
                     instanceCb.Enabled = false;
                     nameCb.Enabled = false;
 
-                    var index = dataGridView1.Rows.Add();
-                    dataGridView1.Rows[index].Cells[1].Value = newCounter.getName();
-                    dataGridView1.Rows[index].Cells[2].Value = 0;
-                    dataGridView1.Rows[index].Cells[3].Value = 0;
-                    dataGridView1.Rows[index].Cells[4].Value = criticalValue;
+                    addCounterToDataView(newCounter.getName(), newCounter.getCritivalValue());
                 }
                 catch(System.InvalidOperationException ex)
                 {
@@ -191,15 +194,24 @@ namespace PerfCountersCollector
 
         }
 
+        private void addCounterToDataView(string name, float criticalValue)
+        {
+            var index = dataGridView1.Rows.Add();
+            dataGridView1.Rows[index].Cells[1].Value = name;
+            dataGridView1.Rows[index].Cells[2].Value = 0;
+            dataGridView1.Rows[index].Cells[3].Value = 0;
+            dataGridView1.Rows[index].Cells[4].Value = criticalValue;
+        }
+
         private void deleteBtn_Click(object sender, EventArgs e)
         {
-            
-            foreach (DataGridViewRow row in dataGridView1.Rows)
+            if (MessageBox.Show("Usunąć zaznaczone liczniki?", "Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                object value = row.Cells[0].Value;
-                if (value != null && value.Equals("yes"))
+                for (int i = dataGridView1.Rows.Count - 1; i >= 0; i--)
                 {
-                    if (MessageBox.Show("Usunąć zaznaczone liczniki?", "Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    DataGridViewRow row = dataGridView1.Rows[i]; 
+                    object value = row.Cells[0].Value;
+                    if (value != null && value.Equals("yes"))
                     {
                         counters.RemoveAt(row.Index);
                         dataGridView1.Rows.RemoveAt(row.Index);
@@ -236,7 +248,17 @@ namespace PerfCountersCollector
 
         }
 
-    
-        
+        private void saveBtn_Click(object sender, EventArgs e)
+        {
+            if (fileHandler.saveCounters(counters))
+            {
+                MessageBox.Show("Liczniki zostały zapisane");
+            }
+            else
+            {
+                MessageBox.Show("Nie udało się zapisać liczników", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
     }
 }
