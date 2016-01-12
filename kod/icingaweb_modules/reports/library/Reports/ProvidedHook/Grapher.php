@@ -27,8 +27,12 @@ class Grapher extends GrapherHook
 	   return '';
 
         $output = $object->service_output;
-	$reportName = explode('=', $output)[1];
+	$reportNameTable = explode('=', $output);
 	
+	if (count($reportNameTable)!= 2)
+	   return '';
+	
+	$reportName = $reportNameTable[1];
 	$html = '<table class="name-value-table"><tr><th>Report generated</th>';
         $html .= '<td><a href="/reports/' . $reportName . '.html" target="_blank" class="action-link">Show report</a></td>';
         $html .= '</tr></table>';
