@@ -112,7 +112,7 @@ public class ReportHandler
 		}
 		
 		String reportText = removeDiacritics(sb.toString());
-		return reportText;
+		return "mikolaj";
 	}
 	
 	public void removeReport(String reportLocation)

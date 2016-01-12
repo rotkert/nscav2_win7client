@@ -11,6 +11,8 @@ public class Properties
 	private String reportClientId;
 	private String reportHostName;
 	private int receivingPort;
+	private String login;
+	private String password;
 	
 	public String getIp()
 	{
@@ -65,5 +67,27 @@ public class Properties
 	public void setReceivingPort(int receivingPort)
 	{
 		this.receivingPort = receivingPort;
+	}
+
+	public String getLogin()
+	{
+		return login;
+	}
+	
+	@XmlElement
+	public void setLogin(String login)
+	{
+		this.login = login;
+	}
+
+	public String getPassword()
+	{
+		return password;
+	}
+
+	@XmlElement
+	public void setPassword(String password)
+	{
+		this.password = password;
 	}
 }

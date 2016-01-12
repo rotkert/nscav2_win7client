@@ -19,6 +19,7 @@ public class ConfigProvider
 	private final String configPath = System.getenv(APP_DATA) + APP_DIR + "\\properties.xml";
 	private final String reportDirectory = System.getenv(APP_DATA) + APP_DIR + "\\reports";
 	private final String logDirecotry = System.getenv(APP_DATA) + APP_DIR + "\\logs";
+	private final String keyPath = System.getenv(APP_DATA) + APP_DIR + "\\key\\Providers__Provider1.pub";
 	private final String reportFileName = "\\report.html";
 	private final String newReportFileName = "\\new_report.html";
 	
@@ -28,6 +29,8 @@ public class ConfigProvider
 	private String reportClientId;
 	private String reportHostName;
 	private int receivingPort;
+	private String login;
+	private String password;
 	
 	private static class Holder
 	{
@@ -42,6 +45,11 @@ public class ConfigProvider
 	public String getLogDirecotry()
 	{
 		return logDirecotry;
+	}
+	
+	public String getKeyPath()
+	{
+		return keyPath;
 	}
 
 	public String getReportFileName()
@@ -110,6 +118,8 @@ public class ConfigProvider
 		reportClientId = properties.getReportClientId();
 		reportHostName = properties.getReportHostName();
 		receivingPort = properties.getReceivingPort();
+		login = properties.getLogin();
+		password = properties.getPassword();
 	}
 
 	public int getReceivingPort()
@@ -117,8 +127,13 @@ public class ConfigProvider
 		return receivingPort;
 	}
 
-	public void setReceivingPort(int receivingPort)
+	public String getLogin()
 	{
-		this.receivingPort = receivingPort;
+		return login;
+	}
+
+	public String getPassword()
+	{
+		return password;
 	}
 }
