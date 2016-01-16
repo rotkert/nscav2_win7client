@@ -86,7 +86,7 @@ public class ReportHandler
 		BufferedReader br = null;
 		InputStream is = null;
 		StringBuilder sb = new StringBuilder();
-		
+
 		reportLocation += ConfigProvider.getInstance().getNewReportFileName();
 		
 		try
@@ -101,17 +101,20 @@ public class ReportHandler
 			}
 
 			br.close();
-		} catch (FileNotFoundException e)
+			is.close();
+		} 
+		catch (FileNotFoundException e)
 		{
 			// TODO
 			System.out.println(ErrorMessages.REPORT_NOT_FOUND);
-		} catch (IOException e)
+		} 
+		catch (IOException e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		String reportText = removeDiacritics(sb.toString());
+		reportText = reportText.replaceAll("\\P{Print}", "");
 		return reportText;
 	}
 	
@@ -179,13 +182,10 @@ public class ReportHandler
 		{
 			reportText = reportText.replaceAll(entry.getKey(), entry.getValue());
 		}
-
 		// zamienia lewy nawias kwadratowy na cos innego
 		reportText = reportText.replaceAll("\\[", "&#91;");
-		
 		//zamienia dlugi myslnik na krotki :)
 		reportText = reportText.replaceAll("\u2014", "-");
-//		
 		return reportText;
 	}
 }

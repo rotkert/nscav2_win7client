@@ -64,7 +64,8 @@ public class CommunicationThread implements Runnable
 			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} catch (IOException e)
+			} 
+			catch (IOException e)
 			{
 				//dev
 				Writer.write(e.getMessage());

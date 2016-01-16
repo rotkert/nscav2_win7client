@@ -5,48 +5,61 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Date;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.locks.Lock;
 
 import inz.commons.Logger;
 import inz.commons.Severity;
 
 public class PerfmonHandler implements Runnable
 {
-	private static final String PS_SCRIPT = "\\extensions\\runPerfmon.ps1";
+	private static final String PS_SCRIPT = System.getenv("APPDATA") + "\\Nscav2_client\\extensions\\runPerfmon.ps1";
 	private BlockingQueue<PerfmonResult> blockingQueue;
 	private String counterCategory;
 	private ReportHandler reportHandler;
+	private Lock lock;
 
-	public PerfmonHandler(BlockingQueue<PerfmonResult> blockingQueue, String counterCategory)
+	public PerfmonHandler(BlockingQueue<PerfmonResult> blockingQueue, Lock lock, String counterCategory)
 	{
 		this.blockingQueue = blockingQueue;
 		this.counterCategory = counterCategory;
 		this.reportHandler = new ReportHandler();
+		this.lock = lock;
 	}
 	
 	public void run()
 	{
-		long timestamp = new Date().getTime() / 1000;
-		String reportLocation = runPerfmon();
-		
-		try 
+		if(lock.tryLock())
 		{
-			if (reportLocation != null)
+			long timestamp = new Date().getTime() / 1000;
+			String reportLocation = runPerfmon();
+			
+			try 
 			{
-				String reportName = getReportName(reportLocation);
-				reportHandler.setReportExecutionDetails(reportLocation, counterCategory, timestamp);
-				blockingQueue.put(new PerfmonResult(reportLocation, timestamp, counterCategory, reportName));
+				if (reportLocation != null)
+				{
+					String reportName = getReportName(reportLocation);
+					reportHandler.setReportExecutionDetails(reportLocation, counterCategory, timestamp);
+					blockingQueue.put(new PerfmonResult(reportLocation, timestamp, counterCategory, reportName));
+				}
+			}
+			catch (InterruptedException e)
+			{
+				Logger.getInstatnce().log(Severity.ERROR, e.getMessage());
+			}
+			finally
+			{
+				lock.unlock();
 			}
 		}
-		catch (InterruptedException e)
+		else
 		{
-			Logger.getInstatnce().log(Severity.ERROR, e.getMessage());
-		}	
+			Logger.getInstatnce().log(Severity.DEBUG, "Dianostyka jest ju¿ uruchomiona");
+		}
 	}
 	
 	private String runPerfmon()
 	{
-		String projectDirectory = System.getProperty("user.dir");
-		String command = "powershell.exe " + projectDirectory + PS_SCRIPT;
+		String command = "powershell.exe " + PS_SCRIPT;
 		Process powerShellProcess = null;
 		String reportLocation = null;
 		String line = null;
