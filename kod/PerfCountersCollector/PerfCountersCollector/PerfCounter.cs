@@ -16,8 +16,9 @@ namespace PerfCountersCollector
         private float avg;
         private String name;
         private String category;
+        private bool above;
 
-        public PerfCounter(String category, String instance, String counter, int queueSize, float criticalValue)
+        public PerfCounter(String category, String instance, String counter, int queueSize, float criticalValue, bool above)
         {
             this.counter = new System.Diagnostics.PerformanceCounter();
 
@@ -34,6 +35,7 @@ namespace PerfCountersCollector
             this.criticalValue = criticalValue;
             this.name = category + " " + counter + " " + instance;
             this.category = category;
+            this.above = above;
         }
 
         public System.Diagnostics.PerformanceCounter getCounter()
@@ -71,6 +73,11 @@ namespace PerfCountersCollector
             return queueSize;
         }
 
+        public bool isAbove()
+        {
+            return above;
+        }
+
         public void reset()
         {
             valuesQueue.Clear();
@@ -106,7 +113,14 @@ namespace PerfCountersCollector
             }
 
             avg = sum / queueSize;
-            return avg > criticalValue ? true : false;
+            if (above)
+            {
+                return avg > criticalValue ? true : false;
+            }
+            else
+            {
+                return avg < criticalValue ? true : false;
+            }
         }
     }
 }

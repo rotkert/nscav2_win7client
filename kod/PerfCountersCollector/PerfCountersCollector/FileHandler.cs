@@ -26,7 +26,8 @@ namespace PerfCountersCollector
                 foreach (PerfCounter perfCounter in perfCounters)
                 {
                     System.Diagnostics.PerformanceCounter counter = perfCounter.getCounter();
-                    string counterRow = string.Format("{0},{1},{2},{3},{4}", counter.CategoryName, counter.InstanceName, counter.CounterName, perfCounter.getQueueSize(), perfCounter.getCritivalValue());
+                    String isAboveSign = perfCounter.isAbove() ? "1" : "0";
+                    string counterRow = string.Format("{0},{1},{2},{3},{4},{5}", counter.CategoryName, counter.InstanceName, counter.CounterName, perfCounter.getQueueSize(), perfCounter.getCritivalValue(), isAboveSign);
                     sb.AppendLine(counterRow);
                 }
 
@@ -57,7 +58,8 @@ namespace PerfCountersCollector
                     string counterRow = sr.ReadLine();
                     string[] valuesTable = counterRow.Split(',');
 
-                    PerfCounter perfCounter = new PerfCounter(valuesTable[0], valuesTable[1], valuesTable[2], Int32.Parse(valuesTable[3]), float.Parse(valuesTable[4]));
+                    bool isAbove = Int32.Parse(valuesTable[5]) == 1 ? true : false;  
+                    PerfCounter perfCounter = new PerfCounter(valuesTable[0], valuesTable[1], valuesTable[2], Int32.Parse(valuesTable[3]), float.Parse(valuesTable[4]), isAbove);
                     perfCounters.Add(perfCounter);
                 }
             }

@@ -39,36 +39,41 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.isBelowRadio = new System.Windows.Forms.RadioButton();
+            this.isAboveRadio = new System.Windows.Forms.RadioButton();
+            this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
+            this.label7 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.deleteBtn = new System.Windows.Forms.Button();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.check = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.value = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.avgValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.criticalValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.infoLabel = new System.Windows.Forms.Label();
             this.sendCustomBtn = new System.Windows.Forms.Button();
             this.stopBtn = new System.Windows.Forms.Button();
             this.startBtn = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
-            this.label6 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
-            this.perfCounterBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.saveBtn = new System.Windows.Forms.Button();
+            this.perfCounterBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.check = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.value = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.avgValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.criticalValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Type = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.performanceCounter1)).BeginInit();
             this.groupBox1.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.perfCounterBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
@@ -82,7 +87,7 @@
             // timer1
             // 
             this.timer1.Enabled = true;
-            this.timer1.Interval = 4000;
+            this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // categoryCb
@@ -154,6 +159,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.groupBox3);
             this.groupBox1.Controls.Add(this.numericUpDown3);
             this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.label4);
@@ -172,6 +178,61 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Nowy licznik";
             // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.isBelowRadio);
+            this.groupBox3.Controls.Add(this.isAboveRadio);
+            this.groupBox3.Location = new System.Drawing.Point(11, 130);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(165, 39);
+            this.groupBox3.TabIndex = 15;
+            this.groupBox3.TabStop = false;
+            // 
+            // isBelowRadio
+            // 
+            this.isBelowRadio.AutoSize = true;
+            this.isBelowRadio.Location = new System.Drawing.Point(90, 11);
+            this.isBelowRadio.Name = "isBelowRadio";
+            this.isBelowRadio.Size = new System.Drawing.Size(64, 17);
+            this.isBelowRadio.TabIndex = 1;
+            this.isBelowRadio.Text = "mniejszy";
+            this.isBelowRadio.UseVisualStyleBackColor = true;
+            // 
+            // isAboveRadio
+            // 
+            this.isAboveRadio.AutoSize = true;
+            this.isAboveRadio.Checked = true;
+            this.isAboveRadio.Location = new System.Drawing.Point(6, 11);
+            this.isAboveRadio.Name = "isAboveRadio";
+            this.isAboveRadio.Size = new System.Drawing.Size(62, 17);
+            this.isAboveRadio.TabIndex = 0;
+            this.isAboveRadio.TabStop = true;
+            this.isAboveRadio.Text = "większy";
+            this.isAboveRadio.UseVisualStyleBackColor = true;
+            this.isAboveRadio.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
+            // 
+            // numericUpDown3
+            // 
+            this.numericUpDown3.Location = new System.Drawing.Point(300, 103);
+            this.numericUpDown3.Name = "numericUpDown3";
+            this.numericUpDown3.Size = new System.Drawing.Size(76, 20);
+            this.numericUpDown3.TabIndex = 14;
+            this.numericUpDown3.ThousandsSeparator = true;
+            this.numericUpDown3.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(213, 106);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(65, 13);
+            this.label7.TabIndex = 13;
+            this.label7.Text = "Ilość próbek";
+            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -186,7 +247,7 @@
             this.numericUpDown1.DecimalPlaces = 1;
             this.numericUpDown1.Location = new System.Drawing.Point(64, 104);
             this.numericUpDown1.Maximum = new decimal(new int[] {
-            10000,
+            100000000,
             0,
             0,
             0});
@@ -213,51 +274,12 @@
             this.name,
             this.value,
             this.avgValue,
-            this.criticalValue});
+            this.criticalValue,
+            this.Type});
             this.dataGridView1.Location = new System.Drawing.Point(12, 229);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(668, 150);
             this.dataGridView1.TabIndex = 11;
-            // 
-            // check
-            // 
-            this.check.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
-            this.check.HeaderText = "";
-            this.check.Name = "check";
-            this.check.TrueValue = "yes";
-            this.check.Width = 5;
-            // 
-            // name
-            // 
-            this.name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.name.FillWeight = 70F;
-            this.name.HeaderText = "Nazwa";
-            this.name.Name = "name";
-            this.name.ReadOnly = true;
-            // 
-            // value
-            // 
-            this.value.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.value.FillWeight = 10F;
-            this.value.HeaderText = "Wartość";
-            this.value.Name = "value";
-            this.value.ReadOnly = true;
-            // 
-            // avgValue
-            // 
-            this.avgValue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.avgValue.FillWeight = 10F;
-            this.avgValue.HeaderText = "Średnia";
-            this.avgValue.Name = "avgValue";
-            this.avgValue.ReadOnly = true;
-            // 
-            // criticalValue
-            // 
-            this.criticalValue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.criticalValue.FillWeight = 10F;
-            this.criticalValue.HeaderText = "Próg";
-            this.criticalValue.Name = "criticalValue";
-            this.criticalValue.ReadOnly = true;
             // 
             // groupBox2
             // 
@@ -275,6 +297,23 @@
             this.groupBox2.TabIndex = 13;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Połączenie";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(74, 37);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(120, 20);
+            this.textBox1.TabIndex = 18;
+            this.textBox1.Text = "127.0.0.1";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(19, 37);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(34, 13);
+            this.label6.TabIndex = 17;
+            this.label6.Text = "Adres";
             // 
             // infoLabel
             // 
@@ -344,49 +383,6 @@
             0});
             this.numericUpDown2.ValueChanged += new System.EventHandler(this.numericUpDown2_ValueChanged);
             // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(19, 37);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(34, 13);
-            this.label6.TabIndex = 17;
-            this.label6.Text = "Adres";
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(74, 37);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(120, 20);
-            this.textBox1.TabIndex = 18;
-            this.textBox1.Text = "127.0.0.1";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(213, 106);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(65, 13);
-            this.label7.TabIndex = 13;
-            this.label7.Text = "Ilość próbek";
-            // 
-            // numericUpDown3
-            // 
-            this.numericUpDown3.Location = new System.Drawing.Point(300, 103);
-            this.numericUpDown3.Name = "numericUpDown3";
-            this.numericUpDown3.Size = new System.Drawing.Size(76, 20);
-            this.numericUpDown3.TabIndex = 14;
-            this.numericUpDown3.ThousandsSeparator = true;
-            this.numericUpDown3.Value = new decimal(new int[] {
-            4,
-            0,
-            0,
-            0});
-            // 
-            // perfCounterBindingSource
-            // 
-            this.perfCounterBindingSource.DataSource = typeof(PerfCountersCollector.PerfCounter);
-            // 
             // saveBtn
             // 
             this.saveBtn.Location = new System.Drawing.Point(113, 385);
@@ -396,6 +392,57 @@
             this.saveBtn.Text = "Zapisz liczniki";
             this.saveBtn.UseVisualStyleBackColor = true;
             this.saveBtn.Click += new System.EventHandler(this.saveBtn_Click);
+            // 
+            // perfCounterBindingSource
+            // 
+            this.perfCounterBindingSource.DataSource = typeof(PerfCountersCollector.PerfCounter);
+            // 
+            // check
+            // 
+            this.check.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
+            this.check.HeaderText = "";
+            this.check.Name = "check";
+            this.check.TrueValue = "yes";
+            this.check.Width = 5;
+            // 
+            // name
+            // 
+            this.name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.name.FillWeight = 65F;
+            this.name.HeaderText = "Nazwa";
+            this.name.Name = "name";
+            this.name.ReadOnly = true;
+            // 
+            // value
+            // 
+            this.value.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.value.FillWeight = 10F;
+            this.value.HeaderText = "Wartość";
+            this.value.Name = "value";
+            this.value.ReadOnly = true;
+            // 
+            // avgValue
+            // 
+            this.avgValue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.avgValue.FillWeight = 10F;
+            this.avgValue.HeaderText = "Średnia";
+            this.avgValue.Name = "avgValue";
+            this.avgValue.ReadOnly = true;
+            // 
+            // criticalValue
+            // 
+            this.criticalValue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.criticalValue.FillWeight = 10F;
+            this.criticalValue.HeaderText = "Próg";
+            this.criticalValue.Name = "criticalValue";
+            this.criticalValue.ReadOnly = true;
+            // 
+            // Type
+            // 
+            this.Type.FillWeight = 5F;
+            this.Type.HeaderText = "Typ";
+            this.Type.Name = "Type";
+            this.Type.ReadOnly = true;
             // 
             // Form1
             // 
@@ -412,12 +459,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.performanceCounter1)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.perfCounterBindingSource)).EndInit();
             this.ResumeLayout(false);
 
@@ -439,11 +488,6 @@
         private System.Windows.Forms.Button deleteBtn;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn check;
-        private System.Windows.Forms.DataGridViewTextBoxColumn name;
-        private System.Windows.Forms.DataGridViewTextBoxColumn value;
-        private System.Windows.Forms.DataGridViewTextBoxColumn avgValue;
-        private System.Windows.Forms.DataGridViewTextBoxColumn criticalValue;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.GroupBox groupBox2;
@@ -458,6 +502,15 @@
         private System.Windows.Forms.NumericUpDown numericUpDown3;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button saveBtn;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.RadioButton isBelowRadio;
+        private System.Windows.Forms.RadioButton isAboveRadio;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn check;
+        private System.Windows.Forms.DataGridViewTextBoxColumn name;
+        private System.Windows.Forms.DataGridViewTextBoxColumn value;
+        private System.Windows.Forms.DataGridViewTextBoxColumn avgValue;
+        private System.Windows.Forms.DataGridViewTextBoxColumn criticalValue;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Type;
     }
 }
 

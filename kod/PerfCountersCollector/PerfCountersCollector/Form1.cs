@@ -27,7 +27,7 @@ namespace PerfCountersCollector
             counters = fileHandler.loadCounters();
             foreach(PerfCounter counter in counters)
             {
-                addCounterToDataView(counter.getName(), counter.getCritivalValue());
+                addCounterToDataView(counter.getName(), counter.getCritivalValue(), counter.isAbove());
             }
             
             System.Diagnostics.PerformanceCounterCategory[] categories = System.Diagnostics.PerformanceCounterCategory.GetCategories();
@@ -164,6 +164,7 @@ namespace PerfCountersCollector
             String name = nameCb.Text.ToString();
             decimal criticalValue = numericUpDown1.Value;
             decimal sampleAmount = numericUpDown3.Value;
+            bool isAbove = isAboveRadio.Checked;
 
             if (String.IsNullOrEmpty(category) || String.IsNullOrEmpty(name) || criticalValue == 0)
             {
@@ -174,7 +175,7 @@ namespace PerfCountersCollector
             {
                 try
                 {
-                    PerfCounter newCounter = new PerfCounter(category, instance, name, (int)sampleAmount, (float)criticalValue);
+                    PerfCounter newCounter = new PerfCounter(category, instance, name, (int)sampleAmount, (float)criticalValue, isAbove);
                     counters.Add(newCounter);
                     categoryCb.Text = "";
                     instanceCb.Text = "";
@@ -184,7 +185,7 @@ namespace PerfCountersCollector
                     instanceCb.Enabled = false;
                     nameCb.Enabled = false;
 
-                    addCounterToDataView(newCounter.getName(), newCounter.getCritivalValue());
+                    addCounterToDataView(newCounter.getName(), newCounter.getCritivalValue(), isAbove);
                 }
                 catch(System.InvalidOperationException ex)
                 {
@@ -194,13 +195,15 @@ namespace PerfCountersCollector
 
         }
 
-        private void addCounterToDataView(string name, float criticalValue)
+        private void addCounterToDataView(string name, float criticalValue, bool isAbove)
         {
+            String isAboveString = isAbove ? "Większy" : "Mniejszy";
             var index = dataGridView1.Rows.Add();
             dataGridView1.Rows[index].Cells[1].Value = name;
             dataGridView1.Rows[index].Cells[2].Value = 0;
             dataGridView1.Rows[index].Cells[3].Value = 0;
             dataGridView1.Rows[index].Cells[4].Value = criticalValue;
+            dataGridView1.Rows[index].Cells[5].Value = isAboveString;
         }
 
         private void deleteBtn_Click(object sender, EventArgs e)
@@ -258,6 +261,11 @@ namespace PerfCountersCollector
             {
                 MessageBox.Show("Nie udało się zapisać liczników", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
 
     }
