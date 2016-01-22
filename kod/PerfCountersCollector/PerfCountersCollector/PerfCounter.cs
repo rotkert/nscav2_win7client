@@ -33,7 +33,7 @@ namespace PerfCountersCollector
             this.lastValue = 0;
             this.avg = 0;
             this.criticalValue = criticalValue;
-            this.name = category + " " + counter + " " + instance;
+            this.name = category + ": " + counter + " (" + instance + ")";
             this.category = category;
             this.above = above;
         }
@@ -85,7 +85,7 @@ namespace PerfCountersCollector
             avg = 0;
         }
 
-        public bool Check()
+        public bool check()
         {
             float counterValue = counter.NextValue();
             lastValue = counterValue;

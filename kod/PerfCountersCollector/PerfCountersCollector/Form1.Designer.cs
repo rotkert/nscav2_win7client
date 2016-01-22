@@ -62,6 +62,7 @@
             this.perfCounterBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.check = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.queueSize = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.value = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.avgValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.criticalValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -229,9 +230,9 @@
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(213, 106);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(65, 13);
+            this.label7.Size = new System.Drawing.Size(74, 13);
             this.label7.TabIndex = 13;
-            this.label7.Text = "Ilość próbek";
+            this.label7.Text = "Liczba próbek";
             // 
             // label4
             // 
@@ -272,6 +273,7 @@
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.check,
             this.name,
+            this.queueSize,
             this.value,
             this.avgValue,
             this.criticalValue,
@@ -319,7 +321,7 @@
             // 
             this.infoLabel.AutoSize = true;
             this.infoLabel.ForeColor = System.Drawing.Color.Red;
-            this.infoLabel.Location = new System.Drawing.Point(19, 111);
+            this.infoLabel.Location = new System.Drawing.Point(19, 130);
             this.infoLabel.Name = "infoLabel";
             this.infoLabel.Size = new System.Drawing.Size(0, 13);
             this.infoLabel.TabIndex = 16;
@@ -408,10 +410,18 @@
             // name
             // 
             this.name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.name.FillWeight = 65F;
+            this.name.FillWeight = 60F;
             this.name.HeaderText = "Nazwa";
             this.name.Name = "name";
             this.name.ReadOnly = true;
+            // 
+            // queueSize
+            // 
+            this.queueSize.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.queueSize.FillWeight = 8F;
+            this.queueSize.HeaderText = "Próbki";
+            this.queueSize.Name = "queueSize";
+            this.queueSize.ReadOnly = true;
             // 
             // value
             // 
@@ -439,7 +449,8 @@
             // 
             // Type
             // 
-            this.Type.FillWeight = 5F;
+            this.Type.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Type.FillWeight = 10F;
             this.Type.HeaderText = "Typ";
             this.Type.Name = "Type";
             this.Type.ReadOnly = true;
@@ -507,6 +518,7 @@
         private System.Windows.Forms.RadioButton isAboveRadio;
         private System.Windows.Forms.DataGridViewCheckBoxColumn check;
         private System.Windows.Forms.DataGridViewTextBoxColumn name;
+        private System.Windows.Forms.DataGridViewTextBoxColumn queueSize;
         private System.Windows.Forms.DataGridViewTextBoxColumn value;
         private System.Windows.Forms.DataGridViewTextBoxColumn avgValue;
         private System.Windows.Forms.DataGridViewTextBoxColumn criticalValue;

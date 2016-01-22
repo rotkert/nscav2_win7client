@@ -27,7 +27,7 @@ namespace PerfCountersCollector
             counters = fileHandler.loadCounters();
             foreach(PerfCounter counter in counters)
             {
-                addCounterToDataView(counter.getName(), counter.getCritivalValue(), counter.isAbove());
+                addCounterToDataView(counter.getName(), counter.getQueueSize(), counter.getCritivalValue(), counter.isAbove());
             }
             
             System.Diagnostics.PerformanceCounterCategory[] categories = System.Diagnostics.PerformanceCounterCategory.GetCategories();
@@ -44,14 +44,14 @@ namespace PerfCountersCollector
             {
                 PerfCounter counter = counters[i];
 
-                if (counter.Check() && isSendMode)
+                if (counter.check() && isSendMode)
                 {
                     criticalCounters.Add(counter.getCategory() + "=1");
                 }
                 else
                 {
-                    dataGridView1.Rows[i].Cells[2].Value = counter.getLastValue();
-                    dataGridView1.Rows[i].Cells[3].Value = counter.getAvg();
+                    dataGridView1.Rows[i].Cells[3].Value = counter.getLastValue();
+                    dataGridView1.Rows[i].Cells[4].Value = counter.getAvg();
                 }
 
             }
@@ -185,7 +185,7 @@ namespace PerfCountersCollector
                     instanceCb.Enabled = false;
                     nameCb.Enabled = false;
 
-                    addCounterToDataView(newCounter.getName(), newCounter.getCritivalValue(), isAbove);
+                    addCounterToDataView(newCounter.getName(), newCounter.getQueueSize(), newCounter.getCritivalValue(), isAbove);
                 }
                 catch(System.InvalidOperationException ex)
                 {
@@ -195,15 +195,16 @@ namespace PerfCountersCollector
 
         }
 
-        private void addCounterToDataView(string name, float criticalValue, bool isAbove)
+        private void addCounterToDataView(string name, int queueSize, float criticalValue, bool isAbove)
         {
             String isAboveString = isAbove ? "Większy" : "Mniejszy";
             var index = dataGridView1.Rows.Add();
             dataGridView1.Rows[index].Cells[1].Value = name;
-            dataGridView1.Rows[index].Cells[2].Value = 0;
+            dataGridView1.Rows[index].Cells[2].Value = queueSize;
             dataGridView1.Rows[index].Cells[3].Value = 0;
-            dataGridView1.Rows[index].Cells[4].Value = criticalValue;
-            dataGridView1.Rows[index].Cells[5].Value = isAboveString;
+            dataGridView1.Rows[index].Cells[4].Value = 0;
+            dataGridView1.Rows[index].Cells[5].Value = criticalValue;
+            dataGridView1.Rows[index].Cells[6].Value = isAboveString;
         }
 
         private void deleteBtn_Click(object sender, EventArgs e)
