@@ -91,8 +91,8 @@ namespace PerfCountersCollector
                 PerfCounter counter = counters[i];
 
                 counter.reset();
-                dataGridView1.Rows[i].Cells[2].Value = counter.getLastValue();
-                dataGridView1.Rows[i].Cells[3].Value = counter.getAvg();
+                dataGridView1.Rows[i].Cells[3].Value = counter.getLastValue();
+                dataGridView1.Rows[i].Cells[4].Value = counter.getAvg();
             }
         }
 

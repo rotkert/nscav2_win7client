@@ -42,7 +42,7 @@ public class CommunicationThread implements Runnable
 				
 				String reportName = perfmonResult.getReportName();
 				String reportLocation = perfmonResult.getReportLocation();
-				String counterName = perfmonResult.getCounterCategory();
+				String counterName = reportHandler.removeDiacritics(perfmonResult.getCounterCategory());
 				long timestamp = perfmonResult.getTimestamp();
 				String reportText = reportHandler.getReportText(reportLocation);
 				

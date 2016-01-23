@@ -175,7 +175,7 @@ public class ReportHandler
 		return perfmonResult;
 	}
 	
-	private String removeDiacritics(String reportText) 
+	public String removeDiacritics(String reportText) 
 	{
 		// zamienia polskie znaki diakretyczne na ichodpowiedniki bez "ogonkow"
 		for (Map.Entry<String, String> entry : polishDiacriticsDict.entrySet())
