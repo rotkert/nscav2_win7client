@@ -73,6 +73,13 @@ void DiagnosticsConsumer::consumeDataPortion(const ReadPortion *portion,
 		
 		LOG_ENTRY(MyLogger::INFO, " Size: "<<strs.size());
 		
+		if (strs.size() != 3)
+		{
+			LOG_ENTRY(MyLogger::FATAL, "Cannot find report in separators");
+                	MyNscaMain::shutDown();
+                	return;	
+		}
+
 		std::string logEnd = tmpString;
 		std::string reportName = strs[2];
 		std::string reportText = strs[1];
@@ -105,6 +112,7 @@ void DiagnosticsConsumer::writeToDir(std::string reportName, std::string reportT
 	QFile file(filepath);
 	QString reportTextQStr = QString::fromUtf8(reportText.c_str());
 	
+	reportTextQStr.replace(QString("&#91;"), QString("["));	
 	if(file.open(QIODevice::ReadWrite)) {
 		QTextStream stream(&file);
 		stream << reportTextQStr << endl;
@@ -112,8 +120,8 @@ void DiagnosticsConsumer::writeToDir(std::string reportName, std::string reportT
 	}
 	else {
 		LOG_ENTRY(MyLogger::FATAL, "Unable to open " << filepath <<".html");
-        MyNscaMain::shutDown();
-        return;
+        	MyNscaMain::shutDown();
+        	return;
 	}
 }
 

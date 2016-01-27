@@ -6,10 +6,11 @@ class Reports_IndexController extends ModuleActionController
 {
     public function indexAction()
     {
+
 	$servername = "localhost";
 	$username = "root";
 	$password = "root";
-	$dbname = "icinga2idomysql";
+	$dbname = "icinga2";
 
 	// Create connection
 	$conn = mysqli_connect($servername, $username, $password, $dbname);
@@ -18,7 +19,7 @@ class Reports_IndexController extends ModuleActionController
     	    die("Connection failed: " . mysqli_connect_error());
 	}
 
-	$sql = "SELECT sh.state_time, sh.output, o.name1 FROM icinga_statehistory sh join icinga_objects o on o.object_id = sh.object_id where sh.object_id = 166 and sh.state = 2 order by sh.statehistory_id desc";
+	$sql = "SELECT sh.state_time, sh.output, o.name1 FROM icinga_statehistory sh join icinga_objects o on o.object_id = sh.object_id where sh.object_id = 99 and sh.state = 2 order by sh.statehistory_id desc";
 	$result = mysqli_query($conn, $sql);
 
 	$returnHtml = "<div class='content'><table id='reportsTable' class='state-table' style='border-collapse:separate; border-spacing:1px'>";
