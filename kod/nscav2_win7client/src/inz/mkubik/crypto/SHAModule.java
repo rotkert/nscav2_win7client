@@ -1,4 +1,4 @@
-package inz.crypto;
+package inz.mkubik.crypto;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

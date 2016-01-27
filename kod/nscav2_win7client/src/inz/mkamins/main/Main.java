@@ -6,7 +6,6 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import javax.xml.bind.JAXBException;
 
-import inz.crypto.CryptoManager;
 import inz.mkamins.commons.ConfigProvider;
 import inz.mkamins.commons.Logger;
 import inz.mkamins.commons.Severity;
@@ -14,6 +13,7 @@ import inz.mkamins.perfmon.PerfmonResult;
 import inz.mkamins.perfmon.ReportHandler;
 import inz.mkamins.receiver.Receiver;
 import inz.mkamins.socket.CommunicationThread;
+import inz.mkubik.crypto.CryptoManager;
 
 public class Main
 {

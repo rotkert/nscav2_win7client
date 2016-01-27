@@ -7,7 +7,7 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.nio.ByteBuffer;
 
-import inz.crypto.CryptoManager;
+import inz.mkubik.crypto.CryptoManager;
 
 public class SocketRunner
 {

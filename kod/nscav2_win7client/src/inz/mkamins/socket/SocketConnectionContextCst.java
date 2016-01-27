@@ -1,12 +1,12 @@
 package inz.mkamins.socket;
 
-import inz.message.MessageDecrypter;
 import inz.mkamins.data.DataPackProvider;
 import inz.mkamins.message.DatabaseProvider;
 import inz.mkamins.message.MessageFormerCst;
-import inz.socket.SocketConnectionContext;
-import inz.socket.SocketConnectionState;
-import inz.state.WaitingForHello;
+import inz.mkubik.message.MessageDecrypter;
+import inz.mkubik.socket.SocketConnectionContext;
+import inz.mkubik.socket.SocketConnectionState;
+import inz.mkubik.state.WaitingForHello;
 
 public class SocketConnectionContextCst extends SocketConnectionContext
 {

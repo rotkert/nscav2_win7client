@@ -1,16 +1,16 @@
-package inz.message;
+package inz.mkubik.message;
 
 import java.security.SecureRandom;
 import java.util.ArrayList;
 
-import inz.crypto.CryptoManager;
 import inz.mkamins.data.IcingaLog;
 import inz.mkamins.logger.AndroidLogger;
 import inz.mkamins.logger.Level;
 import inz.mkamins.message.DatabaseProvider;
 import inz.mkamins.message.SharedPreferencesProxy;
 import inz.mkamins.socket.ClientSocket;
-import inz.state.StateUtils;
+import inz.mkubik.crypto.CryptoManager;
+import inz.mkubik.state.StateUtils;
 
 /**
  * Class used to form data that will be send to remote server

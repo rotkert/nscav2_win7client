@@ -1,12 +1,12 @@
-package inz.state;
+package inz.mkubik.state;
 
 import java.net.Socket;
 
 import inz.mkamins.logger.AndroidLogger;
 import inz.mkamins.logger.Level;
 import inz.mkamins.state.WaitingForWaitingForLogsCst;
-import inz.socket.SocketConnectionContext;
-import inz.socket.SocketConnectionState;
+import inz.mkubik.socket.SocketConnectionContext;
+import inz.mkubik.socket.SocketConnectionState;
 
 public class WaitingForRequestPassword implements SocketConnectionState {
 

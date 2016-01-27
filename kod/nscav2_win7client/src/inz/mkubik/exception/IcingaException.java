@@ -1,4 +1,4 @@
-package inz.exception;
+package inz.mkubik.exception;
 
 /**
  * Class used as an exception. Raised, when events strange or unexpected for

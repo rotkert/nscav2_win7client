@@ -3,9 +3,9 @@ package inz.mkamins.state;
 import inz.mkamins.logger.AndroidLogger;
 import inz.mkamins.logger.Level;
 import inz.mkamins.socket.SocketConnectionContextCst;
-import inz.socket.SocketConnectionContext;
-import inz.socket.SocketConnectionState;
-import inz.state.WaitingForWaitingForLogs;
+import inz.mkubik.socket.SocketConnectionContext;
+import inz.mkubik.socket.SocketConnectionState;
+import inz.mkubik.state.WaitingForWaitingForLogs;
 
 public class WaitingForWaitingForLogsCst extends WaitingForWaitingForLogs
 {

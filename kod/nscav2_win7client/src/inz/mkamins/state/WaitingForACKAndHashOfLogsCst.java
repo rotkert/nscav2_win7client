@@ -1,7 +1,7 @@
 package inz.mkamins.state;
 
-import inz.socket.SocketConnectionState;
-import inz.state.WaitingForACKAndHashOfLogs;
+import inz.mkubik.socket.SocketConnectionState;
+import inz.mkubik.state.WaitingForACKAndHashOfLogs;
 
 public class WaitingForACKAndHashOfLogsCst extends WaitingForACKAndHashOfLogs
 {

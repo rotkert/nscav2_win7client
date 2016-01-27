@@ -1,4 +1,4 @@
-package inz.crypto;
+package inz.mkubik.crypto;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
@@ -9,9 +9,9 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 
-import inz.exception.IcingaException;
 import inz.mkamins.logger.AndroidLogger;
 import inz.mkamins.logger.Level;
+import inz.mkubik.exception.IcingaException;
 
 /**
  * Class used for symmetric encryption and decryption of data that is sent to

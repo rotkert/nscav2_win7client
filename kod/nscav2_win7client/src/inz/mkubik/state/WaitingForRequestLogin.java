@@ -1,25 +1,22 @@
-package inz.state;
+package inz.mkubik.state;
 
 import java.net.Socket;
 import java.net.SocketException;
 
 import inz.mkamins.logger.AndroidLogger;
 import inz.mkamins.logger.Level;
-import inz.socket.SocketConnectionContext;
-import inz.socket.SocketConnectionState;
+import inz.mkubik.socket.SocketConnectionContext;
+import inz.mkubik.socket.SocketConnectionState;
 
-public class WaitingForACKAfterChooseProtocol implements SocketConnectionState {
-
-	public static final int SOCKET_TIMEOUT = 4000;
+public class WaitingForRequestLogin implements SocketConnectionState {
 
 	public byte[] getDataToSend(SocketConnectionContext socketConnectionContext) {
 		AndroidLogger.INSTANCE.writeToLog(this.getClass(), Level.INFO,
 				"Getting data to send");
-		return socketConnectionContext.getMessageFormer().formClientID();
+		return socketConnectionContext.getMessageFormer().formLogin();
 	}
 
 	public void onTimeout() {
-
 	}
 
 	public void setTimeout(Socket socket) {
@@ -35,12 +32,12 @@ public class WaitingForACKAfterChooseProtocol implements SocketConnectionState {
 			int sizeOfMessage, byte[] text) {
 		AndroidLogger.INSTANCE.writeToLog(this.getClass(), Level.INFO,
 				"Proceeding text");
-		return socketConnectionContext.getMessageDecrypter()
-				.checkACKAfterChooseProtocol(sizeOfMessage, text);
+		return socketConnectionContext.getMessageDecrypter().checkRequestLogin(
+				sizeOfMessage, text);
 	}
 
 	public SocketConnectionState setNewState() {
-		return new WaitingForChooseAlgorithmAndIDHash();
+		return new WaitingForRequestPassword();
 	}
 
 }

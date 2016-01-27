@@ -2,8 +2,8 @@ package inz.mkamins.state;
 
 import java.net.Socket;
 
-import inz.socket.SocketConnectionContext;
-import inz.socket.SocketConnectionState;
+import inz.mkubik.socket.SocketConnectionContext;
+import inz.mkubik.socket.SocketConnectionState;
 
 public class LogsSent implements SocketConnectionState
 {

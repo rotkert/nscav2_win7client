@@ -1,6 +1,6 @@
 package inz.mkamins.state;
 
-import inz.state.StateUtils;
+import inz.mkubik.state.StateUtils;
 
 public class StateUtilsCst extends StateUtils
 {

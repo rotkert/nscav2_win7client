@@ -1,4 +1,4 @@
-package inz.state;
+package inz.mkubik.state;
 
 import java.lang.reflect.Field;
 

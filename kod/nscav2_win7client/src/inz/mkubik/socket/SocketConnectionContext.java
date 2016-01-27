@@ -1,14 +1,14 @@
-package inz.socket;
+package inz.mkubik.socket;
 
 import java.net.Socket;
 
-import inz.message.MessageDecrypter;
-import inz.message.MessageFormer;
 import inz.mkamins.logger.AndroidLogger;
 import inz.mkamins.logger.Level;
 import inz.mkamins.message.DatabaseProvider;
-import inz.state.WaitingForHello;
-import inz.state.WrongMessageState;
+import inz.mkubik.message.MessageDecrypter;
+import inz.mkubik.message.MessageFormer;
+import inz.mkubik.state.WaitingForHello;
+import inz.mkubik.state.WrongMessageState;
 
 /**
  * Class used in MachineState pattern as a context

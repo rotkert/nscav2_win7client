@@ -1,4 +1,4 @@
-package inz.socket;
+package inz.mkubik.socket;
 
 import java.net.Socket;
 

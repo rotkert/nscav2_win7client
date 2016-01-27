@@ -1,10 +1,10 @@
-package inz.message;
+package inz.mkubik.message;
 
-import inz.crypto.CryptoManager;
 import inz.mkamins.logger.AndroidLogger;
 import inz.mkamins.logger.Level;
 import inz.mkamins.socket.ClientSocket;
-import inz.state.StateUtils;
+import inz.mkubik.crypto.CryptoManager;
+import inz.mkubik.state.StateUtils;
 
 /**
  * Class used to decrypt and check data that are received from server

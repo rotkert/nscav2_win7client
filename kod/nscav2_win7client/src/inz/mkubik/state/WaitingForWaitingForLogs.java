@@ -1,23 +1,23 @@
-package inz.state;
+package inz.mkubik.state;
 
 import java.net.Socket;
 import java.net.SocketException;
 
 import inz.mkamins.logger.AndroidLogger;
 import inz.mkamins.logger.Level;
-import inz.socket.SocketConnectionContext;
-import inz.socket.SocketConnectionState;
+import inz.mkubik.socket.SocketConnectionContext;
+import inz.mkubik.socket.SocketConnectionState;
 
-public class WaitingForACKAndHashOfLogs implements SocketConnectionState {
-
+public class WaitingForWaitingForLogs implements SocketConnectionState {
+	
 	public byte[] getDataToSend(SocketConnectionContext socketConnectionContext) {
 		AndroidLogger.INSTANCE.writeToLog(this.getClass(), Level.INFO,
 				"Getting data to send");
-		//return socketConnectionContext.getMessageFormer().formLog(socketConnectionContext.getDatabaseProvider());
-		return socketConnectionContext.getMessageFormer().formEnd();
+		return socketConnectionContext.getMessageFormer().formLog(socketConnectionContext.getDatabaseProvider());
 	}
 
 	public void onTimeout() {
+
 	}
 
 	public void setTimeout(Socket socket) {
@@ -33,9 +33,8 @@ public class WaitingForACKAndHashOfLogs implements SocketConnectionState {
 			int sizeOfMessage, byte[] text) {
 		AndroidLogger.INSTANCE.writeToLog(this.getClass(), Level.INFO,
 				"Proceeding text");
-
 		return socketConnectionContext.getMessageDecrypter()
-				.checkACKAndHashOfLogs(sizeOfMessage, text);
+				.checkWaitingForLogs(sizeOfMessage, text);
 	}
 
 	public SocketConnectionState setNewState() {
