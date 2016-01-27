@@ -7,12 +7,13 @@ import java.util.Date;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.locks.Lock;
 
+import inz.mkamins.commons.ConfigProvider;
 import inz.mkamins.commons.Logger;
 import inz.mkamins.commons.Severity;
 
 public class PerfmonHandler implements Runnable
 {
-	private static final String PS_SCRIPT = System.getenv("APPDATA") + "\\Nscav2_client\\extensions\\runPerfmon.ps1";
+	private final String psScript;
 	private BlockingQueue<PerfmonResult> blockingQueue;
 	private String counterCategory;
 	private ReportHandler reportHandler;
@@ -20,6 +21,7 @@ public class PerfmonHandler implements Runnable
 
 	public PerfmonHandler(BlockingQueue<PerfmonResult> blockingQueue, Lock lock, String counterCategory)
 	{
+		this.psScript = ConfigProvider.getInstance().getPsScriptPath();
 		this.blockingQueue = blockingQueue;
 		this.counterCategory = counterCategory;
 		this.reportHandler = new ReportHandler();
@@ -31,10 +33,11 @@ public class PerfmonHandler implements Runnable
 		if(lock.tryLock())
 		{
 			long timestamp = new Date().getTime() / 1000;
-			String reportLocation = runPerfmon();
 			
 			try 
 			{
+				String reportLocation = runPerfmon();
+				
 				if (reportLocation != null)
 				{
 					String reportName = getReportName(reportLocation);
@@ -45,6 +48,9 @@ public class PerfmonHandler implements Runnable
 			catch (InterruptedException e)
 			{
 				Logger.getInstatnce().log(Severity.ERROR, e.getMessage());
+			} catch (IOException e)
+			{
+				Logger.getInstatnce().log(Severity.ERROR, "Error while running diagnostics: " +  e.getMessage());
 			}
 			finally
 			{
@@ -53,13 +59,16 @@ public class PerfmonHandler implements Runnable
 		}
 		else
 		{
-			Logger.getInstatnce().log(Severity.DEBUG, "Dianostyka jest ju¿ uruchomiona");
+			Logger.getInstatnce().log(Severity.DEBUG, "Diagnostics is already running");
 		}
 	}
 	
-	private String runPerfmon()
+	private String runPerfmon() throws IOException
 	{
-		String command = "powershell.exe " + PS_SCRIPT;
+		int diagDuration = ConfigProvider.getInstance().getDiagnosticsDuration();
+		String diagName = ConfigProvider.getInstance().getDiagnosticsName();
+		
+		String command = "powershell.exe " + psScript + " -diagDuration " + diagDuration + " -diagName " + diagName;
 		Process powerShellProcess = null;
 		String reportLocation = null;
 		String line = null;
@@ -67,42 +76,33 @@ public class PerfmonHandler implements Runnable
 		
 		BufferedReader stdout = null;
 		BufferedReader stderr = null;
-		
-		try
-		{
-			powerShellProcess = Runtime.getRuntime().exec(command);
-			powerShellProcess.getOutputStream().close();
 	
-			stdout = new BufferedReader(new InputStreamReader(powerShellProcess.getInputStream()));
-			builder = new StringBuilder();
-			while((line = stdout.readLine()) != null)
-			{
-				builder.append(line);
-			}
-			reportLocation = builder.toString();
-			stdout.close();
-			
-			String errorText = null;
-			stderr = new BufferedReader(new InputStreamReader(powerShellProcess.getErrorStream()));
-			builder = new StringBuilder();
-			while((line = stderr.readLine()) != null)
-			{
-				builder.append(line);
-			}
-			errorText = builder.toString();
-			
-			if (errorText != null && !errorText.equals(""))
-			{
-				IOException e = new IOException(errorText);
-				throw e;
-			}
-			
-			stderr.close();
-		} 
-		catch (IOException e)
+		powerShellProcess = Runtime.getRuntime().exec(command);
+		powerShellProcess.getOutputStream().close();
+
+		stdout = new BufferedReader(new InputStreamReader(powerShellProcess.getInputStream()));
+		builder = new StringBuilder();
+		while((line = stdout.readLine()) != null)
 		{
-			Logger.getInstatnce().log(Severity.ERROR, e.getMessage());
-			reportLocation = null;
+			builder.append(line);
+		}
+		reportLocation = builder.toString();
+		stdout.close();
+		
+		String errorText = null;
+		stderr = new BufferedReader(new InputStreamReader(powerShellProcess.getErrorStream()));
+		builder = new StringBuilder();
+		while((line = stderr.readLine()) != null)
+		{
+			builder.append(line);
+		}
+		errorText = builder.toString();
+		
+		stderr.close();
+		
+		if (errorText != null && !errorText.equals(""))
+		{
+			throw new IOException(errorText);
 		}
 		
 		return reportLocation;

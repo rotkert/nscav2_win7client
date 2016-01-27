@@ -17,6 +17,7 @@ public class ConfigProvider
 	private final String reportDirectory = System.getenv(APP_DATA) + APP_DIR + "\\reports";
 	private final String logDirecotry = System.getenv(APP_DATA) + APP_DIR + "\\logs";
 	private final String keyPath = System.getenv(APP_DATA) + APP_DIR + "\\key\\Providers__Provider1.pub";
+	private final String psScriptPath = System.getenv(APP_DATA) + APP_DIR + "\\extensions\\runPerfmon.ps1";
 	private final String reportFileName = "\\report.html";
 	private final String newReportFileName = "\\new_report.html";
 	
@@ -30,6 +31,10 @@ public class ConfigProvider
 	private String login;
 	private String password;
 	private int receivingPort;
+	private int icingaServerTimeout;
+	private int waitForConnection;
+	private int diagnosticsDuration;
+	private String diagnosticsName;
 	
 	private static class Holder
 	{
@@ -49,6 +54,11 @@ public class ConfigProvider
 	public String getKeyPath()
 	{
 		return keyPath;
+	}
+	
+	public String getPsScriptPath()
+	{
+		return psScriptPath;
 	}
 
 	public String getReportFileName()
@@ -111,6 +121,28 @@ public class ConfigProvider
 		return receivingPort;
 	}
 	
+
+	public int getIcingaServerTimeout()
+	{
+		return icingaServerTimeout;
+	}
+
+
+	public int getWaitForConnection()
+	{
+		return waitForConnection;
+	}
+	
+	public int getDiagnosticsDuration()
+	{
+		return diagnosticsDuration;
+	}
+	
+	public String getDiagnosticsName()
+	{
+		return diagnosticsName;
+	}
+	
 	public static ConfigProvider getInstance() 
 	{
 		return Holder.INSTANCE;
@@ -146,5 +178,10 @@ public class ConfigProvider
 		login = properties.getLogin();
 		password = properties.getPassword();
 		receivingPort = properties.getReceivingPort();
+		icingaServerTimeout = properties.getIcingaServerTimeout();
+		waitForConnection = properties.getWaitForConnection();
+		diagnosticsDuration = properties.getDiagnosticsDuration();
+		diagnosticsName = properties.getDiagnosticsName();
 	}
+
 }

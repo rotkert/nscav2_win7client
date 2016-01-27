@@ -18,6 +18,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import inz.mkamins.commons.ConfigProvider;
+import inz.mkamins.commons.Logger;
+import inz.mkamins.commons.Severity;
 
 public class ReportHandler
 {
@@ -69,13 +71,12 @@ public class ReportHandler
 				} 
 				catch (InterruptedException e)
 				{
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
 			else
 			{
-				//TODO
+				Logger.getInstatnce().log(Severity.DEBUG, "Couldnt find report:" + reportDir + " " + reportDirName);
 			}
 		}
 	}
@@ -92,7 +93,7 @@ public class ReportHandler
 		{
 			is = new FileInputStream(reportLocation);
 			br = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-16")));
-
+			
 			String line = "";
 			while ((line = br.readLine()) != null)
 			{
@@ -104,16 +105,21 @@ public class ReportHandler
 		} 
 		catch (FileNotFoundException e)
 		{
-			// TODO
-			System.out.println("Report not found");
+			Logger.getInstatnce().log(Severity.ERROR, "Couldnt find report: " + reportLocation);
 		} 
 		catch (IOException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Logger.getInstatnce().log(Severity.ERROR, "Error while reading report text");
 		}
-		String reportText = removeDiacritics(sb.toString());
-		reportText = reportText.replaceAll("\\P{Print}", "");
+		
+		String reportText = sb.toString();
+		
+		if (reportText != null)
+		{
+			reportText = removeDiacritics(reportText);
+			reportText = reportText.replaceAll("\\P{Print}", "");		
+		}
+		
 		return reportText;
 	}
 	
@@ -129,24 +135,18 @@ public class ReportHandler
 		reportDir.delete();
 	}
 	
-	void setReportExecutionDetails(String reportLocation, String counterName, long timestamp) 
+	void setReportExecutionDetails(String reportLocation, String counterName, long timestamp) throws IOException 
 	{
 		File input = new File(reportLocation + ConfigProvider.getInstance().getReportFileName());
 		Document doc = null;
-		try
-		{
-			doc = Jsoup.parse(input, "UTF-16");
-			Element table = (Element) doc.getElementById("c_1").getElementsByClass("info").get(0).parentNode().parentNode();
-			table.append("<tr><td class='h4'>Przyczyna: </td><td class='info' id='CriticalSituationType'>" + counterName + "</td></tr><tr><td class='h4'>Stempel czasu: </td><td class='info' id='timestamp'>" + timestamp + "</td></tr>");
-			PrintWriter writer = new PrintWriter(reportLocation + "\\new_report.html", "UTF-16");
-			writer.print(doc.toString());
-			writer.close();
-		} 
-		catch (IOException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+		doc = Jsoup.parse(input, "UTF-16");
+		Element table = (Element) doc.getElementById("c_1").getElementsByClass("info").get(0).parentNode().parentNode();
+		table.append("<tr><td class='h4'>Przyczyna: </td><td class='info' id='CriticalSituationType'>" + counterName + "</td></tr><tr><td class='h4'>Stempel czasu: </td><td class='info' id='timestamp'>" + timestamp + "</td></tr>");
+		PrintWriter writer = new PrintWriter(reportLocation + ConfigProvider.getInstance().getNewReportFileName(), "UTF-16");
+		writer.print(doc.toString());
+		writer.close();
+		
 	}
 	
 	private PerfmonResult getReportExecutionDetails(String reportDir, String reportName)
@@ -167,8 +167,7 @@ public class ReportHandler
 		} 
 		catch (IOException e)
 		{
-			//TODO
-			System.out.println(e.getMessage());
+			Logger.getInstatnce().log(Severity.ERROR, "Couldnt  load execution details");
 		}
 		
 		return perfmonResult;
@@ -176,15 +175,17 @@ public class ReportHandler
 	
 	public String removeDiacritics(String reportText) 
 	{
-		// zamienia polskie znaki diakretyczne na ichodpowiedniki bez "ogonkow"
+		// zamienia polskie znaki diakretyczne na ich odpowiedniki bez "ogonkow"
 		for (Map.Entry<String, String> entry : polishDiacriticsDict.entrySet())
 		{
 			reportText = reportText.replaceAll(entry.getKey(), entry.getValue());
 		}
-		// zamienia lewy nawias kwadratowy na cos innego
+		
+		// koduje lewy nawias kwadratowy
 		reportText = reportText.replaceAll("\\[", "&#91;");
 		//zamienia dlugi myslnik na krotki :)
 		reportText = reportText.replaceAll("\u2014", "-");
+		
 		return reportText;
 	}
 }

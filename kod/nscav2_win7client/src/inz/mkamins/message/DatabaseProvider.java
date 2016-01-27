@@ -4,18 +4,16 @@ import java.util.ArrayList;
 
 import inz.mkamins.data.IcingaLog;
 
+//Used in ovrriden method
 public class DatabaseProvider
 {
-
 	public ArrayList<IcingaLog> getDataToSend()
 	{
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	public String getMostFilledTableName()
 	{
-		// TODO Auto-generated method stub
 		return null;
 	}
 

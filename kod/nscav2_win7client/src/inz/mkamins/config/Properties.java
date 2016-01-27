@@ -15,6 +15,10 @@ public class Properties
 	private String login;
 	private String password;
 	private int receivingPort;
+	private int icingaServerTimeout;
+	private int waitForConnection;
+	private int diagnosticsDuration;
+	private String diagnosticsName;
 	
 	public String getIp()
 	{
@@ -113,5 +117,49 @@ public class Properties
 	public void setReceivingPort(int receivingPort)
 	{
 		this.receivingPort = receivingPort;
+	}
+
+	public int getIcingaServerTimeout()
+	{
+		return icingaServerTimeout;
+	}
+	
+	@XmlElement
+	public void setIcingaServerTimeout(int icingaServerTimeout)
+	{
+		this.icingaServerTimeout = icingaServerTimeout;
+	}
+
+	public int getWaitForConnection()
+	{
+		return waitForConnection;
+	}
+	
+	@XmlElement
+	public void setWaitForConnection(int waitForConnection)
+	{
+		this.waitForConnection = waitForConnection;
+	}
+
+	public int getDiagnosticsDuration()
+	{
+		return diagnosticsDuration;
+	}
+	
+	@XmlElement
+	public void setDiagnosticsDuration(int diagnosticsDuration)
+	{
+		this.diagnosticsDuration = diagnosticsDuration;
+	}
+
+	public String getDiagnosticsName()
+	{
+		return diagnosticsName;
+	}
+
+	@XmlElement
+	public void setDiagnosticsName(String diagnosticsName)
+	{
+		this.diagnosticsName = diagnosticsName;
 	}
 }

@@ -22,7 +22,9 @@ public class Receiver
 		int port = ConfigProvider.getInstance().getReceivingPort();
 		ServerSocket serverSocket = new ServerSocket(port);
 		Lock lock = new ReentrantLock();
-		Logger.getInstatnce().log(Severity.DEBUG, "Rozpoczêto nas³uvhiwanie");
+		
+		Logger.getInstatnce().log(Severity.DEBUG, "Apllication started listening on port: " + port);
+		
 		while(true)
 		{	
 			Socket socket = serverSocket.accept();
@@ -31,7 +33,9 @@ public class Receiver
 			byte[] message = new byte[1024];
 			int bytesRead = is.read(message);
 			String counterCategory = new String(message, 0, bytesRead, "UTF-8");
-			Logger.getInstatnce().log(Severity.INFO, "Odebrano porcjê danych: " + counterCategory);
+			
+			Logger.getInstatnce().log(Severity.INFO, "Received data portion: " + counterCategory);
+			
 			new Thread(new PerfmonHandler(blockingQueue,lock, counterCategory)).start();
 		}
 			

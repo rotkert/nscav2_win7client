@@ -18,20 +18,17 @@ public class LogsSent implements SocketConnectionState
 	public void onTimeout()
 	{
 		// Nothing to do
-		
 	}
 
 	@Override
 	public void setTimeout(Socket socket)
 	{
 		// Nothing to do
-		
 	}
 
 	@Override
 	public boolean proceedText(SocketConnectionContext socketConnectionContext, int sizeOfMessage, byte[] text)
 	{
-	
 		return false;
 	}
 
