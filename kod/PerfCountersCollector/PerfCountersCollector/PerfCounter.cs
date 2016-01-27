@@ -33,7 +33,8 @@ namespace PerfCountersCollector
             this.lastValue = 0;
             this.avg = 0;
             this.criticalValue = criticalValue;
-            this.name = category + ": " + counter + " (" + instance + ")";
+            string instanceStr = instance == "" ? "" : " (" + instance + ")";  
+            this.name = category + ": " + counter + instanceStr;
             this.category = category;
             this.above = above;
         }

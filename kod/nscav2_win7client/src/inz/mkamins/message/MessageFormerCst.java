@@ -64,6 +64,8 @@ public class MessageFormerCst extends MessageFormer
 				totalData = StateUtilsCst.combineByteArrays(totalData, output);
 				totalData = StateUtilsCst.combineByteArrays(totalData, pipe);
 				totalData = StateUtilsCst.combineByteArrays(totalData, StateUtilsCst.getTextForGraph(perfdataName));
+				
+				totalData = StateUtilsCst.combineByteArrays(totalData, StateUtilsCst.getTextAfterGraph(perfdataName));
 				totalData = StateUtilsCst.combineByteArrays(totalData, zero);
 			}
 
