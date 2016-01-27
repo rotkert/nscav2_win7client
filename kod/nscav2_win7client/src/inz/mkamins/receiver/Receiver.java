@@ -16,6 +16,7 @@ import inz.mkamins.perfmon.PerfmonResult;
 
 public class Receiver
 {
+	@SuppressWarnings("resource")
 	public void work(BlockingQueue<PerfmonResult> blockingQueue) throws IOException
 	{
 		int port = ConfigProvider.getInstance().getReceivingPort();

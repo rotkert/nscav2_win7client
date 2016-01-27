@@ -1,13 +1,10 @@
 package inz.mkamins.commons;
 
 import java.io.File;
-import java.util.List;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
-
-import org.w3c.dom.css.Counter;
 
 import inz.mkamins.config.Properties;
 
@@ -28,9 +25,11 @@ public class ConfigProvider
 	private int port;
 	private String reportClientId;
 	private String reportHostName;
-	private int receivingPort;
+	private String serviceName;
+	private String pluginOutputLevel;
 	private String login;
 	private String password;
+	private int receivingPort;
 	
 	private static class Holder
 	{
@@ -86,7 +85,32 @@ public class ConfigProvider
 	{
 		return reportClientId;
 	}
+	
+	public String getServiceName()
+	{
+		return serviceName;
+	}
+	
+	public String getPluginOutputLevel()
+	{
+		return pluginOutputLevel;
+	}
+	
+	public String getLogin()
+	{
+		return login;
+	}
 
+	public String getPassword()
+	{
+		return password;
+	}
+	
+	public int getReceivingPort()
+	{
+		return receivingPort;
+	}
+	
 	public static ConfigProvider getInstance() 
 	{
 		return Holder.INSTANCE;
@@ -117,23 +141,10 @@ public class ConfigProvider
 		port = properties.getPort();
 		reportClientId = properties.getReportClientId();
 		reportHostName = properties.getReportHostName();
-		receivingPort = properties.getReceivingPort();
+		serviceName = properties.getServiceName();
+		pluginOutputLevel = properties.getPluginOutputLevel();
 		login = properties.getLogin();
 		password = properties.getPassword();
-	}
-
-	public int getReceivingPort()
-	{
-		return receivingPort;
-	}
-
-	public String getLogin()
-	{
-		return login;
-	}
-
-	public String getPassword()
-	{
-		return password;
+		receivingPort = properties.getReceivingPort();
 	}
 }

@@ -57,7 +57,7 @@ public class CommunicationThread implements Runnable
 				
 				Logger.getInstatnce().log(Severity.INFO, "Report " + reportName + " was successfully sent to Icinga2 server.");
 				Writer.write("skonczone");
-//				reportHandler.removeReport(perfmonResult.getReportLocation());
+				reportHandler.removeReport(perfmonResult.getReportLocation());
 				perfmonResult = null;
 			}
 			catch (InterruptedException e)

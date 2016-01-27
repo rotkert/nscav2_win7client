@@ -10,9 +10,11 @@ public class Properties
 	private int port;
 	private String reportClientId;
 	private String reportHostName;
-	private int receivingPort;
+	private String serviceName;
+	private String pluginOutputLevel;
 	private String login;
 	private String password;
+	private int receivingPort;
 	
 	public String getIp()
 	{
@@ -57,16 +59,27 @@ public class Properties
 	{
 		this.reportHostName = reportHostName;
 	}
-
-	public int getReceivingPort()
+	
+	public String getServiceName()
 	{
-		return receivingPort;
+		return serviceName;
 	}
 	
 	@XmlElement
-	public void setReceivingPort(int receivingPort)
+	public void setServiceName(String serviceName)
 	{
-		this.receivingPort = receivingPort;
+		this.serviceName = serviceName;
+	}
+
+	public String getPluginOutputLevel()
+	{
+		return pluginOutputLevel;
+	}
+	
+	@XmlElement
+	public void setPluginOutputLevel(String pluginOutputLevel)
+	{
+		this.pluginOutputLevel = pluginOutputLevel;
 	}
 
 	public String getLogin()
@@ -89,5 +102,16 @@ public class Properties
 	public void setPassword(String password)
 	{
 		this.password = password;
+	}
+	
+	public int getReceivingPort()
+	{
+		return receivingPort;
+	}
+	
+	@XmlElement
+	public void setReceivingPort(int receivingPort)
+	{
+		this.receivingPort = receivingPort;
 	}
 }
