@@ -1,4 +1,4 @@
-package inz.commons;
+package inz.mkamins.commons;
 
 import java.io.File;
 import java.util.List;
@@ -9,7 +9,7 @@ import javax.xml.bind.Unmarshaller;
 
 import org.w3c.dom.css.Counter;
 
-import inz.config.Properties;
+import inz.mkamins.config.Properties;
 
 public class ConfigProvider
 {

@@ -2,9 +2,9 @@ package inz.mkamins.message;
 
 import java.util.ArrayList;
 
-import inz.commons.ConfigProvider;
 import inz.crypto.CryptoManager;
 import inz.message.MessageFormer;
+import inz.mkamins.commons.ConfigProvider;
 import inz.mkamins.data.DataPackProvider;
 import inz.mkamins.data.IcingaLog;
 import inz.mkamins.state.StateUtilsCst;

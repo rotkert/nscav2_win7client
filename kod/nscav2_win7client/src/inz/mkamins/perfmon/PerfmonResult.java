@@ -1,4 +1,4 @@
-package inz.data.perfmon;
+package inz.mkamins.perfmon;
 
 public class PerfmonResult
 {

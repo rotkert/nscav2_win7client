@@ -1,4 +1,4 @@
-package inz.data.perfmon;
+package inz.mkamins.perfmon;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -17,8 +17,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
-import inz.comm.errorHandling.ErrorMessages;
-import inz.commons.ConfigProvider;
+import inz.mkamins.commons.ConfigProvider;
 
 public class ReportHandler
 {
@@ -106,7 +105,7 @@ public class ReportHandler
 		catch (FileNotFoundException e)
 		{
 			// TODO
-			System.out.println(ErrorMessages.REPORT_NOT_FOUND);
+			System.out.println("Report not found");
 		} 
 		catch (IOException e)
 		{

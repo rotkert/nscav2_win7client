@@ -1,6 +1,6 @@
 package inz.mkamins.message;
 
-import inz.commons.ConfigProvider;
+import inz.mkamins.commons.ConfigProvider;
 
 public class SharedPreferencesProxy
 {

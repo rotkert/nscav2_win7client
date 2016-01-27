@@ -1,4 +1,4 @@
-package inz.receiver;
+package inz.mkamins.receiver;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -8,11 +8,11 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import inz.commons.ConfigProvider;
-import inz.commons.Logger;
-import inz.commons.Severity;
-import inz.data.perfmon.PerfmonHandler;
-import inz.data.perfmon.PerfmonResult;
+import inz.mkamins.commons.ConfigProvider;
+import inz.mkamins.commons.Logger;
+import inz.mkamins.commons.Severity;
+import inz.mkamins.perfmon.PerfmonHandler;
+import inz.mkamins.perfmon.PerfmonResult;
 
 public class Receiver
 {

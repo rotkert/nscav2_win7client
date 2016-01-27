@@ -1,4 +1,4 @@
-package inz.main;
+package inz.mkamins.main;
 
 import java.io.IOException;
 import java.util.concurrent.BlockingQueue;
@@ -7,13 +7,13 @@ import java.util.concurrent.LinkedBlockingQueue;
 import javax.xml.bind.JAXBException;
 
 import devPackage.AddReport;
-import inz.commons.ConfigProvider;
-import inz.commons.Logger;
-import inz.commons.Severity;
 import inz.crypto.CryptoManager;
-import inz.data.perfmon.PerfmonResult;
+import inz.mkamins.commons.ConfigProvider;
+import inz.mkamins.commons.Logger;
+import inz.mkamins.commons.Severity;
+import inz.mkamins.perfmon.PerfmonResult;
+import inz.mkamins.receiver.Receiver;
 import inz.mkamins.socket.CommunicationThread;
-import inz.receiver.Receiver;
 
 public class Main
 {
@@ -26,8 +26,10 @@ public class Main
 			ConfigProvider.getInstance().init();
 			CryptoManager.INSTANCE.readKeys();
 			BlockingQueue<PerfmonResult> blockingQueue = new LinkedBlockingQueue<>();
+			Logger.getInstatnce().log(Severity.DEBUG, "asdfsdf");
 			new Thread(new CommunicationThread(blockingQueue)).start();
-			new AddReport(blockingQueue);
+			Logger.getInstatnce().log(Severity.DEBUG, "mikolaj");
+//			new AddReport(blockingQueue);
 //			ReportHandler reportHandler = new ReportHandler();
 //			reportHandler.getNotSentReports(blockingQueue);
 			

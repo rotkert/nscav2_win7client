@@ -1,4 +1,4 @@
-package inz.commons;
+package inz.mkamins.commons;
 
 import java.io.File;
 import java.io.FileNotFoundException;

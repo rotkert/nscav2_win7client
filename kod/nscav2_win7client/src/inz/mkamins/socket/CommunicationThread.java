@@ -6,12 +6,12 @@ import java.net.Socket;
 import java.util.concurrent.BlockingQueue;
 
 import devPackage.Writer;
-import inz.commons.ConfigProvider;
-import inz.commons.Logger;
-import inz.commons.Severity;
-import inz.data.perfmon.PerfmonResult;
-import inz.data.perfmon.ReportHandler;
+import inz.mkamins.commons.ConfigProvider;
+import inz.mkamins.commons.Logger;
+import inz.mkamins.commons.Severity;
 import inz.mkamins.data.DataPackProvider;
+import inz.mkamins.perfmon.PerfmonResult;
+import inz.mkamins.perfmon.ReportHandler;
 
 public class CommunicationThread implements Runnable
 {

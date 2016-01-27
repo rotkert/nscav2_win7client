@@ -1,4 +1,4 @@
-package inz.config;
+package inz.mkamins.config;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;

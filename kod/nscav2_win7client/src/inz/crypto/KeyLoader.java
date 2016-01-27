@@ -6,7 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import inz.commons.ConfigProvider;
+import inz.mkamins.commons.ConfigProvider;
 import inz.mkamins.logger.AndroidLogger;
 import inz.mkamins.logger.Level;
 

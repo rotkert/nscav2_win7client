@@ -1,7 +1,7 @@
 package inz.mkamins.logger;
 
-import inz.commons.Logger;
-import inz.commons.Severity;
+import inz.mkamins.commons.Logger;
+import inz.mkamins.commons.Severity;
 
 /**
  * Enum class used to log and store each important event that was proceeded in

@@ -1,4 +1,4 @@
-package inz.data.perfmon;
+package inz.mkamins.perfmon;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -7,8 +7,8 @@ import java.util.Date;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.locks.Lock;
 
-import inz.commons.Logger;
-import inz.commons.Severity;
+import inz.mkamins.commons.Logger;
+import inz.mkamins.commons.Severity;
 
 public class PerfmonHandler implements Runnable
 {

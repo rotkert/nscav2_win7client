@@ -1,4 +1,4 @@
-package inz.commons;
+package inz.mkamins.commons;
 
 public enum Severity
 {
